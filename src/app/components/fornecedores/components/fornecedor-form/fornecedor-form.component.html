@@ -1,0 +1,80 @@
+<mat-accordion>
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          + Novo
+        </mat-panel-title>
+        <mat-panel-description>
+          Fornecedores
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+
+<div class="form-container" [formGroup]="parent">
+    <div formGroupName="fornec">
+    <p class="mat-form-field--inline">
+      <mat-form-field appearance="outline">
+          <mat-label>Nome</mat-label>
+        <input matInput placeholder="Nome" type="text" formControlName="nome">
+      </mat-form-field>
+
+
+      <mat-form-field appearance="outline" id="field-cep">
+          <mat-label>Cep</mat-label>
+        <input matInput placeholder="Cep" type="text" formControlName="cep">
+      </mat-form-field>
+
+
+      <mat-form-field appearance="outline" id="field-endereco">
+          <mat-label>Endereço</mat-label>
+        <input matInput placeholder="Endereço" type="text" formControlName="endereco">
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" id="field-bairro">
+          <mat-label>Bairro</mat-label>
+        <input matInput placeholder="Bairro" type="text" formControlName="bairro">
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" id="field-cidade">
+          <mat-label>Cidade</mat-label>
+        <input matInput placeholder="Cidade" type="text" formControlName="cidade">
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" id="field-estado">
+          <mat-label>UF</mat-label>
+        <input matInput placeholder="UF" type="text" formControlName="estado">
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" id="field-contato">
+          <mat-label>Contato</mat-label>
+        <input matInput placeholder="Contato" type="text" formControlName="contato">
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" id="field-telefone">
+          <mat-label>Telefone</mat-label>
+        <input matInput placeholder="Telefone" type="text" formControlName="telefone">
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" id="field-celular">
+          <mat-label>Celular</mat-label>
+        <input matInput placeholder="Celular" type="text" formControlName="celular">
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" id="field-email">
+          <mat-label>Email</mat-label>
+        <input matInput placeholder="Email" type="email" formControlName="email">
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" id="field-cnpj">
+          <mat-label>Cnpj</mat-label>
+        <input matInput placeholder="Cnpj" type="text" formControlName="cnpj">
+      </mat-form-field>
+
+    </p>
+
+  </div>
+  <button mat-raised-button color="primary" type="submit" >Criar</button>
+  <button mat-raised-button color="accent" type="submit" >Editar</button>
+
+</div>
+
+    <mat-expansion-panel>

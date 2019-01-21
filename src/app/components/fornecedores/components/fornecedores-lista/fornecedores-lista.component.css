@@ -1,0 +1,40 @@
+.table-container {
+  width: 90%;
+  overflow: auto;
+  max-height: 400px;
+}
+
+.mat-row,
+.mat-header-row {
+  min-width: 1123px;
+  width: 100%;
+  width: max-content;
+}
+
+.mat-table {
+  overflow: scroll;
+  max-height: 400px;
+}
+
+.mat-cell,
+.mat-header-cell {
+  min-width: 150px;
+}
+
+.mat-cell {
+  padding: 3px;
+}
+
+.inline{
+  display: inline;
+}
+
+.td {
+  height: auto;
+}
+mat-form-field{
+  background-color: #424242;
+  color:#ffffff;
+  margin-bottom: 1%;
+}
+

@@ -1,0 +1,16 @@
+<div class="center">
+
+  <br>
+
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <app-fornecedor-form [parent]="form">
+    </app-fornecedor-form>
+  </form>
+
+  <br>
+
+  <app-fornecedores-lista [fornecedores]="dataSource" [displayedColumns]="displayedColumns" (delete)="onDeleteClick($event)"
+    (keyup)="applyFilter($event.target.value)">
+  </app-fornecedores-lista>
+
+</div>

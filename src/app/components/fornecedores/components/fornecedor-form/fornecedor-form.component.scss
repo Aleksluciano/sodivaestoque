@@ -1,0 +1,72 @@
+
+
+.mat-form-field--inline {
+  display: flex;
+  flex-wrap: wrap;
+
+}
+
+.mat-form-field--inline .mat-form-field {
+  margin-bottom: -20px;
+  margin-right:20px
+}
+
+#field-endereco{
+  width: 350px;
+
+}
+
+#field-estado{
+  width: 50px;
+
+}
+
+#field-cep{
+  width: 100px;
+
+}
+
+#field-telefone{
+  width: 150px;
+
+}
+
+#field-celular{
+  width: 150px;
+
+}
+
+#field-cidade{
+  width: 250px;
+
+}
+
+#field-email{
+  width: 300px;
+}
+
+::placeholder{
+  opacity: 0.2;
+}
+
+
+
+mat-label{
+  opacity: 0.5;
+}
+mat-card {
+  width: 100%;
+}
+
+mat-expansion-panel{
+  width: 89%;
+
+}
+
+
+
+mat-panel-description {
+  flex: 0 0 auto;
+}
+
+
