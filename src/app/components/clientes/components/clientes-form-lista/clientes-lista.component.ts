@@ -1,4 +1,4 @@
-import { Fornecedor } from "./../../../../models/fornecedor.model";
+import { Cliente } from "./../../../../models/cliente.model";
 import {
   Component,
   OnInit,
@@ -46,23 +46,23 @@ const fadeAnimation = trigger("fade", [
   transition("void => *", [style({ opacity: 0 }), animate(500)])
 ]);
 @Component({
-  selector: "app-fornecedores-lista",
-  templateUrl: "./fornecedores-lista.component.html",
-  styleUrls: ["./fornecedores-lista.component.scss"],
+  selector: "app-clientes-lista",
+  templateUrl: "./clientes-lista.component.html",
+  styleUrls: ["./clientes-lista.component.scss"],
   animations: [rowsAnimation, fadeAnimation]
 })
-export class FornecedoresListaComponent implements OnInit {
+export class ClientesListaComponent implements OnInit {
   @Input()
   displayedColumns: string[] = [];
 
   @Input()
-  fornecedores: MatTableDataSource<Fornecedor>;
+  clientes: MatTableDataSource<Cliente>;
 
   @Output()
-  delete: EventEmitter<Fornecedor> = new EventEmitter<Fornecedor>();
+  delete: EventEmitter<Cliente> = new EventEmitter<Cliente>();
 
   @Output()
-  edit: EventEmitter<Fornecedor> = new EventEmitter<Fornecedor>();
+  edit: EventEmitter<Cliente> = new EventEmitter<Cliente>();
 
   @Output()
   filter: EventEmitter<string> = new EventEmitter<string>();
@@ -83,12 +83,12 @@ export class FornecedoresListaComponent implements OnInit {
 
   ngOnInit() {}
 
-  deleteRow(fornecedor: Fornecedor) {
-    this.delete.emit(fornecedor);
+  deleteRow(cliente: Cliente) {
+    this.delete.emit(cliente);
   }
 
-  editRow(fornecedor: Fornecedor) {
-    this.edit.emit(fornecedor);
+  editRow(cliente: Cliente) {
+    this.edit.emit(cliente);
   }
 
   onKeyup(filter: string) {
@@ -99,6 +99,4 @@ export class FornecedoresListaComponent implements OnInit {
   callNewItemForm(){
     this.newItem.emit();
   }
-
-  
 }

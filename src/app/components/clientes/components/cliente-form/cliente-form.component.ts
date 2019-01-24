@@ -5,16 +5,16 @@ import { Observable } from "rxjs";
 import { startWith, map } from "rxjs/operators";
 
 @Component({
-  selector: "app-fornecedor-form",
-  templateUrl: "./fornecedor-form.component.html",
-  styleUrls: ["./fornecedor-form.component.scss"],
+  selector: "app-cliente-form",
+  templateUrl: "./cliente-form.component.html",
+  styleUrls: ["./cliente-form.component.scss"],
   animations: [
     trigger("fade", [
       transition("void => *", [style({ opacity: 0 }), animate(500)])
     ])
   ]
 })
-export class FornecedorFormComponent implements OnInit, AfterViewInit {
+export class ClienteFormComponent implements OnInit, AfterViewInit {
   @Input()
   parent: FormGroup;
 

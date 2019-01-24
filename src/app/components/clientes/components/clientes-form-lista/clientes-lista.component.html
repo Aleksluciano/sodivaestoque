@@ -1,0 +1,105 @@
+
+  <button id="newItemButton" mat-raised-button color="primary" type="button" (click)="callNewItemForm()" >+ Novo</button>
+  <button id="newEditButton" mat-raised-button color="accent" type="button" (click)="editRow(clientes.data[0])" > Editar</button>
+  <mat-card class="inline" @fade>
+    <mat-form-field appearance="fill" class="fieldFind">
+      <mat-label>CLIENTES</mat-label>
+      <input matInput (keyup)="onKeyup($event?.target?.value)" placeholder="Filtro">
+      <mat-icon matSuffix>search</mat-icon>
+    </mat-form-field>
+  </mat-card>
+
+  <div class="table-container" >
+
+    <table mat-table [dataSource]="clientes" >
+
+      <ng-container matColumnDef="Indice" class="colHide">
+        <th class="colHide" mat-header-cell *matHeaderCellDef> No. </th>
+        <td class="colHide" mat-cell *matCellDef="let cliente; let i = index;"> {{i + 1}} </td>
+        <td class="colHide" mat-footer-cell *matFooterCellDef> <strong>{{clientes?.data?.length}}</strong> </td>
+      </ng-container>
+
+      <ng-container matColumnDef="Nome" sticky>
+        <th mat-header-cell *matHeaderCellDef> Cliente </th>
+        <td mat-cell *matCellDef="let cliente"> {{cliente.nome}} </td>
+        <td mat-footer-cell *matFooterCellDef></td>
+      </ng-container>
+
+
+      <ng-container matColumnDef="Endereço">
+        <th mat-header-cell *matHeaderCellDef> Endereço </th>
+        <td mat-cell *matCellDef="let cliente"> {{cliente.endereco}} </td>
+        <td mat-footer-cell *matFooterCellDef></td>
+      </ng-container>
+
+      <ng-container matColumnDef="Bairro">
+        <th mat-header-cell *matHeaderCellDef> Bairro </th>
+        <td mat-cell *matCellDef="let cliente"> {{cliente.bairro}} </td>
+        <td mat-footer-cell *matFooterCellDef></td>
+      </ng-container>
+
+      <ng-container matColumnDef="Cidade">
+        <th mat-header-cell *matHeaderCellDef> Cidade </th>
+        <td mat-cell *matCellDef="let cliente"> {{cliente.cidade}} </td>
+        <td mat-footer-cell *matFooterCellDef></td>
+      </ng-container>
+
+      <ng-container class="uf" matColumnDef="Estado">
+        <th class="uf" mat-header-cell *matHeaderCellDef> Estado </th>
+        <td class="uf" mat-cell *matCellDef="let cliente"> {{cliente.estado}} </td>
+        <td class="uf" mat-footer-cell *matFooterCellDef></td>
+      </ng-container>
+
+
+      <ng-container matColumnDef="Telefone">
+        <th mat-header-cell *matHeaderCellDef> Telefone </th>
+        <td mat-cell *matCellDef="let cliente"> {{cliente.telefone | mask:"(00) 0000-0000" }} </td>
+        <td mat-footer-cell *matFooterCellDef></td>
+      </ng-container>
+
+      <ng-container matColumnDef="Celular">
+        <th mat-header-cell *matHeaderCellDef> Celular </th>
+        <td mat-cell *matCellDef="let cliente"> {{cliente.celular | mask:"(00) 00000-0000"}} </td>
+        <td mat-footer-cell *matFooterCellDef></td>
+      </ng-container>
+
+
+      <ng-container matColumnDef="Email">
+        <th mat-header-cell *matHeaderCellDef> Email </th>
+        <td mat-cell *matCellDef="let cliente"> {{cliente.email}} </td>
+        <td mat-footer-cell *matFooterCellDef></td>
+      </ng-container>
+
+
+      <ng-container matColumnDef="Cpf">
+        <th mat-header-cell *matHeaderCellDef> Cpf </th>
+        <td mat-cell *matCellDef="let cliente"> {{cliente.cpf | mask:"000.000.000-00"}} </td>
+        <td mat-footer-cell *matFooterCellDef></td>
+      </ng-container>
+
+      <ng-container matColumnDef="Rg">
+        <th mat-header-cell *matHeaderCellDef> Rg </th>
+        <td mat-cell *matCellDef="let cliente"> {{cliente.rg | mask:"00.000.000-0"}} </td>
+        <td mat-footer-cell *matFooterCellDef></td>
+      </ng-container>
+
+
+      <ng-container class="actions" matColumnDef="Ações" stickyEnd >
+        <th class="actions" mat-header-cell *matHeaderCellDef > Ações </th>
+        <td class="actions" mat-cell *matCellDef="let cliente">
+          <button mat-icon-button color="accent" (click)="editRow(cliente)">
+            <mat-icon>edit</mat-icon>
+          </button>
+          <button mat-icon-button color="warn" (click)="deleteRow(cliente)">
+            <mat-icon>delete</mat-icon>
+          </button></td>
+          <td class="actions" mat-footer-cell *matFooterCellDef></td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+      <tr mat-row @rowsAnimation *matRowDef="let row; columns: displayedColumns;"></tr>
+      <tr mat-footer-row *matFooterRowDef="displayedColumns; sticky: true"></tr>
+
+    </table>
+
+  </div>

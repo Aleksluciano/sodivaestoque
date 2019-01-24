@@ -6,10 +6,12 @@
 <!-- <img src="assets/sodivastoqueicon.jpg" style="align-items: center"><img> -->
 <button mat-button [matMenuTriggerFor]="appMenu" id="menuFloat">Menu</button>
 <div class="mycontainer">
-
+  <div style="width: 500px">
+    <ng-flash-message></ng-flash-message>
+  </div>
 <mat-menu #appMenu="matMenu">
   <button mat-menu-item [routerLink]="['/']">Fornecedores</button>
-  <button mat-menu-item>Clientes</button>
+  <button mat-menu-item [routerLink]="['/clientes']">Clientes</button>
 </mat-menu>
 
 <router-outlet></router-outlet>

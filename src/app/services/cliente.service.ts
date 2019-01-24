@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Fornecedor } from '../models/fornecedor.model';
+import { Cliente } from '../models/cliente.model';
 import { Observable } from 'rxjs';
 import { AngularFirestoreDocument, AngularFirestoreCollection, AngularFirestore } from '@angular/fire/firestore';
 import { map } from "rxjs/operators";
@@ -10,12 +10,12 @@ import { NgxViacepService } from "@brunoc/ngx-viacep";
 @Injectable({
   providedIn: 'root'
 })
-export class FornecedorService {
+export class ClienteService {
 
-  fornecedoresCollection: AngularFirestoreCollection<Fornecedor>;
-  fornecedorDoc: AngularFirestoreDocument<Fornecedor>;
-  fornecedores: Observable<Fornecedor[]>
-  fornecedor: Observable<Fornecedor>;
+  fornecedoresCollection: AngularFirestoreCollection<Cliente>;
+  fornecedorDoc: AngularFirestoreDocument<Cliente>;
+  clientes: Observable<Cliente[]>
+  cliente: Observable<Cliente>;
 
   constructor(
     private afs: AngularFirestore,
@@ -23,57 +23,57 @@ export class FornecedorService {
     private viacep: NgxViacepService
     ) {
 
-    this.fornecedoresCollection = this.afs.collection('fornecedores',
+    this.fornecedoresCollection = this.afs.collection('clientes',
     ref => ref.orderBy('nome', 'asc'));
    }
 
-   getFornecedores(): Observable<Fornecedor[]> {
+   getClientes(): Observable<Cliente[]> {
 
-    this.fornecedores = this.fornecedoresCollection.snapshotChanges().
+    this.clientes = this.fornecedoresCollection.snapshotChanges().
     pipe(
       map(changes => {
       return changes.map(action => {
-        const data = action.payload.doc.data() as Fornecedor;
+        const data = action.payload.doc.data() as Cliente;
 
         data.id = action.payload.doc.id;
         return data;
       });
     }));
 
-    return this.fornecedores;
+    return this.clientes;
    }
 
-   newFornecedor(fornecedor: Fornecedor){
-     return this.fornecedoresCollection.add(fornecedor)
+   newCliente(cliente: Cliente){
+     return this.fornecedoresCollection.add(cliente)
    }
 
-   getFornecedor(id: string): Observable<Fornecedor>{
+   getCliente(id: string): Observable<Cliente>{
 
-      this.fornecedorDoc = this.afs.doc<Fornecedor>(`fornecedores/${id}`);
-      this.fornecedor =  this.fornecedorDoc.snapshotChanges().pipe(
+      this.fornecedorDoc = this.afs.doc<Cliente>(`clientes/${id}`);
+      this.cliente =  this.fornecedorDoc.snapshotChanges().pipe(
         map(action => {
           if(action.payload.exists === false){
             return null;
           }else{
-            const data = action.payload.data() as Fornecedor;
+            const data = action.payload.data() as Cliente;
             data.id = action.payload.id;
             return data;
           }
 
         }));
-          return this.fornecedor;
+          return this.cliente;
 
    }
 
-   updateFornecedor(fornecedor: Fornecedor){
-     console.log(fornecedor)
-    this.fornecedorDoc = this.afs.doc(`fornecedores/${fornecedor.id}`);
-     return this.fornecedorDoc.update(fornecedor);
+   updateCliente(cliente: Cliente){
+     console.log(cliente)
+    this.fornecedorDoc = this.afs.doc(`clientes/${cliente.id}`);
+     return this.fornecedorDoc.update(cliente);
 
    }
 
-   deleteFornecedor(id: string){
-    this.fornecedorDoc = this.afs.doc(`fornecedores/${id}`);
+   deleteCliente(id: string){
+    this.fornecedorDoc = this.afs.doc(`clientes/${id}`);
     return this.fornecedorDoc.delete();
 
    }
@@ -88,7 +88,7 @@ export class FornecedorService {
 
    flashMessageToNew(name: string){
     this.ngFlashMessageService.showFlashMessage({
-      messages: [`SUCESSO! Fornecedor ${name} adicionado.`],
+      messages: [`SUCESSO! Cliente ${name} adicionado.`],
       dismissible: true,
       timeout: 2000,
       type: 'success'
@@ -97,7 +97,7 @@ export class FornecedorService {
 
    flashMessageToUpdate(name: string){
     this.ngFlashMessageService.showFlashMessage({
-      messages: [`SUCESSO! Fornecedor ${name} atualizado.`],
+      messages: [`SUCESSO! Cliente ${name} atualizado.`],
       dismissible: true,
       timeout: 2000,
       type: 'success'
@@ -106,7 +106,7 @@ export class FornecedorService {
 
    flashMessageToDelete(name: string){
     this.ngFlashMessageService.showFlashMessage({
-      messages: [`SUCESSO! Fornecedor ${name} removido.`],
+      messages: [`SUCESSO! Cliente ${name} removido.`],
       dismissible: true,
       timeout: 2000,
       type: 'success'

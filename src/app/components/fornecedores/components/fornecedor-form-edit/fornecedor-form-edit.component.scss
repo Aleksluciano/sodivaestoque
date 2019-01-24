@@ -82,6 +82,10 @@ margin-right: 20px;
 margin-bottom: -20px;
 }
 
+.findData{
+  float: right;
+}
+
 #backIcon{
   width: 100px;
 }
@@ -94,6 +98,19 @@ a{
   float:right;
 
 }
+
+#saveButton{
+margin-right: 2px;
+}
+
+#editButton{
+  margin-right: 40px;
+  }
+
+  #findInput{
+float: right;
+  }
+
 
 
 // mat-expansion-panel{

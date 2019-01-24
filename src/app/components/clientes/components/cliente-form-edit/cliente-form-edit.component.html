@@ -2,9 +2,68 @@
 
   <mat-card-header class="inline">
     <mat-card-title class="inline">
-      <h2 class="inline">Adicionar Fornecedor</h2>
+      <h2 class="inline">Atualizar Cliente</h2>
     </mat-card-title>
+
   </mat-card-header>
+
+
+
+  <button
+  class="findData"
+  color="primary"
+  mat-button
+  (keydown.enter)="findData(Buscar.value)"
+  type="button"
+  (click)="findData(Buscar.value)"
+  id="searchIcon"
+  >
+    <mat-icon>search</mat-icon>
+  </button>
+  <button
+  class="findData"
+  color="accent"
+  mat-button
+  type="button"
+  (click)="nextData(Buscar.value)"
+  id="searchIcon"
+  >
+    <mat-icon>arrow_right</mat-icon>
+  </button>
+
+  <mat-form-field
+  appearance="fill"
+  id="findInput">
+      <mat-label>Buscar</mat-label>
+      <input
+      matInput
+       placeholder="Buscar"
+       type="text"
+       #Buscar
+       [formControl]="myControl" [matAutocomplete]="autoo"
+
+       >
+       <mat-autocomplete autoActiveFirstOption #autoo="matAutocomplete">
+          <mat-option *ngFor="let optionn of filteredOptionsFind | async"
+          [value]="optionn"
+          >
+            {{optionn}}
+          </mat-option>
+        </mat-autocomplete>
+    </mat-form-field>
+
+  <button
+  class="findData"
+  color="accent"
+  mat-button
+  type="button"
+  (click)="previousData(Buscar.value)"
+  id="searchIcon"
+  >
+    <mat-icon>arrow_left</mat-icon>
+  </button>
+
+
 
   <mat-card-subtitle>
     <p>Os campos com * são obrigatórios</p>
@@ -21,8 +80,7 @@
            type="text"
            formControlName="nome"
            minlength="2"
-           required
-           #nameInput>
+           required>
         </mat-form-field>
 
 
@@ -33,7 +91,13 @@
           mask="00000-000"
           >
         </mat-form-field>
-        <button mat-stroked-button type="button" (click)="findAdress(mycep.value)" id="searchIcon">
+        <button
+        mat-stroked-button
+        type="button"
+        (click)="findAdress(mycep.value)"
+        id="searchIcon"
+        [disabled]="this.editButton"
+        >
           <mat-icon>search</mat-icon>
         </button>
 
@@ -73,11 +137,6 @@
             </mat-autocomplete>
         </mat-form-field>
 
-        <mat-form-field appearance="outline" id="field-contato">
-          <mat-label>Contato</mat-label>
-          <input matInput placeholder="Contato" type="text" formControlName="contato" required>
-        </mat-form-field>
-
         <mat-form-field appearance="outline" id="field-telefone">
           <mat-label>Telefone</mat-label>
           <input matInput placeholder="Telefone" type="text" formControlName="telefone"
@@ -104,18 +163,47 @@
         </mat-form-field>
 
         <mat-form-field appearance="outline" id="field-cnpj">
-          <mat-label>Cnpj</mat-label>
-          <input matInput placeholder="Cnpj" type="text" #jh formControlName="cnpj"
-          minlength="14"
-          mask="00.000.000/0000-00"
+          <mat-label>Cpf</mat-label>
+          <input matInput placeholder="Cpf" type="text" formControlName="cpf"
+          minlength="11"
+          mask="000.000.000-00"
           >
-          {{ jh.value?.lenght}}
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" id="field-cnpj">
+          <mat-label>Rg</mat-label>
+          <input matInput placeholder="Rg" type="text" formControlName="rg"
+          minlength="9"
+          mask="00.000.000-0"
+          >
         </mat-form-field>
 
       </div>
 
     </div>
-    <button mat-raised-button color="primary" type="submit" [disabled]="!parent.valid">Criar</button>
+    <button
+    mat-raised-button
+    color="primary"
+    type="submit"
+    [disabled]="!parent.valid"
+    id="saveButton"
+    (click)="this.editButton = !this.editButton"
+    >Salvar</button>
+    <button
+    mat-raised-button color="accent"
+    type="button"
+    (click)="changeEditButton()"
+    id="editButton"
+    >{{ this.editButton ? 'Editar' : 'Cancelar' }}
+  </button>
+  <button
+  mat-raised-button color="warn"
+  type="button"
+  (click)="deleteItem()"
+  [disabled]="this.editButton"
+  id="deleteButton"
+  >Deletar
+</button>
     <a [routerLink]="" (click)="return()">
       <button mat-mini-fab color="accent">
         <mat-icon>arrow_back</mat-icon>

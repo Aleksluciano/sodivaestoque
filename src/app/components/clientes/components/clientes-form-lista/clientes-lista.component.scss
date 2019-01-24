@@ -1,0 +1,93 @@
+.table-container {
+  width: 90%;
+  overflow: auto;
+  max-height: 420px;
+}
+
+.mat-row,
+.mat-header-row {
+  min-width: 1123px;
+  width: 100%;
+  width: max-content;
+}
+
+.mat-table {
+  overflow: scroll;
+  max-height: 400px;
+}
+
+.mat-cell:not(.colHide):not(.actions),
+.mat-header-cell:not(.colHide):not(.actions) {
+  min-width: 150px;
+}
+
+.colHide{
+  min-width: 40px;
+
+  }
+
+.actions{
+  min-width: 90px;
+}
+
+
+.mat-cell {
+  padding: 3px;
+}
+
+.inline{
+  width: 86%;
+  margin-bottom: 1%;
+
+}
+
+.fildFind{
+  z-index: 1;
+}
+
+.td {
+  height: auto;
+}
+
+
+
+
+
+@media screen and (max-width: 480px) {
+  .colHide{
+ display: none;
+
+  }
+
+  .inline{
+    width: 80%;
+    margin-bottom: 1%;
+
+  }
+}
+
+
+tr:hover {
+  background-color: black;
+}
+
+#newItemButton{
+  width: 200px;
+  margin-top: 1%;
+  margin-bottom: 1%;
+  margin-right: 12%;
+  float: right;
+  z-index: 1;
+
+}
+
+
+#newEditButton{
+  width: 200px;
+  margin-top: 1%;
+  margin-bottom: 1%;
+  margin-right: 2%;
+  float: right;
+  z-index: 1;
+
+}
