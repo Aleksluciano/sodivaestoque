@@ -113,15 +113,14 @@ export class ProdutosComponent implements OnInit {
   }
 
   newItem() {
-    // let param: Params = {
-    //   lastCode: this.produtos[this.produtos.length - 1].codigo
-    // };
-    // console.log("PARAM",param)
+
     if (!this.popupOpen) {
-      // this.navigationex.queryParams = param
+  let code = '';
+  if(this.produtos.length > 0)code = this.produtos[this.produtos.length - 1].codigo
+
       this.router.navigate(["produtos/add"], {
         queryParams: {
-          lastCode: this.produtos[this.produtos.length - 1].codigo
+          lastCode: code
         }
       });
     }
