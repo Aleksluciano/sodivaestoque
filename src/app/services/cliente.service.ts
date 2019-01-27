@@ -66,7 +66,7 @@ export class ClienteService {
    }
 
    updateCliente(cliente: Cliente){
-     console.log(cliente)
+
     this.fornecedorDoc = this.afs.doc(`clientes/${cliente.id}`);
      return this.fornecedorDoc.update(cliente);
 

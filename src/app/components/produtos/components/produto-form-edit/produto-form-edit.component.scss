@@ -12,44 +12,55 @@
   margin-right:20px
 }
 
-#field-endereco{
-  width: 350px;
-
-}
-
-#searchIcon{
-  margin-bottom: -20px;
-}
-
-#field-estado{
-  width: 60px;
-
-}
-
-#field-cep{
-  width: 110px;
-
-}
-
-#field-telefone{
-
+#codigo{
   width: 150px;
+  }
 
-}
+  #descricao{
+    width: 350px;
+   }
+  // #fornecedor{
 
-#field-celular{
-  width: 150px;
+  // }
+   #codigofornecedor{
+    width: 170px;
+   }
+   #data{
+    width: 160px;
+  }
+  // #cor{
 
-}
+  // }
+  // #tipo{
 
-#field-cidade{
-  width: 250px;
+  // }
+   #tamanho{
+    width: 110px;
+   }
+  #quantidade{
+    width: 130px;
 
-}
+   }
+  #valor{
+    width: 140px;
+  }
+  #custo{
+    width: 140px;
+  }
+  #preco{
+    width: 140px;
+  }
+   #lucrobruto{
+    width: 140px;
+   }
 
-#field-email{
-  width: 300px;
-}
+   #textCusto{
+     margin-right: 5%
+   }
+
+   #textLucro{
+    margin-right: 5%
+  }
 
 ::placeholder{
   opacity: 0.2;
@@ -83,6 +94,10 @@ margin-right: 20px;
 margin-bottom: -20px;
 }
 
+.findData{
+  float: right;
+}
+
 #backIcon{
   width: 100px;
 }
@@ -95,6 +110,19 @@ a{
   float:right;
 
 }
+
+#saveButton{
+margin-right: 2px;
+}
+
+#editButton{
+  margin-right: 40px;
+  }
+
+  #findInput{
+float: right;
+  }
+
 
 
 // mat-expansion-panel{

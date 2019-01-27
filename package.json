@@ -28,6 +28,7 @@
     "core-js": "^2.5.4",
     "firebase": "^5.7.0",
     "ng-flash-messages": "^0.3.0",
+    "ngx-currency": "^1.5.1",
     "ngx-mask": "^7.3.3",
     "rxjs": "~6.3.3",
     "zone.js": "~0.8.26"

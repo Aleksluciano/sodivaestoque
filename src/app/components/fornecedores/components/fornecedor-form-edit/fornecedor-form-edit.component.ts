@@ -1,10 +1,16 @@
-import { Component, OnInit, Input, Output, EventEmitter, AfterViewInit } from "@angular/core";
+import {
+  Component,
+  OnInit,
+  Input,
+  Output,
+  EventEmitter,
+  AfterViewInit
+} from "@angular/core";
 import { FormGroup, FormControl } from "@angular/forms";
 import { trigger, transition, style, animate } from "@angular/animations";
 import { Observable } from "rxjs";
 import { startWith, map } from "rxjs/operators";
 import { Fornecedor } from "src/app/models/fornecedor.model";
-
 
 @Component({
   selector: "app-fornecedor-form-edit",
@@ -56,7 +62,6 @@ export class FornecedorFormEditComponent implements OnInit {
   @Output()
   previous: EventEmitter<Fornecedor> = new EventEmitter<Fornecedor>();
 
-
   @Output()
   findOne: EventEmitter<string> = new EventEmitter<string>();
 
@@ -92,18 +97,12 @@ export class FornecedorFormEditComponent implements OnInit {
   filteredOptions: Observable<string[]>;
   filteredOptionsFind: Observable<string[]>;
 
-
-
   constructor() {}
 
-
-
   ngOnInit() {
-
-    if(this.parent.get('fornec').get('nome').value){
-      this.firstInput = this.parent.get('fornec').get('nome').value
-    }
-
+    // if(this.parent.get('fornec').get('nome').value){
+    //   this.firstInput = this.parent.get('fornec').get('nome').value
+    // }
 
     this.filteredOptions = this.parent
       .get("fornec")
@@ -113,16 +112,11 @@ export class FornecedorFormEditComponent implements OnInit {
         map(value => this._filter(value))
       );
 
-
-
-  this.filteredOptionsFind = this.myControl.valueChanges
-  .pipe(
-    startWith(""),
-    map(value => this._filterFind(value))
-  )
-
-}
-
+    this.filteredOptionsFind = this.myControl.valueChanges.pipe(
+      startWith(""),
+      map(value => this._filterFind(value))
+    );
+  }
 
   findAdress(cepValue: string) {
     this.cep.emit(cepValue);
@@ -133,67 +127,47 @@ export class FornecedorFormEditComponent implements OnInit {
   }
 
   private _filter(value: string): string[] {
-
-
-    const filterValue = value.toLowerCase();
+    let filterValue = "";
+    if (value) filterValue = value.toLowerCase();
 
     return this.options.filter(
       option => option.toLowerCase().indexOf(filterValue) === 0
     );
-
-
   }
 
   private _filterFind(value: string): string[] {
-
-
-    const filterValue = value.toLowerCase();
-
-
+    let filterValue = "";
+    if (value) filterValue = value.toLowerCase();
 
     return this.arrayFornecedores.filter(
       option => option.toLowerCase().indexOf(filterValue) === 0
     );
-
-
   }
 
-  changeEditButton(){
+  changeEditButton() {
+    this.editButton = !this.editButton;
 
-    this.editButton = !this.editButton
-
-    if(!this.editButton)
-    this.parent
-      .get("fornec").enable()
-   else this.parent
-   .get("fornec").disable()
-
+    if (!this.editButton) this.parent.get("fornec").enable();
+    else this.parent.get("fornec").disable();
   }
 
   deleteItem() {
     this.delete.emit();
   }
 
-  saveDocument(){
-    this.changeEditButton()
-
+  saveDocument() {
+    this.changeEditButton();
   }
 
+  findData(e) {
+    this.find.emit(e);
+  }
 
-findData(e){
-console.log(e)
-  this.find.emit(e)
-}
+  nextData(e) {
+    this.next.emit(e);
+  }
 
-nextData(e){
-  this.next.emit(e)
-}
-
-previousData(e){
-
-this.previous.emit(e)
-
-}
-
-
+  previousData(e) {
+    this.previous.emit(e);
+  }
 }

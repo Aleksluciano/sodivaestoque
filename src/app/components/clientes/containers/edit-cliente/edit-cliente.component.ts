@@ -50,7 +50,7 @@ export class EditClienteComponent implements OnInit {
       celular: "",
       email: "",
       cpf: "",
-      rg: "",
+      rg: ""
     })
   });
 
@@ -91,7 +91,7 @@ export class EditClienteComponent implements OnInit {
           celular: this.cliente.celular,
           email: this.cliente.email,
           cpf: this.cliente.cpf,
-          rg: this.cliente.rg,
+          rg: this.cliente.rg
         });
 
         this.form.controls.fornec.disable();
@@ -203,8 +203,6 @@ export class EditClienteComponent implements OnInit {
   }
 
   nextData(e) {
-    console.log(e);
-
     let index = this.clientes.findIndex(a => a.nome == e);
     if (index != -1 && index != this.clientes.length - 1) {
       this.cliente = { ...this.clientes[index + 1] };
@@ -226,7 +224,6 @@ export class EditClienteComponent implements OnInit {
   }
 
   previousData(e) {
-    console.log(e);
     let index = this.clientes.findIndex(a => a.nome == e);
     if (index != -1 && index > 0) {
       this.cliente = { ...this.clientes[index - 1] };

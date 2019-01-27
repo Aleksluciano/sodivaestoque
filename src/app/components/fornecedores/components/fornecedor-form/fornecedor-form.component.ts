@@ -1,4 +1,13 @@
-import { Component, OnInit, Input, Output, EventEmitter, ElementRef, ViewChild, AfterViewInit } from "@angular/core";
+import {
+  Component,
+  OnInit,
+  Input,
+  Output,
+  EventEmitter,
+  ElementRef,
+  ViewChild,
+  AfterViewInit
+} from "@angular/core";
 import { FormGroup, FormControl } from "@angular/forms";
 import { trigger, transition, style, animate } from "@angular/animations";
 import { Observable } from "rxjs";
@@ -54,17 +63,13 @@ export class FornecedorFormComponent implements OnInit, AfterViewInit {
     "TO"
   ];
   filteredOptions: Observable<string[]>;
-  @ViewChild('nameInput') nameInput;
+  @ViewChild("nameInput") nameInput;
 
   constructor() {}
 
-  ngAfterViewInit() {
-
-
-  }
+  ngAfterViewInit() {}
 
   ngOnInit() {
-
     this.nameInput.nativeElement.focus();
 
     this.filteredOptions = this.parent
@@ -85,12 +90,13 @@ export class FornecedorFormComponent implements OnInit, AfterViewInit {
   }
 
   private _filter(value: string): string[] {
-    if(value){
-    const filterValue = value.toLowerCase();
+    if (value) {
+      let filterValue = "";
+      if (value) filterValue = value.toLowerCase();
 
-    return this.options.filter(
-      option => option.toLowerCase().indexOf(filterValue) === 0
-    );
+      return this.options.filter(
+        option => option.toLowerCase().indexOf(filterValue) === 0
+      );
+    }
   }
-}
 }

@@ -3,7 +3,7 @@ import { FornecedoresComponent } from './components/fornecedores/containers/forn
 import { ConfirmModalComponent } from './components/shared/confirm-modal/confirm-modal.component'
 
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule, LOCALE_ID } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -32,6 +32,28 @@ import { ClienteFormComponent } from './components/clientes/components/cliente-f
 import { ClienteFormEditComponent } from './components/clientes/components/cliente-form-edit/cliente-form-edit.component';
 import { AddClienteComponent } from './components/clientes/containers/add-cliente/add-cliente.component';
 import { EditClienteComponent } from './components/clientes/containers/edit-cliente/edit-cliente.component';
+import { ProdutosComponent } from './components/produtos/containers/produtos-lista/produtos.component';
+import { ProdutosListaComponent } from './components/produtos/components/produtos-lista/produtos-lista.component';
+import { ProdutoFormComponent } from './components/produtos/components/produto-form/produto-form.component';
+import { ProdutoFormEditComponent } from './components/produtos/components/produto-form-edit/produto-form-edit.component';
+import { AddProdutoComponent } from './components/produtos/containers/add-produto/add-produto.component';
+import { EditProdutoComponent } from './components/produtos/containers/edit-produto/edit-produto.component';
+import { NgxCurrencyModule } from "ngx-currency";
+import {DatePipe, registerLocaleData} from '@angular/common';
+import ptBr from '@angular/common/locales/pt';
+export const customCurrencyMaskConfig = {
+  align: "right",
+  allowNegative: true,
+  allowZero: true,
+  decimal: ",",
+  precision: 2,
+  prefix: "R$ ",
+  suffix: "",
+  thousands: ".",
+  nullable: false
+};
+
+registerLocaleData(ptBr)
 @NgModule({
   declarations: [
     AppComponent,
@@ -42,6 +64,7 @@ import { EditClienteComponent } from './components/clientes/containers/edit-clie
     FornecedorFormEditComponent,
     AddFornecedorComponent,
     EditFornecedorComponent,
+    ///////////////
     ClientesComponent,
     ClientesListaComponent,
     ClienteFormComponent,
@@ -49,6 +72,13 @@ import { EditClienteComponent } from './components/clientes/containers/edit-clie
     AddClienteComponent,
     EditClienteComponent,
     /////////
+    ProdutosComponent,
+    ProdutosListaComponent,
+    ProdutoFormComponent,
+    ProdutoFormEditComponent,
+    AddProdutoComponent,
+    EditProdutoComponent,
+    ////////
     ConfirmModalComponent,
     InfoModalComponent
   ],
@@ -79,15 +109,19 @@ import { EditClienteComponent } from './components/clientes/containers/edit-clie
     MatDialogModule,
     MatAutocompleteModule,
     MatSelectModule,
+   ReactiveFormsModule.withConfig({warnOnNgModelWithFormControl: 'never'}),
+
 
     ///////
     NgFlashMessagesModule.forRoot(),
     NgxViacepModule,
-    NgxMaskModule.forRoot()
+    NgxMaskModule.forRoot(),
+    ////////
+    NgxCurrencyModule.forRoot(customCurrencyMaskConfig)
 
 
   ],
-  providers: [],
+  providers: [DatePipe,{ provide: LOCALE_ID, useValue: 'pt' }],
   bootstrap: [AppComponent],
   entryComponents:[ConfirmModalComponent, InfoModalComponent]
 })

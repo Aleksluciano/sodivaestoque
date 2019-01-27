@@ -66,7 +66,7 @@ export class FornecedorService {
    }
 
    updateFornecedor(fornecedor: Fornecedor){
-     console.log(fornecedor)
+
     this.fornecedorDoc = this.afs.doc(`fornecedores/${fornecedor.id}`);
      return this.fornecedorDoc.update(fornecedor);
 

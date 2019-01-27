@@ -14,7 +14,7 @@ import {
   transition,
   style
 } from "@angular/animations";
-import {MatTableDataSource } from "@angular/material";
+import { MatTableDataSource } from "@angular/material";
 
 const rowsAnimation = trigger("rowsAnimation", [
   transition("void => *", [
@@ -70,12 +70,11 @@ export class ClientesListaComponent implements OnInit {
   @Output()
   newItem: EventEmitter<void> = new EventEmitter<void>();
 
-  @HostListener('document:keypress', ['$event'])
+  @HostListener("document:keypress", ["$event"])
   handleKeyboardEvent(event: KeyboardEvent) {
-    console.log(event)
-    if ((event.which == 13 || event.keyCode == 13)) {
-        event.preventDefault();
-        this.callNewItemForm();
+    if (event.which == 13 || event.keyCode == 13) {
+      event.preventDefault();
+      this.callNewItemForm();
     }
   }
 
@@ -92,11 +91,10 @@ export class ClientesListaComponent implements OnInit {
   }
 
   onKeyup(filter: string) {
-
     this.filter.emit(filter);
   }
 
-  callNewItemForm(){
+  callNewItemForm() {
     this.newItem.emit();
   }
 }

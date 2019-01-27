@@ -185,7 +185,6 @@ export class EditFornecedorComponent implements OnInit {
   findData(e) {
     this.fornecedor = this.fornecedores.find(a => a.nome == e);
     if (this.fornecedor) {
-
       this.myControl.setValue(this.fornecedor.nome);
 
       this.form.controls.fornec.setValue({
@@ -205,11 +204,8 @@ export class EditFornecedorComponent implements OnInit {
   }
 
   nextData(e) {
-    console.log(e);
-
     let index = this.fornecedores.findIndex(a => a.nome == e);
     if (index != -1 && index != this.fornecedores.length - 1) {
-
       this.fornecedor = { ...this.fornecedores[index + 1] };
       this.myControl.setValue(this.fornecedor.nome);
 
@@ -230,7 +226,6 @@ export class EditFornecedorComponent implements OnInit {
   }
 
   previousData(e) {
-
     let index = this.fornecedores.findIndex(a => a.nome == e);
     if (index != -1 && index > 0) {
       this.fornecedor = { ...this.fornecedores[index - 1] };
