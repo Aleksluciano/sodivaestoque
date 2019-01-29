@@ -4,16 +4,20 @@
 <router-outlet></router-outlet>
 </div> -->
 <!-- <img src="assets/sodivastoqueicon.jpg" style="align-items: center"><img> -->
-<button mat-button [matMenuTriggerFor]="appMenu" id="menuFloat">Menu</button>
+<div *ngIf=isLoggedIn>
+  <button mat-button [matMenuTriggerFor]="appMenu" id="menuFloat">Menu</button>
+  <mat-menu #appMenu="matMenu">
+    <button mat-menu-item [routerLink]="['/']">Fornecedores</button>
+    <button mat-menu-item [routerLink]="['/clientes']">Clientes</button>
+    <button mat-menu-item [routerLink]="['/produtos']">Produtos</button>
+    <button mat-menu-item (click)="onLogoutClick()">Sair</button>
+  </mat-menu>
+</div>
+
 <div class="mycontainer">
   <div style="width: 500px">
     <ng-flash-message></ng-flash-message>
   </div>
-<mat-menu #appMenu="matMenu">
-  <button mat-menu-item [routerLink]="['/']">Fornecedores</button>
-  <button mat-menu-item [routerLink]="['/clientes']">Clientes</button>
-  <button mat-menu-item [routerLink]="['/produtos']">Produtos</button>
-</mat-menu>
 
 <router-outlet></router-outlet>
 </div>

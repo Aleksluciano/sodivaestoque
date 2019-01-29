@@ -171,7 +171,7 @@ export class EditClienteComponent implements OnInit {
             .then(a => {
               this.clientesService.flashMessageToDelete(cliente.nome);
               this.form.reset();
-              this.router.navigate([""]);
+              this.router.navigate(["clientes"]);
             })
             .catch(error => {
               this.dialog.open(InfoModalComponent, {

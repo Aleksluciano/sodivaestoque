@@ -56,7 +56,7 @@ export class AddFornecedorComponent implements OnInit {
             this.form.value.fornec.nome
           );
           this.form.reset();
-          this.router.navigate([""]);
+          this.router.navigate(["fornecedores"]);
         })
         .catch(error => {
           this.dialog.open(InfoModalComponent, {

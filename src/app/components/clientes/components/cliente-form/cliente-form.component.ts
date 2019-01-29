@@ -90,13 +90,13 @@ export class ClienteFormComponent implements OnInit, AfterViewInit {
   }
 
   private _filter(value: string): string[] {
-    if (value) {
+
       let filterValue = "";
       if (value) filterValue = value.toLowerCase();
 
       return this.options.filter(
         option => option.toLowerCase().indexOf(filterValue) === 0
       );
-    }
+
   }
 }

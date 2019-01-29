@@ -9,17 +9,20 @@ import { ClientesComponent } from './components/clientes/containers/clientes-lis
 import { ProdutosComponent } from './components/produtos/containers/produtos-lista/produtos.component';
 import { AddProdutoComponent } from './components/produtos/containers/add-produto/add-produto.component';
 import { EditProdutoComponent } from './components/produtos/containers/edit-produto/edit-produto.component';
+import { LoginComponent } from './components/login/login.component';
+import { AuthGuard } from './guards/auth.guard';
 
 const routes: Routes = [
-  {path: "", component: FornecedoresComponent},
-  {path: "add", component: AddFornecedorComponent},
-  {path: "edit/:id", component: EditFornecedorComponent},
-  {path: "clientes", component: ClientesComponent},
-  {path: "clientes/add", component: AddClienteComponent},
-  {path: "clientes/edit/:id", component: EditClienteComponent},
-  {path: "produtos", component: ProdutosComponent},
-  {path: "produtos/add", component: AddProdutoComponent},
-  {path: "produtos/edit/:id", component: EditProdutoComponent}
+  {path: "", component: LoginComponent},
+  {path: "fornecedores", component: FornecedoresComponent, canActivate:[AuthGuard]},
+  {path: "add", component: AddFornecedorComponent, canActivate:[AuthGuard]},
+  {path: "edit/:id", component: EditFornecedorComponent, canActivate:[AuthGuard]},
+  {path: "clientes", component: ClientesComponent, canActivate:[AuthGuard]},
+  {path: "clientes/add", component: AddClienteComponent, canActivate:[AuthGuard]},
+  {path: "clientes/edit/:id", component: EditClienteComponent, canActivate:[AuthGuard]},
+  {path: "produtos", component: ProdutosComponent, canActivate:[AuthGuard]},
+  {path: "produtos/add", component: AddProdutoComponent, canActivate:[AuthGuard]},
+  {path: "produtos/edit/:id", component: EditProdutoComponent, canActivate:[AuthGuard]}
   // {  path: "", loadChildren: "./components/fornecedores/forcedores.module#FornecedoresModule"},
 ]
 @NgModule({

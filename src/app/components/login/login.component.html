@@ -1,0 +1,40 @@
+<div
+fxLayout="row" fxLayoutAlign="center center" class="row-height"
+>
+  <mat-card >
+
+      <mat-card-title class="inline">      <span class="inline"> <mat-icon class="inline">lock</mat-icon></span><h3 class="inline">
+          Sodiva Estoque<span class="inline"> Login</span>
+        </h3>
+      </mat-card-title>
+<br>
+<br>
+      <mat-card-content fxLayout="column">
+
+          <mat-form-field>
+              <input
+              type="email"
+              name="email"
+              [(ngModel)]="email"
+              matInput
+              placeholder="Email"
+              required
+              >
+          </mat-form-field>
+          <mat-form-field>
+              <input
+              type="password"
+              name="password"
+              [(ngModel)]="password"
+              matInput
+              placeholder="Password"
+              required
+              >
+          </mat-form-field>
+          <button mat-raised-button color="primary" (click)="onSubmit()">Login</button>
+
+      </mat-card-content>
+
+
+  </mat-card>
+</div>

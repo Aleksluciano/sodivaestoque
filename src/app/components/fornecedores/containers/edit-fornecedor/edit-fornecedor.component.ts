@@ -171,7 +171,7 @@ export class EditFornecedorComponent implements OnInit {
             .then(a => {
               this.fornecedoresService.flashMessageToDelete(fornecedor.nome);
               this.form.reset();
-              this.router.navigate([""]);
+              this.router.navigate(["fornecedores"]);
             })
             .catch(error => {
               this.dialog.open(InfoModalComponent, {

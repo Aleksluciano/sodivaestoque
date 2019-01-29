@@ -1,3 +1,4 @@
+import { LoginComponent } from './components/login/login.component';
 import { FornecedoresListaComponent } from './components/fornecedores/components/fornecedores-lista/fornecedores-lista.component';
 import { FornecedoresComponent } from './components/fornecedores/containers/fornecedores-lista/fornecedores.component';
 import { ConfirmModalComponent } from './components/shared/confirm-modal/confirm-modal.component'
@@ -41,6 +42,8 @@ import { EditProdutoComponent } from './components/produtos/containers/edit-prod
 import { NgxCurrencyModule } from "ngx-currency";
 import {DatePipe, registerLocaleData} from '@angular/common';
 import ptBr from '@angular/common/locales/pt';
+import { FlexLayoutModule } from '@angular/flex-layout';
+
 export const customCurrencyMaskConfig = {
   align: "right",
   allowNegative: true,
@@ -78,6 +81,7 @@ registerLocaleData(ptBr)
     ProdutoFormEditComponent,
     AddProdutoComponent,
     EditProdutoComponent,
+    LoginComponent,
     ////////
     ConfirmModalComponent,
     InfoModalComponent
@@ -89,6 +93,7 @@ registerLocaleData(ptBr)
     AngularFireModule.initializeApp(environment.firebase, 'sodivaestoque'),
     AngularFirestoreModule,
     AngularFireAuthModule,
+    FlexLayoutModule,
     //////////
     BrowserAnimationsModule,
     MatTableModule,

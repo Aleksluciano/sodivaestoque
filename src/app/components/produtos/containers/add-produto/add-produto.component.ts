@@ -64,12 +64,14 @@ export class AddProdutoComponent implements OnInit {
 
   ngOnInit() {
     this.route.queryParams.subscribe(params => {
+      if(params.lastCode != ''){
       let partNumber = Number(String(params.lastCode).substring(2)) + 1;
       let partString = String(params.lastCode).substring(0, 2);
       let newCode = partString + String(partNumber);
       this.form.controls.fornec.patchValue({
         codigo: newCode
       });
+    }
     });
 
     this.fornecedoresService.getFornecedores().subscribe(fornecedores => {
