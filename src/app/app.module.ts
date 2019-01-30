@@ -1,3 +1,4 @@
+import { HeaderComponent } from './components/navigation/header/header.component';
 import { LoginComponent } from './components/login/login.component';
 import { FornecedoresListaComponent } from './components/fornecedores/components/fornecedores-lista/fornecedores-lista.component';
 import { FornecedoresComponent } from './components/fornecedores/containers/fornecedores-lista/fornecedores.component';
@@ -14,7 +15,7 @@ import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { AngularFireAuthModule } from '@angular/fire/auth';
 import { environment } from '../environments/environment';
 
-import {MatTableModule, MatSidenavModule, MatListModule, MatTabsModule, MatBadgeModule, MatInputModule, MatFormFieldModule, MatButtonModule, MatCardModule, MatExpansionModule, MatIconModule, MatMenuModule, MatSortModule, MatDialogModule, MatAutocompleteModule, MatSelectModule} from "@angular/material";
+import {MatTableModule, MatSidenavModule, MatListModule, MatTabsModule, MatBadgeModule, MatInputModule, MatFormFieldModule, MatButtonModule, MatCardModule, MatExpansionModule, MatIconModule, MatMenuModule, MatSortModule, MatDialogModule, MatAutocompleteModule, MatSelectModule, MatToolbarModule} from "@angular/material";
 import {
   BrowserAnimationsModule
 } from '@angular/platform-browser/animations';
@@ -43,6 +44,7 @@ import { NgxCurrencyModule } from "ngx-currency";
 import {DatePipe, registerLocaleData} from '@angular/common';
 import ptBr from '@angular/common/locales/pt';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { SidenavListComponent } from './components/navigation/sidenav-list/sidenav-list.component';
 
 export const customCurrencyMaskConfig = {
   align: "right",
@@ -82,9 +84,14 @@ registerLocaleData(ptBr)
     AddProdutoComponent,
     EditProdutoComponent,
     LoginComponent,
+    SidenavListComponent,
+    HeaderComponent,
+
     ////////
     ConfirmModalComponent,
     InfoModalComponent
+    //////////
+
   ],
   imports: [
     BrowserModule,
@@ -114,6 +121,7 @@ registerLocaleData(ptBr)
     MatDialogModule,
     MatAutocompleteModule,
     MatSelectModule,
+    MatToolbarModule,
    ReactiveFormsModule.withConfig({warnOnNgModelWithFormControl: 'never'}),
 
 

@@ -4,7 +4,10 @@
 <router-outlet></router-outlet>
 </div> -->
 <!-- <img src="assets/sodivastoqueicon.jpg" style="align-items: center"><img> -->
-<div *ngIf=isLoggedIn>
+
+
+
+<!-- <div *ngIf=isLoggedIn>
   <button mat-button [matMenuTriggerFor]="appMenu" id="menuFloat">Menu</button>
   <mat-menu #appMenu="matMenu">
     <button mat-menu-item [routerLink]="['/']">Fornecedores</button>
@@ -12,15 +15,34 @@
     <button mat-menu-item [routerLink]="['/produtos']">Produtos</button>
     <button mat-menu-item (click)="onLogoutClick()">Sair</button>
   </mat-menu>
-</div>
+</div> -->
 
-<div class="mycontainer">
-  <div style="width: 500px">
-    <ng-flash-message></ng-flash-message>
-  </div>
+<app-login *ngIf=!isLoggedIn></app-login>
 
-<router-outlet></router-outlet>
-</div>
+<mat-sidenav-container *ngIf=isLoggedIn>
+    <mat-sidenav #sidenav role="navigation" >
+      <app-sidenav-list
+      (closeSidenav)="sidenav.close()"
+      (logout)="onLogoutClick()"></app-sidenav-list>
+    </mat-sidenav>
+    <mat-sidenav-content>
+      <app-header
+      (sidenavToggle)="sidenav.toggle()"
+      (logout)="onLogoutClick()"
+      ></app-header>
+      <main>
+          <div class="mycontainer">
+              <div style="width: 500px">
+                <ng-flash-message></ng-flash-message>
+              </div>
+
+            <router-outlet></router-outlet>
+            </div>
+      </main>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+
+
 <!-- <div class="mycontainer">
     <nav mat-tab-nav-bar>
 

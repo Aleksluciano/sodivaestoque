@@ -1,0 +1,20 @@
+<mat-nav-list>
+  <a mat-list-item routerLink="/fornecedores" (click)="onClose()">
+    <mat-icon>group</mat-icon>
+    <span class="nav-caption">Fornecedoes</span>
+  </a>
+  <a mat-list-item routerLink="/clientes" (click)="onClose()">
+    <mat-icon>perm_identity</mat-icon>
+    <span class="nav-caption">Clientes</span>
+  </a>
+  <a mat-list-item routerLink="/produtos" (click)="onClose()">
+    <mat-icon>toys</mat-icon>
+    <span class="nav-caption">Produtos</span>
+  </a>
+  <mat-list-item>
+    <button mat-icon-button (click)="onLogout()">
+      <mat-icon>arrow_back</mat-icon>
+      <span class="nav-caption">Sair</span>
+    </button>
+  </mat-list-item>
+</mat-nav-list>
