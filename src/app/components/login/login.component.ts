@@ -25,14 +25,14 @@ password: string;
   }
 
   onSubmit(){
-console.log(this.email,this.password)
+
 this.authService.login(this.email, this.password)
 .then(res => {
-  console.log(res)
+
   this.router.navigate(['/fornecedores']);
 })
 .catch(err => {
-  console.log(err)
+ 
 });
 
   }
