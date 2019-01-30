@@ -1,6 +1,8 @@
 .mycontainer{
+
+  margin:6%;
+
   margin-top: 1%;
-  margin-left: 8%;
   margin-bottom: 3%
 }
 
@@ -16,9 +18,11 @@ img{
   float: right;
 }
 
-#menuFloat{
-  position: relative;
-  margin-right: 3%;
-  float: left;
 
+mat-sidenav-container, mat-sidenav-content, mat-sidenav {
+  height: 100%;
+}
+
+mat-sidenav {
+  width: 250px;
 }

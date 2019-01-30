@@ -15,7 +15,7 @@ import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { AngularFireAuthModule } from '@angular/fire/auth';
 import { environment } from '../environments/environment';
 
-import {MatTableModule, MatSidenavModule, MatListModule, MatTabsModule, MatBadgeModule, MatInputModule, MatFormFieldModule, MatButtonModule, MatCardModule, MatExpansionModule, MatIconModule, MatMenuModule, MatSortModule, MatDialogModule, MatAutocompleteModule, MatSelectModule, MatToolbarModule} from "@angular/material";
+import {MatTableModule, MatSidenavModule, MatListModule, MatTabsModule, MatBadgeModule, MatInputModule, MatFormFieldModule, MatButtonModule, MatCardModule, MatExpansionModule, MatIconModule, MatMenuModule, MatSortModule, MatDialogModule, MatAutocompleteModule, MatSelectModule, MatToolbarModule, MatChipsModule} from "@angular/material";
 import {
   BrowserAnimationsModule
 } from '@angular/platform-browser/animations';
@@ -122,6 +122,7 @@ registerLocaleData(ptBr)
     MatAutocompleteModule,
     MatSelectModule,
     MatToolbarModule,
+    MatChipsModule,
    ReactiveFormsModule.withConfig({warnOnNgModelWithFormControl: 'never'}),
 
 

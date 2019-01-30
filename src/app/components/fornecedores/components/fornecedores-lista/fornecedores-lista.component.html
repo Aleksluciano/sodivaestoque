@@ -1,6 +1,6 @@
 
   <button id="newItemButton" mat-raised-button color="primary" type="button" (click)="callNewItemForm()" >+ Novo</button>
-  <button id="newEditButton" mat-raised-button color="accent" type="button" (click)="editRow(fornecedores.data[0])" > Editar</button>
+  <button id="newEditButton" mat-raised-button color="accent" type="button" (click)="editRow(fornecedores.data[0])" *ngIf="fornecedores?.data?.length"> Editar</button>
 <mat-card class="inline" @fade>
   <mat-form-field appearance="fill" class="fieldFind">
     <mat-label>FORNECEDORES</mat-label>
