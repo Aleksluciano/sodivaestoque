@@ -1,18 +1,18 @@
-import { Produto } from "./../../../../models/produto.model";
+import { Produto } from './../../../../models/produto.model';
 
-import { Component, OnInit } from "@angular/core";
-import { FormBuilder, Validators, FormControl } from "@angular/forms";
-import { ProdutoService } from "src/app/services/produto.service";
-import { Router, ActivatedRoute, Params } from "@angular/router";
-import { Location, DatePipe } from "@angular/common";
-import { MatDialog, MatDialogConfig } from "@angular/material";
-import { InfoModalComponent } from "src/app/components/shared/info-modal.component.ts/info-modal.component";
-import { ConfirmModalComponent } from "src/app/components/shared/confirm-modal/confirm-modal.component";
-import { FornecedorService } from "src/app/services/fornecedor.service";
-import { Fornecedor } from "src/app/models/fornecedor.model";
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, Validators, FormControl } from '@angular/forms';
+import { ProdutoService } from 'src/app/services/produto.service';
+import { Router, ActivatedRoute, Params } from '@angular/router';
+import { Location, DatePipe } from '@angular/common';
+import { MatDialog, MatDialogConfig } from '@angular/material';
+import { InfoModalComponent } from 'src/app/components/shared/info-modal.component.ts/info-modal.component';
+import { ConfirmModalComponent } from 'src/app/components/shared/confirm-modal/confirm-modal.component';
+import { FornecedorService } from 'src/app/services/fornecedor.service';
+import { Fornecedor } from 'src/app/models/fornecedor.model';
 
 @Component({
-  selector: "app-add-produto",
+  selector: 'app-add-produto',
   template: `
     <br />
     <form [formGroup]="form" (ngSubmit)="onSubmit($event)">
@@ -21,8 +21,8 @@ import { Fornecedor } from "src/app/models/fornecedor.model";
         [arrayProdutos]="arrayDataSource"
         [optionsFornecedor]="arrayFornecedor"
         [produtos]="produtos"
+        [produto]="produto"
         [myControl]="myControl"
-        [myControlFornec]="myControlFornec"
         (find)="findData($event)"
         (next)="nextData($event)"
         (previous)="previousData($event)"
@@ -38,7 +38,7 @@ export class EditProdutoComponent implements OnInit {
   produtos: Produto[] = [];
   arrayDataSource = [];
   myControl = new FormControl();
-  myControlFornec = new FormControl();
+
   arrayFornecedor: string[] = [];
   fornecedores: Fornecedor[] = [];
   day = new Date();
@@ -47,22 +47,22 @@ export class EditProdutoComponent implements OnInit {
 
   form = this.fb.group({
     fornec: this.fb.group({
-      codigo: ["", Validators.required],
-      descricao: ["", Validators.required],
-      fornecedor: ["", Validators.required],
-      codigofornecedor: "",
+      codigo: ['', Validators.required],
+      descricao: ['', Validators.required],
+      fornecedor: ['', Validators.required],
+      // codigofornecedor: "",
       data: [
-        this.datePipe.transform(this.day, "yyyy-MM-dd"),
+        new Date(),
         Validators.required
       ],
-      cor: ["", Validators.required],
-      tipo: ["", Validators.required],
-      tamanho: ["", Validators.required],
-      quantidade: ["", Validators.required],
-      valor: ["", Validators.required],
-      //custo: ['',Validators.required],
-      preco: ["", Validators.required]
-      //lucrobruto: ''
+      cor: ['', Validators.required],
+      tipo: ['', Validators.required],
+      tamanho: ['', Validators.required],
+      quantidade: ['', Validators.required],
+      valor: ['', Validators.required],
+      // custo: ['',Validators.required],
+      preco: ['', Validators.required]
+      // lucrobruto: ''
     })
   });
 
@@ -94,7 +94,7 @@ export class EditProdutoComponent implements OnInit {
     });
 
     // Get id from url
-    this.id = this.route.snapshot.params["id"];
+    this.id = this.route.snapshot.params['id'];
 
     // Get produto
     this.produtosService.getProduto(this.id).subscribe(produto => {
@@ -105,16 +105,16 @@ export class EditProdutoComponent implements OnInit {
           codigo: this.produto.codigo,
           descricao: this.produto.descricao,
           fornecedor: this.produto.fornecedor,
-          codigofornecedor: this.produto.codigofornecedor,
-          data: this.datePipe.transform(this.produto.data, "yyyy-MM-dd"),
+          // codigofornecedor: this.produto.codigofornecedor,
+          data: new Date(this.produto.data['seconds'] * 1000),
           cor: this.produto.cor,
           tipo: this.produto.tipo,
           tamanho: this.produto.tamanho,
           quantidade: this.produto.quantidade,
           valor: this.produto.valor,
-          //custo: this.produto.custo,
+          // custo: this.produto.custo,
           preco: this.produto.preco
-          //lucrobruto: this.produto.lucrobruto
+          // lucrobruto: this.produto.lucrobruto
         });
 
         this.form.controls.fornec.disable();
@@ -124,9 +124,11 @@ export class EditProdutoComponent implements OnInit {
 
   onSubmit() {
     if (this.form.valid) {
-      let id = this.produto.id;
+      const id = this.produto.id;
+      const estoque = this.produto.estoque;
       this.produto = this.form.value.fornec;
       this.produto.id = id;
+      this.produto.estoque = estoque;
 
       this.produtosService
         .updateProduto(this.produto)
@@ -146,7 +148,7 @@ export class EditProdutoComponent implements OnInit {
         })
         .catch(error => {
           this.dialog.open(InfoModalComponent, {
-            data: { title: "Erro", message: error.message }
+            data: { title: 'Erro', message: error.message }
           });
         });
     }
@@ -160,7 +162,7 @@ export class EditProdutoComponent implements OnInit {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.disableClose = false;
     dialogConfig.autoFocus = true;
-    let produto = { ...this.produto };
+    const produto = { ...this.produto };
     dialogConfig.data = {
       message: `Deseja realmente remover o produto`,
       item: `${this.produto.codigo}`
@@ -175,11 +177,11 @@ export class EditProdutoComponent implements OnInit {
             .then(a => {
               this.produtosService.flashMessageToDelete(produto.codigo);
               this.form.reset();
-              this.router.navigate(["produtos"]);
+              this.router.navigate(['produtos']);
             })
             .catch(error => {
               this.dialog.open(InfoModalComponent, {
-                data: { title: "Erro", message: error.message }
+                data: { title: 'Erro', message: error.message }
               });
             });
         }
@@ -195,22 +197,22 @@ export class EditProdutoComponent implements OnInit {
         codigo: this.produto.codigo,
         descricao: this.produto.descricao,
         fornecedor: this.produto.fornecedor,
-        codigofornecedor: this.produto.codigofornecedor,
-        data: this.datePipe.transform(this.produto.data, "yyyy-MM-dd"),
+        // codigofornecedor: this.produto.codigofornecedor,
+        data: new Date(this.produto.data['seconds'] * 1000),
         cor: this.produto.cor,
         tipo: this.produto.tipo,
         tamanho: this.produto.tamanho,
         quantidade: this.produto.quantidade,
         valor: this.produto.valor,
-        //custo: this.produto.custo,
+        // custo: this.produto.custo,
         preco: this.produto.preco
-        //lucrobruto: this.produto.lucrobruto
+        // lucrobruto: this.produto.lucrobruto
       });
     }
   }
 
   nextData(e) {
-    let index = this.produtos.findIndex(a => a.codigo == e);
+    const index = this.produtos.findIndex(a => a.codigo == e);
     if (index != -1 && index != this.produtos.length - 1) {
       this.produto = { ...this.produtos[index + 1] };
       this.myControl.setValue(this.produto.codigo);
@@ -219,22 +221,22 @@ export class EditProdutoComponent implements OnInit {
         codigo: this.produto.codigo,
         descricao: this.produto.descricao,
         fornecedor: this.produto.fornecedor,
-        codigofornecedor: this.produto.codigofornecedor,
-        data: this.datePipe.transform(this.produto.data, "yyyy-MM-dd"),
+        // codigofornecedor: this.produto.codigofornecedor,
+        data: new Date(this.produto.data['seconds'] * 1000),
         cor: this.produto.cor,
         tipo: this.produto.tipo,
         tamanho: this.produto.tamanho,
         quantidade: this.produto.quantidade,
         valor: this.produto.valor,
-        //custo: this.produto.custo,
+        // custo: this.produto.custo,
         preco: this.produto.preco
-        //lucrobruto: this.produto.lucrobruto
+        // lucrobruto: this.produto.lucrobruto
       });
     }
   }
 
   previousData(e) {
-    let index = this.produtos.findIndex(a => a.codigo == e);
+    const index = this.produtos.findIndex(a => a.codigo == e);
     if (index != -1 && index > 0) {
       this.produto = { ...this.produtos[index - 1] };
 
@@ -244,16 +246,16 @@ export class EditProdutoComponent implements OnInit {
         codigo: this.produto.codigo,
         descricao: this.produto.descricao,
         fornecedor: this.produto.fornecedor,
-        codigofornecedor: this.produto.codigofornecedor,
-        data: this.datePipe.transform(this.produto.data, "yyyy-MM-dd"),
+        // codigofornecedor: this.produto.codigofornecedor,
+        data: new Date(this.produto.data['seconds'] * 1000),
         cor: this.produto.cor,
         tipo: this.produto.tipo,
         tamanho: this.produto.tamanho,
         quantidade: this.produto.quantidade,
         valor: this.produto.valor,
-        //custo: this.produto.custo,
+        // custo: this.produto.custo,
         preco: this.produto.preco
-        //lucrobruto: this.produto.lucrobruto
+        // lucrobruto: this.produto.lucrobruto
       });
     }
   }

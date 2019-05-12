@@ -1,0 +1,27 @@
+<mat-card>
+  <mat-card-content fxLayout="column">
+<mat-card-title>Nova senha</mat-card-title>
+     <form (ngSubmit)="onSubmit()" style="width: 100%" #f="ngForm">
+       <div>
+         <mat-form-field>
+           <input
+           type="password"
+           name="password"
+           [(ngModel)]="password"
+            minlength="6"
+            matInput
+            placeholder="Digite a nova senha" required>
+           <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+           <mat-hint>Mínimo de 6 caracteres</mat-hint>
+         </mat-form-field>
+       </div>
+       <br>
+       <button mat-raised-button [disabled]="f.invalid" color="primary" (submit)="onSubmit()">Salvar</button>
+
+     </form>
+
+ </mat-card-content>
+
+
+</mat-card>
+

@@ -1,6 +1,6 @@
 .table-container {
   overflow: auto;
-  max-height: 420px;
+  max-height: 380px;
 }
 
 .mat-row,
@@ -12,12 +12,16 @@
 
 .mat-table {
   overflow: scroll;
-  max-height: 400px;
+  max-height: 380px;
 }
 
 .mat-cell:not(.colHide):not(.actions),
 .mat-header-cell:not(.colHide):not(.actions) {
   min-width: 150px;
+}
+
+.mat-header-cell, .mat-footer-cell{
+  background-color: black;
 }
 
 .colHide{

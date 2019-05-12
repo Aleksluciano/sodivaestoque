@@ -11,6 +11,14 @@
     <mat-icon>toys</mat-icon>
     <span class="nav-caption">Produtos</span>
   </a>
+    <a mat-list-item routerLink="/vendas" (click)="onClose()">
+    <mat-icon>shopping_cart</mat-icon>
+    <span class="nav-caption">Vendas</span>
+  </a>
+      <a mat-list-item routerLink="/senha" (click)="onClose()">
+    <mat-icon>security</mat-icon>
+    <span class="nav-caption">Senha</span>
+  </a>
   <mat-list-item>
     <button mat-icon-button (click)="onLogout()">
       <mat-icon>arrow_back</mat-icon>

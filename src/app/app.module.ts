@@ -1,8 +1,9 @@
+import { PrintComponent } from './components/vendas/print.component';
 import { HeaderComponent } from './components/navigation/header/header.component';
 import { LoginComponent } from './components/login/login.component';
 import { FornecedoresListaComponent } from './components/fornecedores/components/fornecedores-lista/fornecedores-lista.component';
 import { FornecedoresComponent } from './components/fornecedores/containers/fornecedores-lista/fornecedores.component';
-import { ConfirmModalComponent } from './components/shared/confirm-modal/confirm-modal.component'
+import { ConfirmModalComponent } from './components/shared/confirm-modal/confirm-modal.component';
 
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule, LOCALE_ID } from '@angular/core';
@@ -15,7 +16,8 @@ import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { AngularFireAuthModule } from '@angular/fire/auth';
 import { environment } from '../environments/environment';
 
-import {MatTableModule, MatSidenavModule, MatListModule, MatTabsModule, MatBadgeModule, MatInputModule, MatFormFieldModule, MatButtonModule, MatCardModule, MatExpansionModule, MatIconModule, MatMenuModule, MatSortModule, MatDialogModule, MatAutocompleteModule, MatSelectModule, MatToolbarModule, MatChipsModule} from "@angular/material";
+// tslint:disable-next-line: max-line-length
+import {MatTableModule, MatSidenavModule, MatListModule, MatTabsModule, MatBadgeModule, MatInputModule, MatFormFieldModule, MatButtonModule, MatCardModule, MatExpansionModule, MatIconModule, MatMenuModule, MatSortModule, MatDialogModule, MatAutocompleteModule, MatSelectModule, MatToolbarModule, MatChipsModule, MatButtonToggleGroup, MatButtonToggleModule, MatRadioModule, MatDatepickerModule, MAT_DATE_LOCALE, MatNativeDateModule, MatPaginatorModule} from '@angular/material';
 import {
   BrowserAnimationsModule
 } from '@angular/platform-browser/animations';
@@ -40,25 +42,29 @@ import { ProdutoFormComponent } from './components/produtos/components/produto-f
 import { ProdutoFormEditComponent } from './components/produtos/components/produto-form-edit/produto-form-edit.component';
 import { AddProdutoComponent } from './components/produtos/containers/add-produto/add-produto.component';
 import { EditProdutoComponent } from './components/produtos/containers/edit-produto/edit-produto.component';
-import { NgxCurrencyModule } from "ngx-currency";
+import { NgxCurrencyModule } from 'ngx-currency';
 import {DatePipe, registerLocaleData} from '@angular/common';
 import ptBr from '@angular/common/locales/pt';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { SidenavListComponent } from './components/navigation/sidenav-list/sidenav-list.component';
+import { VendaFormComponent } from './components/vendas/venda-form/venda-form.component';
+import { SenhaComponent } from './components/senha/senha.component';
+import { VendasListaComponent } from './components/vendas/vendas-lista/vendas-lista.component';
+import { VendaFormEditComponent } from './components/vendas/venda-form-edit/venda-form-edit.component';
 
 export const customCurrencyMaskConfig = {
-  align: "right",
+  align: 'right',
   allowNegative: true,
   allowZero: true,
-  decimal: ",",
+  decimal: ',',
   precision: 2,
-  prefix: "R$ ",
-  suffix: "",
-  thousands: ".",
+  prefix: 'R$ ',
+  suffix: '',
+  thousands: '.',
   nullable: false
 };
 
-registerLocaleData(ptBr)
+registerLocaleData(ptBr);
 @NgModule({
   declarations: [
     AppComponent,
@@ -89,7 +95,12 @@ registerLocaleData(ptBr)
 
     ////////
     ConfirmModalComponent,
-    InfoModalComponent
+    InfoModalComponent,
+    VendaFormComponent,
+    VendasListaComponent,
+    SenhaComponent,
+    VendaFormEditComponent,
+    PrintComponent
     //////////
 
   ],
@@ -123,6 +134,11 @@ registerLocaleData(ptBr)
     MatSelectModule,
     MatToolbarModule,
     MatChipsModule,
+    MatButtonToggleModule,
+    MatRadioModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatPaginatorModule,
    ReactiveFormsModule.withConfig({warnOnNgModelWithFormControl: 'never'}),
 
 
@@ -135,9 +151,9 @@ registerLocaleData(ptBr)
 
 
   ],
-  providers: [DatePipe,{ provide: LOCALE_ID, useValue: 'pt' }],
+  providers: [MatDatepickerModule, DatePipe, { provide: LOCALE_ID, useValue: 'pt' }],
   bootstrap: [AppComponent],
-  entryComponents:[ConfirmModalComponent, InfoModalComponent]
+  entryComponents: [ConfirmModalComponent, InfoModalComponent, PrintComponent]
 })
 export class AppModule {
 

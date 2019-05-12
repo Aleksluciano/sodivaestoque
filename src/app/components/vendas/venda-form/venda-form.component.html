@@ -1,0 +1,314 @@
+
+    <br>
+
+    <div id="tela" @fade>
+    <div >
+
+    <div fxFlex="70" [formGroup]="form" >
+        <mat-card>
+
+            <a [routerLink]="" (click)="return()">
+                <button mat-mini-fab color="accent">
+                  <mat-icon>arrow_back</mat-icon>
+                </button>
+              </a>
+              <mat-card-header >
+                  <mat-card-title >
+                    <h2 style="margin: auto">Registrar Venda</h2>
+                  </mat-card-title>
+            </mat-card-header>
+            <h5>Informações do recibo</h5>
+        <mat-form-field appearance="outline" id="nome">
+            <mat-label>Nome Cliente</mat-label>
+            <input matInput
+             placeholder="Nome Cliente"
+             #nomeCliente
+             type="text"
+             minlength="3"
+             formControlName="cliente"
+             [matAutocomplete]="autocliente"
+             required>
+
+          <mat-autocomplete autoActiveFirstOption #autocliente="matAutocomplete" >
+              <mat-option *ngFor="let option of filteredOptionsFindCliente | async"
+              [value]="option.nome"
+              >
+                {{option.nome}}
+              </mat-option>
+            </mat-autocomplete>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline"  id="recibo" >
+              <mat-label>N.Recibo</mat-label>
+              <input matInput
+               #numeroRecibo
+               type="text"
+               placeholder="N.Recibo"
+               (input)="numeroRecibo.value=pad(numeroRecibo.value, 5)"
+               formControlName="recibo"
+               required>
+            </mat-form-field>
+
+<div>
+            <mat-form-field appearance="outline" id="datePicker">
+                <mat-label>Data da venda</mat-label>
+                <input matInput
+                [matDatepicker]="it"
+                formControlName="data"
+                placeholder="Data da venda" maxlength="10" required>
+                <mat-datepicker-toggle matSuffix [for]="it" ></mat-datepicker-toggle>
+                <mat-datepicker #it ></mat-datepicker>
+                </mat-form-field>
+              </div>
+        </mat-card>
+        </div>
+        <div fxFlex=30 *ngIf="cliente">
+            <p >Endereço: {{ cliente?.endereco }}</p>
+            <p >Telefone: {{ cliente?.telefone || cliente?.celular }}</p>
+        </div>
+        </div>
+<br><br>
+        <div *ngIf="form.valid">
+  <div fxFlex="70">
+<div class="inline" fxLayout="column">
+    <mat-card>
+
+        <h5>Informações dos produtos</h5>
+        <button mat-mini-fab id="shopping" (click)="addLista()" [disabled]="!(produto?.quantidade - calcEstoque())">
+            <mat-icon aria-label="Add" >add</mat-icon>
+          </button>
+<mat-form-field appearance="outline" id="codigo">
+    <mat-label>Código</mat-label>
+    <input matInput
+     placeholder="Código"
+     type="text"
+     #codigoInput
+     (input)="codigoInput.value=padCodigo(codigoInput.value.substr(2), 5)"
+     [formControl]="myControlProduto" [matAutocomplete]="autoproduto"
+     >
+
+  <mat-autocomplete autoActiveFirstOption #autoproduto="matAutocomplete">
+      <mat-option *ngFor="let option of filteredOptionsFindProduto | async"
+      [value]="option.codigo"
+      >
+        {{option.codigo}}
+      </mat-option>
+    </mat-autocomplete>
+</mat-form-field>
+<mat-form-field appearance="outline"  id="desconto" >
+    <mat-label>Desc.</mat-label>
+    <input matInput
+    placeholder="Desc."
+     type="number"
+     [(ngModel)]="desconto"
+     disabled="true"
+     min="0" max="30"
+     step="5"
+     >
+     <span matSuffix>%</span>
+  </mat-form-field>
+  <form class="buttonquant" >
+      <button mat-mini-fab class="plusquant" (click)="addDesconto()">
+          <mat-icon aria-label="Add" class="iconb">add</mat-icon>
+        </button>
+      <button mat-mini-fab class="minusquant" (click)="removeDesconto()">
+          <mat-icon aria-label="Add" class="iconb" >remove</mat-icon>
+        </button>
+
+      </form>
+
+<mat-form-field appearance="outline"  id="quantidade" >
+    <mat-label>Qt.</mat-label>
+    <input matInput
+    placeholder="Qt."
+     type="number"
+     [(ngModel)]="quantidade"
+     disabled="true"
+     >
+
+
+  </mat-form-field>
+
+
+  <form class="buttonquant" >
+      <button mat-mini-fab class="plusquant" (click)="addQuantidade()">
+          <mat-icon aria-label="Add" class="iconb">add</mat-icon>
+        </button>
+      <button mat-mini-fab class="minusquant" (click)="removeQuantidade()">
+          <mat-icon aria-label="Add" class="iconb" >remove</mat-icon>
+        </button>
+
+      </form>
+
+
+
+
+</mat-card>
+</div>
+<div fxLayout="column" *ngIf="lista.length > 0">
+  <mat-card >
+      <table border="4">
+          <thead>
+              <tr style="background-color: chocolate">
+              <th>Ação</th>
+              <th>Cód.</th>
+              <th >Tipo</th>
+              <th >Descrição</th>
+              <th >Cor</th>
+              <th >Tam.</th>
+              <td >Quant.</td>
+              <th >Preço</th>
+            </tr>
+          </thead>
+    <tbody>
+        <tr *ngFor="let item of lista; let i = index" >
+        <td (click)="deleteLista(i, item)"><button mat-icon-button><mat-icon>remove</mat-icon></button>
+        </td>
+        <td >{{ item.codigo }} </td>
+        <td align="center">{{ item.tipo }} </td>
+        <td >{{ item.descricao }} </td>
+        <td align="center">{{ item.cor }} </td>
+        <td align="center">{{ item.tamanho }} </td>
+        <td align="center">{{ item.quantidade }} </td>
+        <td align="center">R$ {{ item.preco | number: '.2':'pt' }} </td>
+      </tr>
+    </tbody>
+    <tfoot>
+        <tr >
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td align="center">{{ quantidadeTotalLista }}</td>
+          <td align="center" style="font-size: 1.5em;color:rgb(63, 63, 252);font-weight: bold; background-color: white;min-width: 70px">R$ {{ totalLista | number: '.2-2' }}</td>
+
+        </tr>
+      </tfoot>
+      </table>
+<h4 *ngIf="desconto > 0">Valor total com desconto de: {{ desconto }}%</h4>
+  </mat-card>
+</div>
+</div>
+<div fxFlex=30 *ngIf="produto" [ngClass]="{'greenText':produto?.quantidade - calcEstoque() > 0,
+    'redText':produto?.quantidade - calcEstoque() == 0}">
+
+<p >Descrição: {{ produto?.descricao }}</p>
+<p >Cor: {{ produto?.cor }}</p>
+<p >Tamanho: {{ produto?.tamanho }}</p>
+<p class="preco">Preço: R$ {{ produto?.preco | number: '.2':'pt' }}</p>
+<p class="preco">Quant. Estoque: {{ produto?.quantidade - calcEstoque() }}</p>
+
+</div>
+
+</div>
+
+
+<br>
+<div >
+    <div fxFlex="70">
+  <div  fxLayout="column" *ngIf="lista.length > 0">
+      <br>
+      <br>
+      <mat-card>
+          <h5>Informações de pagamento</h5>
+          <div>
+          <mat-radio-group aria-label="Select an option" [(ngModel)]="avistaaprazo" (change)="addPagamentos()">
+              <mat-radio-button style="margin-right: 20px" value="1">À vista </mat-radio-button>
+
+              <mat-radio-button value="2">À prazo</mat-radio-button>
+            </mat-radio-group>
+            <div *ngIf="avistaaprazo == '1'">
+                <br>
+                <br>
+                <mat-form-field>
+                    <mat-label>Forma de pagamento</mat-label>
+                    <select matNativeControl required [(ngModel)]="forma">
+                      <option value="debito">💳 - Débito</option>
+                      <option value="credito">💳 - Crédito</option>
+                      <option value="dinheiro">💰 - Dinheiro</option>
+                    </select>
+                  </mat-form-field>
+                  <mat-form-field style="margin-left: 15px" appearance="outline" id="datePicker" class="primeiroPag">
+                    <mat-label>Data do pagamento</mat-label>
+                    <input matInput [matDatepicker]="picker" [(ngModel)]="primeiroPagamento"
+                    placeholder="Data do pagamento" maxlength="10" required>
+                    <mat-datepicker-toggle matSuffix [for]="picker" ></mat-datepicker-toggle>
+                    <mat-datepicker #picker ></mat-datepicker>
+                    </mat-form-field>
+           </div>
+            <div *ngIf="avistaaprazo == '2'">
+            <div>
+              <br>
+              <br>
+            <mat-radio-group aria-label="Select an option" (change)="addPagamentos()" [(ngModel)]="numeroPagamentos">
+                <mat-radio-button style="margin-right: 20px" value="2">2x</mat-radio-button>
+                <mat-radio-button style="margin-right: 20px" value="3">3x</mat-radio-button>
+                <mat-radio-button style="margin-right: 20px" value="4">4x</mat-radio-button>
+                <mat-radio-button style="margin-right: 20px" value="5">5x</mat-radio-button>
+                <mat-radio-button style="margin-right: 20px" value="6">6x</mat-radio-button>
+              </mat-radio-group>
+            </div>
+            <br><br>
+            <div *ngFor="let preco of pagamentos; let j = index">
+              <div >
+                  <br>
+                  <br>
+                <span>{{ j + 1 }}X - </span>
+                <mat-form-field>
+                    <mat-label>Forma de pagamento</mat-label>
+                    <select matNativeControl required [(ngModel)]="pagamentos[j].forma">
+                      <option value="debito">💳 - Débito</option>
+                      <option value="credito" selected>💳 - Crédito</option>
+                      <option value="dinheiro">💰 - Dinheiro</option>
+                    </select>
+                  </mat-form-field>
+                  <mat-form-field appearance="outline"  class="precoPag">
+                      <input matInput
+                       type="text"
+                   [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }"
+                   currencyMask
+                   [(ngModel)]="pagamentos[j].preco"
+                   (ngModelChange)="redistribuiValores(j)"
+                       required>
+                    </mat-form-field>
+                    <mat-form-field style="margin-left: 15px" appearance="outline" id="datePicker" *ngIf="j == 0" class="primeiroPag">
+                      <mat-label>Data do 1º pagamento</mat-label>
+                      <input matInput [matDatepicker]="it" [(ngModel)]="primeiroPagamento2"
+                      placeholder="Data do 1º pagamento" maxlength="10"
+                      (dateInput)="addEvent('input', $event)" (dateChange)="addEvent('change', $event)"
+                      required>
+                      <mat-datepicker-toggle matSuffix [for]="it" ></mat-datepicker-toggle>
+                      <mat-datepicker #it ></mat-datepicker>
+                      </mat-form-field>
+                      <span style="margin-left: 15px" *ngIf="j != 0" > {{ preco.data | date:'dd-MM-yyyy' }} </span>
+                  </div>
+                </div>
+              </div>
+              <br>
+              <br>
+              <br>
+              <button
+              mat-raised-button
+              color="primary"
+              type="button"
+              (click)="createVenda()"
+              [disabled]="lista.length == 0"
+              id="saveButton"
+              >Finalizar Venda</button>
+              </div>
+      </mat-card>
+      </div>
+    </div>
+    <div fxFlex="30">
+        <div class="inline" fxLayout="column">
+            <!-- <mat-card>
+
+            </mat-card> -->
+            </div>
+          </div>
+  </div>
+</div>
+
+

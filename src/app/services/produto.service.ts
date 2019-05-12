@@ -2,11 +2,12 @@ import { Injectable } from '@angular/core';
 import { Produto } from '../models/produto.model';
 import { Observable } from 'rxjs';
 import { AngularFirestoreDocument, AngularFirestoreCollection, AngularFirestore, DocumentChangeAction } from '@angular/fire/firestore';
-import { map } from "rxjs/operators";
+import { map, tap, take } from 'rxjs/operators';
 
 
 import { NgFlashMessageService } from 'ng-flash-messages';
-import { NgxViacepService } from "@brunoc/ngx-viacep";
+import { NgxViacepService } from '@brunoc/ngx-viacep';
+import { Venda } from '../models/venda.model';
 @Injectable({
   providedIn: 'root'
 })
@@ -14,7 +15,7 @@ export class ProdutoService {
 
   produtosCollection: AngularFirestoreCollection<Produto>;
   produtoDoc: AngularFirestoreDocument<Produto>;
-  produtos: Observable<Produto[]>
+  produtos: Observable<Produto[]>;
   produto: Observable<Produto>;
 
   constructor(
@@ -43,19 +44,19 @@ export class ProdutoService {
     return this.produtos;
    }
 
-   newProduto(produto: Produto){
-
-     return this.produtosCollection.add(produto)
+   newProduto(produto: Produto) {
+     produto.estoque = [];
+     return this.produtosCollection.add(produto);
    }
 
-   getProduto(id: string): Observable<Produto>{
+   getProduto(id: string): Observable<Produto> {
 
       this.produtoDoc = this.afs.doc<Produto>(`produtos/${id}`);
       this.produto =  this.produtoDoc.snapshotChanges().pipe(
         map(action => {
-          if(action.payload.exists === false){
+          if (action.payload.exists === false) {
             return null;
-          }else{
+          } else {
             const data = action.payload.data() as Produto;
             data.id = action.payload.id;
             return data;
@@ -66,22 +67,22 @@ export class ProdutoService {
 
    }
 
-   getProdutoByCodigo(codigo: string){
+   getProdutoByCodigo(codigo: string) {
 
     return this.afs.collection('produtos', (ref) =>
-    ref.where('codigo', '==', codigo).limit(1))
+    ref.where('codigo', '==', codigo).limit(1));
 
    }
 
 
-   updateProduto(produto: Produto){
-
+   updateProduto(produto: Produto) {
+if (!produto.estoque) {produto.estoque = []; }
     this.produtoDoc = this.afs.doc(`produtos/${produto.id}`);
      return this.produtoDoc.update(produto);
 
    }
 
-   deleteProduto(id: string){
+   deleteProduto(id: string) {
     this.produtoDoc = this.afs.doc(`produtos/${id}`);
     return this.produtoDoc.delete();
 
@@ -90,12 +91,63 @@ export class ProdutoService {
    searchCep(cep: string) {
 
     return this.viacep
-      .buscarPorCep(cep)
+      .buscarPorCep(cep);
+
+  }
+
+  updateEstoque(lista: Produto[], venda, data, clienteId: string = '') {
+    console.log('volta venda', venda);
+    lista.forEach(a => {
+      let findidvazio = a.estoque.find(b => b.id == '');
+      if(!findidvazio)findidvazio = a.estoque.find(b => b.id == venda.id);
+      console.log(findidvazio,"lelele")
+      if (findidvazio) {
+      findidvazio.id = venda.id;
+      findidvazio.recibo = data.recibo;
+      findidvazio.cliente = data.cliente;
+      findidvazio.clienteId = clienteId;
+      findidvazio.data = data.data;
+      this.produtoDoc = this.afs.doc(`produtos/${a.id}`);
+      this.produtoDoc.update({ estoque: a.estoque });
+      }
+    });
+
+  }
+
+  updateOneEstoque(produto: Produto){
+    let produtoDoc = this.afs.doc(`produtos/${produto.id}`);
+    produtoDoc.update({ estoque: produto.estoque });
+  }
+
+  deleteItemEstoque(venda: Venda) {
+
+    venda.listaProduto.forEach(a => {
+
+      let produtoDoc: AngularFirestoreDocument<Produto> = this.afs.doc(`produtos/${a.id}`);
+       produtoDoc.valueChanges().pipe(
+        take(1),
+        ).subscribe(b=>{
+          let indexEstoque = b.estoque.findIndex(c => c.id == venda.id);
+
+          if(indexEstoque >= 0){
+                b.estoque.splice(indexEstoque, 1)
+                console.log("BBB3",b)
+                produtoDoc.update({ estoque: b.estoque })
+                .then(result=> console.log(result))
+                .catch(e=>console.log(e))
+          }
+        });
+
+      })
+
+
+
+
 
   }
 
 
-   flashMessageToNew(name: string){
+   flashMessageToNew(name: string) {
     this.ngFlashMessageService.showFlashMessage({
       messages: [`SUCESSO! Produto ${name} adicionado.`],
       dismissible: true,
@@ -104,7 +156,7 @@ export class ProdutoService {
     });
    }
 
-   flashMessageToUpdate(name: string){
+   flashMessageToUpdate(name: string) {
     this.ngFlashMessageService.showFlashMessage({
       messages: [`SUCESSO! Produto ${name} atualizado.`],
       dismissible: true,
@@ -113,7 +165,7 @@ export class ProdutoService {
     });
    }
 
-   flashMessageToDelete(name: string){
+   flashMessageToDelete(name: string) {
     this.ngFlashMessageService.showFlashMessage({
       messages: [`SUCESSO! Produto ${name} já existe no sistema.`],
       dismissible: true,
@@ -123,7 +175,7 @@ export class ProdutoService {
    }
 
 
-   flashMessageToExist(name: string){
+   flashMessageToExist(name: string) {
     this.ngFlashMessageService.showFlashMessage({
       messages: [`IMPOSSÍVEL! Produto ${name} já existe no sistema.`],
       dismissible: true,

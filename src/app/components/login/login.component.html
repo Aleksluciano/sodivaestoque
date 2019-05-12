@@ -1,46 +1,33 @@
-<div
-fxLayout="row" fxLayoutAlign="center center" class="row-height"
->
-  <mat-card >
+<div fxLayout="row" fxLayoutAlign="center center" class="row-height">
+  <mat-card>
 
-      <mat-card-title class="inline">      <span class="inline"> <mat-icon class="inline">lock</mat-icon></span><h3 class="inline">
-          Sodiva Estoque<span class="inline"> Login</span>
-        </h3>
-      </mat-card-title>
-<br>
-<br>
+    <mat-card-title class="inline"> <span class="inline">
+        <mat-icon class="inline">lock</mat-icon>
+      </span>
+      <h3 class="inline">
+        Sodiva Estoque<span class="inline"> Login</span>
+      </h3>
+    </mat-card-title>
+    <br>
+    <br>
       <mat-card-content fxLayout="column">
-          <div >
-<form (ngSubmit)="onSubmit()" style="width: 100%">
-  <div >
-          <mat-form-field>
-              <input
-              type="email"
-              name="email"
-              [(ngModel)]="email"
-              matInput
-              placeholder="Email"
-              required
-              >
-          </mat-form-field>
-        </div>
-      <div >
-          <mat-form-field>
-              <input
-              type="password"
-              name="password"
-              [(ngModel)]="password"
-              matInput
-              placeholder="Password"
-              required
-              >
-          </mat-form-field>
-        </div>
+      <div>
+        <form (ngSubmit)="onSubmit()" style="width: 100%">
+          <div>
+            <mat-form-field>
+              <input type="email" name="email" [(ngModel)]="email" matInput placeholder="Email" required>
+            </mat-form-field>
+          </div>
+          <div>
+            <mat-form-field>
+              <input type="password" name="password" [(ngModel)]="password" matInput placeholder="Password" required>
+            </mat-form-field>
+          </div>
           <button mat-raised-button color="primary" (submit)="onSubmit()">Login</button>
 
         </form>
       </div>
-      </mat-card-content>
+    </mat-card-content>
 
 
   </mat-card>

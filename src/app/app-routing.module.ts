@@ -11,20 +11,28 @@ import { AddProdutoComponent } from './components/produtos/containers/add-produt
 import { EditProdutoComponent } from './components/produtos/containers/edit-produto/edit-produto.component';
 import { LoginComponent } from './components/login/login.component';
 import { AuthGuard } from './guards/auth.guard';
+import { VendaFormComponent } from './components/vendas/venda-form/venda-form.component'
+import { SenhaComponent } from './components/senha/senha.component';
+import { VendasListaComponent } from './components/vendas/vendas-lista/vendas-lista.component';
+import { VendaFormEditComponent } from './components/vendas/venda-form-edit/venda-form-edit.component';
 
 const routes: Routes = [
-  {path: "", component: LoginComponent},
-  {path: "fornecedores", component: FornecedoresComponent, canActivate:[AuthGuard]},
-  {path: "add", component: AddFornecedorComponent, canActivate:[AuthGuard]},
-  {path: "edit/:id", component: EditFornecedorComponent, canActivate:[AuthGuard]},
-  {path: "clientes", component: ClientesComponent, canActivate:[AuthGuard]},
-  {path: "clientes/add", component: AddClienteComponent, canActivate:[AuthGuard]},
-  {path: "clientes/edit/:id", component: EditClienteComponent, canActivate:[AuthGuard]},
-  {path: "produtos", component: ProdutosComponent, canActivate:[AuthGuard]},
-  {path: "produtos/add", component: AddProdutoComponent, canActivate:[AuthGuard]},
-  {path: "produtos/edit/:id", component: EditProdutoComponent, canActivate:[AuthGuard]}
+  {path: '', component: LoginComponent},
+  {path: 'vendas/add', component: VendaFormComponent, canActivate: [AuthGuard]},
+  {path: 'vendas/edit/:id', component: VendaFormEditComponent, canActivate: [AuthGuard]},
+  {path: 'vendas', component: VendasListaComponent, canActivate: [AuthGuard]},
+  {path: 'fornecedores', component: FornecedoresComponent, canActivate: [AuthGuard]},
+  {path: 'add', component: AddFornecedorComponent, canActivate: [AuthGuard]},
+  {path: 'edit/:id', component: EditFornecedorComponent, canActivate: [AuthGuard]},
+  {path: 'clientes', component: ClientesComponent, canActivate: [AuthGuard]},
+  {path: 'clientes/add', component: AddClienteComponent, canActivate: [AuthGuard]},
+  {path: 'clientes/edit/:id', component: EditClienteComponent, canActivate: [AuthGuard]},
+  {path: 'produtos', component: ProdutosComponent, canActivate: [AuthGuard]},
+  {path: 'produtos/add', component: AddProdutoComponent, canActivate: [AuthGuard]},
+  {path: 'produtos/edit/:id', component: EditProdutoComponent, canActivate: [AuthGuard]},
+  {path: 'senha', component: SenhaComponent, canActivate: [AuthGuard]}
   // {  path: "", loadChildren: "./components/fornecedores/forcedores.module#FornecedoresModule"},
-]
+];
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]

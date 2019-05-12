@@ -1,19 +1,20 @@
-import { Params } from "@angular/router";
-import { Component, OnInit, ViewChild } from "@angular/core";
-import { ProdutoService } from "src/app/services/produto.service";
-import { Produto } from "src/app/models/produto.model";
+import { Params } from '@angular/router';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { ProdutoService } from 'src/app/services/produto.service';
+import { Produto } from 'src/app/models/produto.model';
 
 import {
   MatTableDataSource,
   MatDialogConfig,
-  MatDialog
-} from "@angular/material";
-import { ConfirmModalComponent } from "src/app/components/shared/confirm-modal/confirm-modal.component";
-import { Router, NavigationExtras } from "@angular/router";
-import { Fornecedor } from "src/app/models/fornecedor.model";
+  MatDialog,
+  MatPaginator
+} from '@angular/material';
+import { ConfirmModalComponent } from 'src/app/components/shared/confirm-modal/confirm-modal.component';
+import { Router, NavigationExtras } from '@angular/router';
+import { Fornecedor } from 'src/app/models/fornecedor.model';
 
 @Component({
-  selector: "app-produtos",
+  selector: 'app-produtos',
   template: `
     <br />
 
@@ -35,23 +36,25 @@ import { Fornecedor } from "src/app/models/fornecedor.model";
   `
 })
 export class ProdutosComponent implements OnInit {
+
+
   displayedColumns: string[] = [
-    "Indice",
-    "Código",
-    "Descrição",
-    "Fornecedor",
-    "Cod.Fornecedor",
-    "Data",
-    "Cor",
-    "Tipo",
-    "Tamanho",
-    "Quantidade",
-    "Valor",
-    "Custo",
-    "Preço",
-    "LucroBruto",
-    "PorcentagemLucro",
-    "Ações"
+    'Indice',
+    'codigo',
+    'descricao',
+    'fornecedor',
+    // "Cod.Fornecedor",
+    'quantidade',
+    'cor',
+    'tipo',
+    'tamanho',
+    'valor',
+    'Custo',
+    'preco',
+    'LucroBruto',
+    'PorcentagemLucro',
+    'Data',
+    'Ações'
   ];
   produtos: Produto[] = [];
   dataSource: MatTableDataSource<Produto>;
@@ -64,6 +67,9 @@ export class ProdutosComponent implements OnInit {
   popupOpen = false;
   navigationex: NavigationExtras;
 
+
+  // sort: MatSort;
+
   constructor(
     private produtosService: ProdutoService,
     private dialog: MatDialog,
@@ -71,18 +77,37 @@ export class ProdutosComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+
+    // this.dataSource.sort = this.sort;
+    // this.dataSource.sort.active = 'ini';
+    // traduz o paginator
+    // this.paginator._intl.itemsPerPageLabel = 'Itens por página';
+    // atribui o paginatr para os dados
+    // this.dataSource.paginator = this.paginator;
+
+
     this.produtosService.getProdutos().subscribe(produtos => {
       this.produtos = produtos;
       this.dataSource = new MatTableDataSource(this.produtos);
       this.produtos.forEach(a => {
-        this.footerQuantidade += a.quantidade;
+
+        let estoque = 0;
+        if(a.estoque &&
+          a.estoque.length > 0
+      ) {
+          a.estoque.forEach(obj => {
+          estoque += obj.quant;
+        });
+
+      }
+        this.footerQuantidade += a.quantidade - estoque;
         this.footerValorPago += a.valor * a.quantidade;
         this.footerPrecoVenda += a.preco * a.quantidade;
         this.footerCustoTotal += a.valor * a.quantidade;
         this.footerLucroTotal += ( a.preco * a.quantidade ) - ( a.valor * a.quantidade );
       });
 
-      this.footerLucroPorcentagem = (this.footerLucroTotal / this.footerCustoTotal) * 100;
+      this.footerLucroPorcentagem = ((this.footerLucroTotal / this.footerCustoTotal) * 100);
     });
   }
 
@@ -100,7 +125,7 @@ export class ProdutosComponent implements OnInit {
       .afterClosed()
       .subscribe(result => {
         this.popupOpen = false;
-        if (result) this.produtosService.deleteProduto(event.id);
+        if (result) { this.produtosService.deleteProduto(event.id); }
       });
   }
 
@@ -109,16 +134,17 @@ export class ProdutosComponent implements OnInit {
   }
 
   applyFilter(filterValue: string) {
-    if (filterValue) this.dataSource.filter = filterValue.trim().toLowerCase();
+    if (filterValue) { this.dataSource.filter = filterValue.trim().toLowerCase(); }
+    console.log("LALA",this.dataSource);
   }
 
   newItem() {
 
     if (!this.popupOpen) {
   let code = '';
-  if(this.produtos.length > 0)code = this.produtos[this.produtos.length - 1].codigo
+  if (this.produtos.length > 0) {code = this.produtos[this.produtos.length - 1].codigo; }
 
-      this.router.navigate(["produtos/add"], {
+      this.router.navigate(['produtos/add'], {
         queryParams: {
           lastCode: code
         }

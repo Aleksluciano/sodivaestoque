@@ -7,19 +7,20 @@
    <div>
     <strong>SDestoque</strong>
   </div>
-   <div fxFlex fxLayout fxLayoutAlign="flex-start" fxHide.xs>
-    <ul fxLayout fxLayoutGap="25px" class="navigation-items">
-      <li>
-        <a routerLink="/fornecedores">Fornecedores</a>
-      </li>
-      <li>
-        <a routerLink="/clientes">Clientes</a>
-      </li>
-      <li>
-        <a routerLink="/produtos">Produtos</a>
-      </li>
-    </ul>
+
+  <div fxFlex fxLayout fxLayoutAlign="flex-start" fxHide.xs>
+      <button style="margin-left: 20px" mat-button routerLink="/vendas">Vendas</button>
+    <button mat-button [matMenuTriggerFor]="menu" class="menu">Cadastros</button>
+
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item routerLink="/fornecedores">Fornecedores</button>
+      <button mat-menu-item routerLink="/clientes">Clientes</button>
+      <button mat-menu-item routerLink="/produtos">Produtos</button>
+    </mat-menu>
+
+    <button mat-button routerLink="/senha" >Senha</button>
   </div>
+
   <div>
     <ul>
       <li fxFlex fxLayout fxLayoutAlign="flex-end"  fxHide.xs>

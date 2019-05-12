@@ -1,280 +1,338 @@
 <mat-card @fade>
-
-  <mat-card-header class="inline">
-    <mat-card-title class="inline">
-      <h2 class="inline">Atualizar Fornecedor</h2>
+  <a [routerLink]="" (click)="return()">
+    <button mat-mini-fab color="accent">
+      <mat-icon>arrow_back</mat-icon>
+    </button>
+  </a>
+  <mat-card-header >
+    <mat-card-title >
+      <h2 style="margin: auto">Atualizar Produto</h2>
     </mat-card-title>
 
-  </mat-card-header>
-
-
-
-  <button
-  class="findData"
-  color="primary"
-  mat-button
-  type="button"
-  (click)="findData(Buscar.value)"
-  id="searchIcon"
-  >
-    <mat-icon>search</mat-icon>
-  </button>
   <button
   class="findData"
   color="accent"
-  mat-button
-  type="button"
-  (click)="nextData(Buscar.value)"
-  id="searchIcon"
-  >
-    <mat-icon>arrow_right</mat-icon>
-  </button>
-
-  <mat-form-field
-  appearance="fill"
-  id="findInput">
-      <mat-label>Buscar</mat-label>
-      <input
-      matInput
-       placeholder="Buscar"
-       type="text"
-       name="buscar"
-       #Buscar
-       [formControl]="myControl" [matAutocomplete]="autoo"
-
-       >
-       <mat-autocomplete autoActiveFirstOption #autoo="matAutocomplete">
-          <mat-option *ngFor="let optionn of filteredOptionsFind | async"
-          [value]="optionn"
-          >
-            {{optionn}}
-          </mat-option>
-        </mat-autocomplete>
-    </mat-form-field>
-
-  <button
-  class="findData"
-  color="accent"
-  mat-button
+  mat-icon-button
   type="button"
   (click)="previousData(Buscar.value)"
   id="searchIcon"
+>
+  <mat-icon>arrow_left</mat-icon>
+</button>
+
+  <mat-form-field appearance="fill" id="findInput">
+    <mat-label>Buscar</mat-label>
+    <input
+      matInput
+      placeholder="Buscar"
+      type="text"
+      name="buscar"
+      #Buscar
+      [formControl]="myControl"
+      [matAutocomplete]="autoo"
+    />
+    <mat-autocomplete autoActiveFirstOption #autoo="matAutocomplete">
+      <mat-option
+        *ngFor="let optionn of filteredOptionsFind | async"
+        [value]="optionn"
+      >
+        {{ optionn }}
+      </mat-option>
+    </mat-autocomplete>
+  </mat-form-field>
+
+  <button
+  class="findData"
+  color="accent"
+  mat-icon-button
+  type="button"
+  (click)="nextData(Buscar.value)"
+  id="searchIcon"
+>
+  <mat-icon>arrow_right</mat-icon>
+</button>
+
+  <button
+    class="findData"
+    color="primary"
+    mat-mini-fab
+    type="button"
+    (click)="findData(Buscar.value)"
+    id="searchIcon"
   >
-    <mat-icon>arrow_left</mat-icon>
+    <mat-icon>search</mat-icon>
   </button>
 
+
+</mat-card-header>
   <mat-card-subtitle>
     <p>Os campos com * são obrigatórios</p>
   </mat-card-subtitle>
 
   <div class="form-container" [formGroup]="parent">
     <div formGroupName="fornec">
-
       <div class="mat-form-field--inline">
-
-
-      <mat-form-field appearance="outline" id="codigo">
-        <mat-label>Código</mat-label>
-        <input matInput
-         placeholder="Código"
-         type="text"
-         formControlName="codigo"
-         minlength="3"
-         required
-         #codigoInput
-         (input)="codigoInput.value=$event.target.value.toUpperCase()"
-         >
-      </mat-form-field>
-
-
-
-      <mat-form-field appearance="outline"  id="descricao">
-        <mat-label>Descrição</mat-label>
-        <input matInput
-         placeholder="Descrição"
-         type="text"
-         formControlName="descricao"
-         required>
+        <mat-form-field appearance="outline" id="codigo">
+          <mat-label>Código</mat-label>
+          <input
+            matInput
+            placeholder="Código"
+            type="text"
+            formControlName="codigo"
+            required
+            #codigoInput
+            (input)="codigoInput.value = pad(codigoInput.value.substr(2), 5)"
+          />
         </mat-form-field>
 
+        <mat-form-field appearance="outline" id="descricao">
+          <mat-label>Descrição</mat-label>
+          <input
+            matInput
+            placeholder="Descrição"
+            type="text"
+            formControlName="descricao"
+            required
+          />
+        </mat-form-field>
 
-          <mat-form-field appearance="outline"  id="fornecedor">
-            <mat-label>Fornecedor</mat-label>
-            <input matInput
-             placeholder="Fornecedor"
-             type="text"
-             name="fornecedor"
-             formControlName="fornecedor"
-             [formControl]="myControlFornec"
-             [matAutocomplete]="autof"
-             required>
-             <mat-autocomplete autoActiveFirstOption #autof="matAutocomplete">
-                 <mat-option *ngFor="let optionf of filteredOptionsFornecedor | async" [value]="optionf">
-                   {{optionf}}
-                 </mat-option>
-               </mat-autocomplete>
-          </mat-form-field>
+        <mat-form-field appearance="outline" id="fornecedor">
+          <mat-label>Fornecedor</mat-label>
+          <input
+            matInput
+            placeholder="Fornecedor"
+            type="text"
+            name="fornecedor"
+            formControlName="fornecedor"
+            [matAutocomplete]="autof"
+            minlength="2"
+            required
+          />
+          <mat-autocomplete autoActiveFirstOption #autof="matAutocomplete">
+            <mat-option
+              *ngFor="let optionf of filteredOptionsFornecedor | async"
+              [value]="optionf"
+            >
+              {{ optionf }}
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
 
-
-            <mat-form-field appearance="outline"  id="codigofornecedor">
+        <!-- <mat-form-field appearance="outline"  id="codigofornecedor">
               <mat-label>Cód.Fornecedor</mat-label>
               <input matInput
                placeholder="Cod.Fornecedor"
                type="text"
                formControlName="codigofornecedor"
                required>
-            </mat-form-field>
-
-
-              <mat-form-field appearance="outline"  id="data">
+            </mat-form-field> -->
+            <mat-form-field appearance="outline" id="datePicker">
                 <mat-label>Data</mat-label>
                 <input matInput
-                 type="date"
-                 formControlName="data"
-                 tabindex="-1"
-                 >
-              </mat-form-field>
-
-
-                <mat-form-field appearance="outline"  id="cor">
-                  <mat-label>Cor</mat-label>
-                  <input matInput
-                   placeholder="Cor"
-                   type="text"
-                   name="cor"
-                   minlength="2"
-                   formControlName="cor"
-                   [matAutocomplete]="autoCor"
-                   required>
-                   <mat-autocomplete autoActiveFirstOption #autoCor="matAutocomplete">
-                       <mat-option *ngFor="let option of filteredOptionsCor | async" [value]="option">
-                         {{option}}
-                       </mat-option>
-                     </mat-autocomplete>
+                [matDatepicker]="it"
+                formControlName="data"
+                placeholder="Data" maxlength="10"
+                tabindex="-1"
+                required>
+                <mat-datepicker-toggle matSuffix [for]="it" ></mat-datepicker-toggle>
+                <mat-datepicker #it ></mat-datepicker>
                 </mat-form-field>
+        <!-- <mat-form-field appearance="outline" id="data">
+          <mat-label>Data</mat-label>
+          <input matInput type="date" formControlName="data" tabindex="-1" />
+        </mat-form-field> -->
 
+        <mat-form-field appearance="outline" id="cor">
+          <mat-label>Cor</mat-label>
+          <input
+            matInput
+            placeholder="Cor"
+            type="text"
+            name="cor"
+            minlength="2"
+            formControlName="cor"
+            [matAutocomplete]="autoCor"
+            required
+          />
+          <mat-autocomplete autoActiveFirstOption #autoCor="matAutocomplete">
+            <mat-option
+              *ngFor="let option of filteredOptionsCor | async"
+              [value]="option"
+            >
+              {{ option }}
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
 
-                  <mat-form-field appearance="outline"  id="tipo">
-                    <mat-label>Tipo</mat-label>
-                    <input matInput
-                     placeholder="Tipo"
-                     type="text"
-                     name="tipo"
-                     formControlName="tipo"
-                     [matAutocomplete]="autoTipo"
-                     required>
-                     <mat-autocomplete autoActiveFirstOption #autoTipo="matAutocomplete">
-                         <mat-option *ngFor="let option of filteredOptionsTipo | async" [value]="option">
-                           {{option}}
-                         </mat-option>
-                       </mat-autocomplete>
-                  </mat-form-field>
+        <mat-form-field appearance="outline" id="tipo">
+          <mat-label>Tipo</mat-label>
+          <input
+            matInput
+            placeholder="Tipo"
+            type="text"
+            name="tipo"
+            formControlName="tipo"
+            [matAutocomplete]="autoTipo"
+            required
+          />
+          <mat-autocomplete autoActiveFirstOption #autoTipo="matAutocomplete">
+            <mat-option
+              *ngFor="let option of filteredOptionsTipo | async"
+              [value]="option"
+            >
+              {{ option }}
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
 
+        <mat-form-field appearance="outline" id="tamanho">
+          <mat-label>Tamanho</mat-label>
+          <input
+            matInput
+            placeholder="Tamanho"
+            type="text"
+            #tamanho
+            name="tamanho"
+            formControlName="tamanho"
+            (input)="tamanho.value = $event.target.value.toUpperCase()"
+            [matAutocomplete]="autoTamanho"
+            required
+          />
+          <mat-autocomplete
+            autoActiveFirstOption
+            #autoTamanho="matAutocomplete"
+          >
+            <mat-option
+              *ngFor="let option of filteredOptions | async"
+              [value]="option"
+            >
+              {{ option }}
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
 
-                    <mat-form-field appearance="outline"  id="tamanho">
-                      <mat-label>Tamanho</mat-label>
-                      <input matInput
-                       placeholder="Tamanho"
-                       type="text"
-                       #tamanho
-                       name="tamanho"
-                       formControlName="tamanho"
-                       (input)="tamanho.value=$event.target.value.toUpperCase()"
-                       [matAutocomplete]="autoTamanho"
-                       required>
-                       <mat-autocomplete autoActiveFirstOption #autoTamanho="matAutocomplete">
-                           <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
-                             {{option}}
-                           </mat-option>
-                         </mat-autocomplete>
-                    </mat-form-field>
+        <mat-form-field appearance="outline" id="quantidade">
+          <mat-label>Quant. Inicial</mat-label>
+          <input
+            matInput
+            placeholder="Quant. Inicial"
+            type="number"
+            #quantidadeInput
+            value="1"
+            formControlName="quantidade"
+            required
+          />
+        </mat-form-field>
 
-                      <mat-form-field appearance="outline"  id="quantidade">
-                        <mat-label>Quantidade</mat-label>
-                        <input matInput
-                         placeholder="Quantidade"
-                         type="number"
-                         #quantidadeInput
-                         value='1'
-                         formControlName="quantidade"
-                         required>
+        <mat-form-field appearance="outline" id="valor">
+          <mat-label>Valor pago</mat-label>
+          <input
+            matInput
+            placeholder="Valor"
+            type="text"
+            formControlName="valor"
+            #valorInput
+            name="valor"
+            currencyMask
+            [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }"
+            required
+          />
+        </mat-form-field>
 
-                      </mat-form-field>
-
-
-
-                          <mat-form-field appearance="outline"  id="valor">
-                            <mat-label>Valor pago</mat-label>
-                            <input matInput
-                             placeholder="Valor"
-                             type="text"
-                             formControlName="valor"
-                             #valorInput
-                             name="valor"
-
-                             currencyMask
-                             [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }"
-
-                             required>
-                          </mat-form-field>
-
-
-
-                              <mat-form-field appearance="outline"  id="preco">
-                                <mat-label>Preço de venda</mat-label>
-                                <input matInput
-                                 placeholder="Preço de venda"
-                                 type="text"
-                                 formControlName="preco"
-                                 #precoInput
-                                 name="preco"
-                                 currencyMask
-                             [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }"
-                                 required>
-                              </mat-form-field>
-
-
-
-
-
+        <mat-form-field appearance="outline" id="preco">
+          <mat-label>Preço de venda</mat-label>
+          <input
+            matInput
+            placeholder="Preço de venda"
+            type="text"
+            formControlName="preco"
+            #precoInput
+            name="preco"
+            currencyMask
+            [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }"
+            required
+          />
+        </mat-form-field>
+      </div>
+      <div class="mat-form-field--inline">
+        <h4 id="textCusto">
+          Custo Total: R$
+          {{
+            convertCalc(valorInput.value, quantidadeInput.value)
+              | number: ".2":"pt"
+          }}
+        </h4>
+        <h4 id="textLucro">
+          Lucro Bruto: R$
+          {{
+            calcLucro(
+              valorInput.value,
+              quantidadeInput.value,
+              precoInput.value
+            ) | number: ".2":"pt"
+          }}
+        </h4>
+        <h4>
+          Porcentagem de lucro: %
+          {{
+            porcentagemLucro(
+              valorInput.value,
+              quantidadeInput.value,
+              precoInput.value
+            )
+          }}
+        </h4>
+        <h4
+        style="margin-left: 150px"
+        [ngStyle]="{ color: calcEstoque() <= 'SEM ESTOQUE' ? '#FB0D0D' : '' }"
+      >
+        Estoque:
+        {{
+          calcEstoque()
+        }}
+      </h4>
+      </div>
     </div>
-    <div class="mat-form-field--inline">
-      <h4 id="textCusto">Custo Total: R$ {{ convertCalc(valorInput.value,quantidadeInput.value) | number: '.2':'pt' }}</h4>
-      <h4 id="textLucro">Lucro Bruto: R$ {{ calcLucro(valorInput.value,quantidadeInput.value,precoInput.value) | number: '.2':'pt' }}</h4>
-      <h4 >Porcentagem de lucro: % {{ porcentagemLucro(valorInput.value,quantidadeInput.value,precoInput.value) }}</h4>
-    </div>
-
-  </div>
-    <br><br>
-      <button
-    mat-raised-button
-    color="primary"
-    type="submit"
-    [disabled]="!parent.valid"
-    id="saveButton"
-    (click)="this.editButton = !this.editButton"
-    >Salvar</button>
+    <br /><br />
     <button
-    mat-raised-button color="accent"
-    type="button"
-    (click)="changeEditButton()"
-    id="editButton"
-    >{{ this.editButton ? 'Editar' : 'Cancelar' }}
-  </button>
-  <button
-  mat-raised-button color="warn"
-  type="button"
-  (click)="deleteItem()"
-  [disabled]="this.editButton"
-  id="deleteButton"
-  >Deletar
-</button>
-    <a [routerLink]="" (click)="return()">
-      <button mat-mini-fab color="accent">
-        <mat-icon>arrow_back</mat-icon>
-      </button>
-    </a>
-
+      mat-raised-button
+      color="primary"
+      type="submit"
+      [disabled]="!parent.valid"
+      id="saveButton"
+      (click)="this.editButton = !this.editButton"
+    >
+      Salvar
+    </button>
+    <button
+      mat-raised-button
+      color="accent"
+      type="button"
+      (click)="changeEditButton()"
+      id="editButton"
+    >
+      {{ this.editButton ? "Editar" : "Cancelar" }}
+    </button>
+    <button
+      mat-raised-button
+      color="warn"
+      type="button"
+      (click)="deleteItem()"
+      [disabled]="this.editButton"
+      id="deleteButton"
+    >
+      Deletar
+    </button>
   </div>
-
 </mat-card>
+<br>
+<mat-card *ngIf="produto?.estoque?.length > 0">
+  <mat-card-title>
+    Histórico de baixa/venda
+  </mat-card-title>
+
+<mat-list>
+    <mat-list-item *ngFor="let item of produto?.estoque">  <a style="color: rgb(55, 190, 214);margin-left: 15px;margin-right: 15px" routerLink="/vendas/edit/{{item?.id}}">{{ item?.recibo }}</a> <span> - {{ item?.quant }}un </span><a style="color: yellow;margin-left: 15px;margin-right: 15px" routerLink="/clientes/edit/{{item?.clienteId}}" >{{ item?.cliente }}</a> {{ item?.data?.toDate() | date:'dd-MM-yyyy' }}</mat-list-item>
+   </mat-list>
+</mat-card>
+

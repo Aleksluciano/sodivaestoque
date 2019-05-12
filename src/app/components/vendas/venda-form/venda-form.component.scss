@@ -1,0 +1,129 @@
+h5{
+  color: white;
+}
+
+a{
+  float:left;
+
+}
+
+
+.primeiroPag{
+  width: 200px;
+}
+
+.inline{
+  display: inline-block;
+}
+
+#codigo{
+  width: 150px;
+  }
+
+  #nome{
+    width: 350px;
+    }
+
+  #quantidade{
+    width: 70px;
+    float: right;
+    margin-right: 150px;
+     }
+     #desconto{
+      width: 80px;
+      float: right;
+      margin-right: 170px;
+
+       }
+
+
+.plusquant{
+  text-align: center;
+  margin-top: 8px;
+  margin-right: 3px;
+  width: 24px;
+  height: 24px;
+
+  line-height: 0%;
+
+
+}
+.minusquant{
+  text-align: center;
+  margin-top: 2px !important;
+  margin-right: 3px;
+  width: 24px;
+  height: 24px;
+  line-height: 0%;
+
+
+
+
+}
+
+#datePicker{
+  width: 200px;
+}
+
+.iconb{
+  font-size: 16px;
+  margin-bottom: 30px;
+}
+
+.buttonquant{
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  float: right;
+
+
+}
+
+  p{
+    margin-left: 20px;
+    font-size: 1.2em;
+  }
+
+  .preco{
+    font-size: 1.4em;
+  }
+
+  .greenText{
+    color: rgb(135, 233, 78);
+    font-size: 1.0em;
+  }
+
+  .redText{
+    color: rgb(253, 53, 70);
+    font-size: 1.0em;
+  }
+
+  .precoPag{
+    width: 140px;
+  }
+
+  #shopping{
+    margin-right: 10px;
+  }
+
+  table {
+    border-collapse: separate;
+    border-spacing: 5px 0;
+    border: 1px solid black;
+
+  }
+
+  td, th{
+    padding: 5px 0;
+  }
+
+  #recibo{
+    width: 130px;
+    margin-left: 20px;
+  }
+
+  #tela{
+    min-height: 900px;
+  }
+
+

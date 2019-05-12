@@ -1,8 +1,12 @@
 <mat-card @fade>
-
-  <mat-card-header class="inline">
-    <mat-card-title class="inline">
-      <h2 class="inline">Adicionar Cliente</h2>
+    <a [routerLink]="" (click)="return()">
+        <button mat-mini-fab color="accent">
+          <mat-icon>arrow_back</mat-icon>
+        </button>
+      </a>
+  <mat-card-header >
+    <mat-card-title >
+          <h2 style="margin: auto">Adicionar Cliente </h2>
     </mat-card-title>
   </mat-card-header>
 
@@ -14,7 +18,7 @@
     <div formGroupName="fornec">
 
       <div class="mat-form-field--inline">
-        <mat-form-field appearance="outline">
+        <mat-form-field appearance="outline" id="field-nome">
           <mat-label>Nome</mat-label>
           <input matInput
            placeholder="Nome"
@@ -99,7 +103,7 @@
           >
         </mat-form-field>
 
-        <mat-form-field appearance="outline" id="field-cnpj">
+        <!-- <mat-form-field appearance="outline" id="field-cnpj">
           <mat-label>Cpf</mat-label>
           <input matInput placeholder="Cpf" type="text" formControlName="cpf"
           minlength="11"
@@ -113,17 +117,13 @@
           minlength="9"
           mask="00.000.000-0"
           >
-        </mat-form-field>
+        </mat-form-field> -->
 
       </div>
 
     </div>
     <button mat-raised-button color="primary" type="submit" [disabled]="!parent.valid">Criar</button>
-    <a [routerLink]="" (click)="return()">
-      <button mat-mini-fab color="accent">
-        <mat-icon>arrow_back</mat-icon>
-      </button>
-    </a>
+
 
   </div>
 

@@ -1,16 +1,16 @@
-import { Component, OnInit } from "@angular/core";
-import { FormBuilder, Validators, FormControl } from "@angular/forms";
-import { ProdutoService } from "src/app/services/produto.service";
-import { Router, ActivatedRoute } from "@angular/router";
-import { Location, DatePipe } from "@angular/common";
-import { MatDialog } from "@angular/material";
-import { InfoModalComponent } from "src/app/components/shared/info-modal.component.ts/info-modal.component";
-import { Fornecedor } from "src/app/models/fornecedor.model";
-import { FornecedorService } from "src/app/services/fornecedor.service";
-import { map } from "rxjs/operators";
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, Validators, FormControl } from '@angular/forms';
+import { ProdutoService } from 'src/app/services/produto.service';
+import { Router, ActivatedRoute } from '@angular/router';
+import { Location, DatePipe } from '@angular/common';
+import { MatDialog } from '@angular/material';
+import { InfoModalComponent } from 'src/app/components/shared/info-modal.component.ts/info-modal.component';
+import { Fornecedor } from 'src/app/models/fornecedor.model';
+import { FornecedorService } from 'src/app/services/fornecedor.service';
+import { map } from 'rxjs/operators';
 
 @Component({
-  selector: "app-add-produto",
+  selector: 'app-add-produto',
   template: `
     <br />
     <form [formGroup]="form" (ngSubmit)="onSubmit()">
@@ -18,7 +18,6 @@ import { map } from "rxjs/operators";
         [parent]="form"
         (back)="onBackClicked()"
         [optionsFornecedor]="arrayFornecedor"
-        [myControlFornec]="myControlFornec"
       >
       </app-produto-form>
     </form>
@@ -28,26 +27,26 @@ export class AddProdutoComponent implements OnInit {
   day = new Date();
   fornecedores: Fornecedor[] = [];
   arrayFornecedor: string[] = [];
-  myControlFornec = new FormControl();
+
 
   form = this.fb.group({
     fornec: this.fb.group({
-      codigo: ["", Validators.required],
-      descricao: ["", Validators.required],
-      fornecedor: [" ", Validators.required],
-      codigofornecedor: "",
+      codigo: ['SD00000', Validators.required],
+      descricao: ['', Validators.required],
+      fornecedor: ['', Validators.required],
+      // codigofornecedor: "",
       data: [
-        this.datePipe.transform(this.day, "yyyy-MM-dd"),
+        new Date(this.day),
         Validators.required
       ],
-      cor: ["", Validators.required],
-      tipo: ["", Validators.required],
-      tamanho: ["", Validators.required],
+      cor: ['', Validators.required],
+      tipo: ['', Validators.required],
+      tamanho: ['', Validators.required],
       quantidade: [1, Validators.required],
-      valor: ["", Validators.required],
-      //custo: [{value: '', disabled: true},Validators.required],
-      preco: ["", Validators.required]
-      //lucrobruto: ''
+      valor: ['', Validators.required],
+      // custo: [{value: '', disabled: true},Validators.required],
+      preco: ['', Validators.required]
+      // lucrobruto: ''
     })
   });
 
@@ -64,10 +63,13 @@ export class AddProdutoComponent implements OnInit {
 
   ngOnInit() {
     this.route.queryParams.subscribe(params => {
-      if(params.lastCode != ''){
-      let partNumber = Number(String(params.lastCode).substring(2)) + 1;
-      let partString = String(params.lastCode).substring(0, 2);
-      let newCode = partString + String(partNumber);
+      if (params.lastCode != '') {
+      const partNumber = Number(String(params.lastCode).substring(2)) + 1;
+      const s = '00000' + String(partNumber);
+      const num = s.substr(s.length - 5);
+      const partString = String(params.lastCode).substring(0, 2);
+      const newCode = partString + num;
+
       this.form.controls.fornec.patchValue({
         codigo: newCode
       });
@@ -84,6 +86,7 @@ export class AddProdutoComponent implements OnInit {
 
   onSubmit() {
     if (this.form.valid) {
+
       this.produtosService
         .getProdutoByCodigo(this.form.value.fornec.codigo)
         .get()
@@ -93,6 +96,7 @@ export class AddProdutoComponent implements OnInit {
               this.form.value.fornec.codigo
             );
           } else {
+
             this.produtosService
               .newProduto(this.form.value.fornec)
               .then(a => {
@@ -100,11 +104,11 @@ export class AddProdutoComponent implements OnInit {
                   this.form.value.fornec.codigo
                 );
                 this.form.reset();
-                this.router.navigate(["produtos"]);
+                this.router.navigate(['produtos']);
               })
               .catch(error => {
                 this.dialog.open(InfoModalComponent, {
-                  data: { title: "Erro", message: error.message }
+                  data: { title: 'Erro', message: error.message }
                 });
               });
           }

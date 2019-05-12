@@ -2,11 +2,11 @@ import { Injectable } from '@angular/core';
 import { Fornecedor } from '../models/fornecedor.model';
 import { Observable } from 'rxjs';
 import { AngularFirestoreDocument, AngularFirestoreCollection, AngularFirestore } from '@angular/fire/firestore';
-import { map } from "rxjs/operators";
+import { map } from 'rxjs/operators';
 
 
 import { NgFlashMessageService } from 'ng-flash-messages';
-import { NgxViacepService } from "@brunoc/ngx-viacep";
+import { NgxViacepService } from '@brunoc/ngx-viacep';
 @Injectable({
   providedIn: 'root'
 })
@@ -14,7 +14,7 @@ export class FornecedorService {
 
   fornecedoresCollection: AngularFirestoreCollection<Fornecedor>;
   fornecedorDoc: AngularFirestoreDocument<Fornecedor>;
-  fornecedores: Observable<Fornecedor[]>
+  fornecedores: Observable<Fornecedor[]>;
   fornecedor: Observable<Fornecedor>;
 
   constructor(
@@ -43,18 +43,18 @@ export class FornecedorService {
     return this.fornecedores;
    }
 
-   newFornecedor(fornecedor: Fornecedor){
-     return this.fornecedoresCollection.add(fornecedor)
+   newFornecedor(fornecedor: Fornecedor) {
+     return this.fornecedoresCollection.add(fornecedor);
    }
 
-   getFornecedor(id: string): Observable<Fornecedor>{
+   getFornecedor(id: string): Observable<Fornecedor> {
 
       this.fornecedorDoc = this.afs.doc<Fornecedor>(`fornecedores/${id}`);
       this.fornecedor =  this.fornecedorDoc.snapshotChanges().pipe(
         map(action => {
-          if(action.payload.exists === false){
+          if (action.payload.exists === false) {
             return null;
-          }else{
+          } else {
             const data = action.payload.data() as Fornecedor;
             data.id = action.payload.id;
             return data;
@@ -65,14 +65,14 @@ export class FornecedorService {
 
    }
 
-   updateFornecedor(fornecedor: Fornecedor){
+   updateFornecedor(fornecedor: Fornecedor) {
 
     this.fornecedorDoc = this.afs.doc(`fornecedores/${fornecedor.id}`);
      return this.fornecedorDoc.update(fornecedor);
 
    }
 
-   deleteFornecedor(id: string){
+   deleteFornecedor(id: string) {
     this.fornecedorDoc = this.afs.doc(`fornecedores/${id}`);
     return this.fornecedorDoc.delete();
 
@@ -81,12 +81,12 @@ export class FornecedorService {
    searchCep(cep: string) {
 
     return this.viacep
-      .buscarPorCep(cep)
+      .buscarPorCep(cep);
 
   }
 
 
-   flashMessageToNew(name: string){
+   flashMessageToNew(name: string) {
     this.ngFlashMessageService.showFlashMessage({
       messages: [`SUCESSO! Fornecedor ${name} adicionado.`],
       dismissible: true,
@@ -95,7 +95,7 @@ export class FornecedorService {
     });
    }
 
-   flashMessageToUpdate(name: string){
+   flashMessageToUpdate(name: string) {
     this.ngFlashMessageService.showFlashMessage({
       messages: [`SUCESSO! Fornecedor ${name} atualizado.`],
       dismissible: true,
@@ -104,7 +104,7 @@ export class FornecedorService {
     });
    }
 
-   flashMessageToDelete(name: string){
+   flashMessageToDelete(name: string) {
     this.ngFlashMessageService.showFlashMessage({
       messages: [`SUCESSO! Fornecedor ${name} removido.`],
       dismissible: true,

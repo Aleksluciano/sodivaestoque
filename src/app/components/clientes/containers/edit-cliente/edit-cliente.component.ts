@@ -1,16 +1,19 @@
-import { Cliente } from "./../../../../models/cliente.model";
+import { Venda } from './../../../../models/venda.model';
+import { VendaService } from 'src/app/services/venda.service';
+import { Cliente } from './../../../../models/cliente.model';
 
-import { Component, OnInit } from "@angular/core";
-import { FormBuilder, Validators, FormControl } from "@angular/forms";
-import { ClienteService } from "src/app/services/cliente.service";
-import { Router, ActivatedRoute } from "@angular/router";
-import { Location } from "@angular/common";
-import { MatDialog, MatDialogConfig } from "@angular/material";
-import { InfoModalComponent } from "src/app/components/shared/info-modal.component.ts/info-modal.component";
-import { ConfirmModalComponent } from "src/app/components/shared/confirm-modal/confirm-modal.component";
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, Validators, FormControl } from '@angular/forms';
+import { ClienteService } from 'src/app/services/cliente.service';
+import { Router, ActivatedRoute } from '@angular/router';
+import { Location } from '@angular/common';
+import { MatDialog, MatDialogConfig } from '@angular/material';
+import { InfoModalComponent } from 'src/app/components/shared/info-modal.component.ts/info-modal.component';
+import { ConfirmModalComponent } from 'src/app/components/shared/confirm-modal/confirm-modal.component';
+import { map } from 'rxjs/operators';
 
 @Component({
-  selector: "app-add-cliente",
+  selector: 'app-add-cliente',
   template: `
     <br />
     <form [formGroup]="form" (ngSubmit)="onSubmit($event)">
@@ -19,6 +22,7 @@ import { ConfirmModalComponent } from "src/app/components/shared/confirm-modal/c
         [arrayClientes]="arrayDataSource"
         [clientes]="clientes"
         [myControl]="myControl"
+        [compras]="compras"
         (find)="findData($event)"
         (next)="nextData($event)"
         (previous)="previousData($event)"
@@ -36,21 +40,23 @@ export class EditClienteComponent implements OnInit {
   arrayDataSource = [];
   myControl = new FormControl();
 
+  compras: Venda[] = [];
+
   id: string;
 
   form = this.fb.group({
     fornec: this.fb.group({
-      nome: ["", Validators.required],
-      cep: "",
-      endereco: ["", Validators.required],
-      bairro: ["", Validators.required],
-      cidade: ["", Validators.required],
-      estado: ["", Validators.required],
-      telefone: "",
-      celular: "",
-      email: "",
-      cpf: "",
-      rg: ""
+      nome: ['', Validators.required],
+      cep: '',
+      endereco: ['', Validators.required],
+      bairro: ['', Validators.required],
+      cidade: ['', Validators.required],
+      estado: ['', Validators.required],
+      telefone: '',
+      celular: '',
+      email: '',
+      // cpf: "",
+      // rg: ""
     })
   });
 
@@ -60,7 +66,8 @@ export class EditClienteComponent implements OnInit {
     private router: Router,
     private location: Location,
     private dialog: MatDialog,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private vendasService: VendaService
   ) {}
 
   ngOnInit() {
@@ -73,7 +80,7 @@ export class EditClienteComponent implements OnInit {
     });
 
     // Get id from url
-    this.id = this.route.snapshot.params["id"];
+    this.id = this.route.snapshot.params['id'];
 
     // Get cliente
     this.clientesService.getCliente(this.id).subscribe(cliente => {
@@ -90,18 +97,24 @@ export class EditClienteComponent implements OnInit {
           telefone: this.cliente.telefone,
           celular: this.cliente.celular,
           email: this.cliente.email,
-          cpf: this.cliente.cpf,
-          rg: this.cliente.rg
+          // cpf: this.cliente.cpf,
+          // rg: this.cliente.rg
         });
 
         this.form.controls.fornec.disable();
+
       }
-    });
+
+    })
+
+    this.getCompras(this.id);
+
+
   }
 
   onSubmit() {
     if (this.form.valid) {
-      let id = this.cliente.id;
+      const id = this.cliente.id;
       this.cliente = this.form.value.fornec;
       this.cliente.id = id;
 
@@ -123,7 +136,7 @@ export class EditClienteComponent implements OnInit {
         })
         .catch(error => {
           this.dialog.open(InfoModalComponent, {
-            data: { title: "Erro", message: error.message }
+            data: { title: 'Erro', message: error.message }
           });
         });
     }
@@ -143,7 +156,7 @@ export class EditClienteComponent implements OnInit {
       })
       .catch(error => {
         this.dialog.open(InfoModalComponent, {
-          data: { title: "Erro", message: error.message }
+          data: { title: 'Erro', message: error.message }
         });
       });
   }
@@ -156,7 +169,7 @@ export class EditClienteComponent implements OnInit {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.disableClose = false;
     dialogConfig.autoFocus = true;
-    let cliente = { ...this.cliente };
+    const cliente = { ...this.cliente };
     dialogConfig.data = {
       message: `Deseja realmente remover o cliente`,
       item: `${this.cliente.nome}`
@@ -171,11 +184,11 @@ export class EditClienteComponent implements OnInit {
             .then(a => {
               this.clientesService.flashMessageToDelete(cliente.nome);
               this.form.reset();
-              this.router.navigate(["clientes"]);
+              this.router.navigate(['clientes']);
             })
             .catch(error => {
               this.dialog.open(InfoModalComponent, {
-                data: { title: "Erro", message: error.message }
+                data: { title: 'Erro', message: error.message }
               });
             });
         }
@@ -196,14 +209,16 @@ export class EditClienteComponent implements OnInit {
         telefone: this.cliente.telefone,
         celular: this.cliente.celular,
         email: this.cliente.email,
-        cpf: this.cliente.cpf,
-        rg: this.cliente.rg
+        // cpf: this.cliente.cpf,
+        // rg: this.cliente.rg
       });
+
+      this.getCompras(this.cliente.id);
     }
   }
 
   nextData(e) {
-    let index = this.clientes.findIndex(a => a.nome == e);
+    const index = this.clientes.findIndex(a => a.nome == e);
     if (index != -1 && index != this.clientes.length - 1) {
       this.cliente = { ...this.clientes[index + 1] };
       this.myControl.setValue(this.cliente.nome);
@@ -217,14 +232,16 @@ export class EditClienteComponent implements OnInit {
         telefone: this.cliente.telefone,
         celular: this.cliente.celular,
         email: this.cliente.email,
-        cpf: this.cliente.cpf,
-        rg: this.cliente.rg
+        // cpf: this.cliente.cpf,
+        // rg: this.cliente.rg
       });
+
+      this.getCompras(this.cliente.id);
     }
   }
 
   previousData(e) {
-    let index = this.clientes.findIndex(a => a.nome == e);
+    const index = this.clientes.findIndex(a => a.nome == e);
     if (index != -1 && index > 0) {
       this.cliente = { ...this.clientes[index - 1] };
       this.myControl.setValue(this.cliente.nome);
@@ -238,9 +255,27 @@ export class EditClienteComponent implements OnInit {
         telefone: this.cliente.telefone,
         celular: this.cliente.celular,
         email: this.cliente.email,
-        cpf: this.cliente.cpf,
-        rg: this.cliente.rg
+        // cpf: this.cliente.cpf,
+        // rg: this.cliente.rg
       });
+      this.getCompras(this.cliente.id);
     }
   }
+
+
+  getCompras(id: string){
+
+  this.vendasService.getProdutoByClientes(id).snapshotChanges().pipe(
+    map(actions => actions.map(a => {
+      const data = a.payload.doc.data() as Venda;
+      const id = a.payload.doc.id;
+      return { id, ...data };
+    }))
+  )
+  .subscribe(compras => {
+  this.compras = compras;
+  console.log("aquii", compras)
+  });
+
+}
 }

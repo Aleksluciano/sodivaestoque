@@ -1,26 +1,28 @@
-import { Component, OnInit, Input, Output, EventEmitter } from "@angular/core";
-import { FormGroup, FormControl } from "@angular/forms";
-import { trigger, transition, style, animate } from "@angular/animations";
-import { Observable } from "rxjs";
-import { startWith, map } from "rxjs/operators";
-import { Produto } from "src/app/models/produto.model";
+import { Validators } from '@angular/forms';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { FormGroup, FormControl } from '@angular/forms';
+import { trigger, transition, style, animate } from '@angular/animations';
+import { Observable } from 'rxjs';
+import { startWith, map } from 'rxjs/operators';
+import { Produto } from 'src/app/models/produto.model';
 import {
   optionsCores,
   optionsTipos
-} from "src/app/components/shared/select-options/options";
+} from 'src/app/components/shared/select-options/options';
 
 @Component({
-  selector: "app-produto-form-edit",
-  templateUrl: "./produto-form-edit.component.html",
-  styleUrls: ["./produto-form-edit.component.scss"],
+  selector: 'app-produto-form-edit',
+  templateUrl: './produto-form-edit.component.html',
+  styleUrls: ['./produto-form-edit.component.scss'],
   animations: [
-    trigger("fade", [
-      transition("void => *", [style({ opacity: 0 }), animate(500)])
+    trigger('fade', [
+      transition('void => *', [style({ opacity: 0 }), animate(500)])
     ])
   ]
 })
 export class ProdutoFormEditComponent implements OnInit {
   editButton = true;
+  @Input()
   produto: Produto;
 
   @Input()
@@ -38,8 +40,8 @@ export class ProdutoFormEditComponent implements OnInit {
   @Input()
   myControl = new FormControl();
 
-  @Input()
-  myControlFornec = new FormControl();
+
+
 
   @Input()
   optionsFornecedor: string[];
@@ -66,24 +68,24 @@ export class ProdutoFormEditComponent implements OnInit {
   findOne: EventEmitter<string> = new EventEmitter<string>();
 
   options: string[] = [
-    "PP",
-    "P",
-    "M",
-    "G",
-    "GG",
-    "G1",
-    "G2",
-    "G3",
-    "34",
-    "36",
-    "38",
-    "40",
-    "42",
-    "44",
-    "U"
+    'PP',
+    'P',
+    'M',
+    'G',
+    'GG',
+    'G1',
+    'G2',
+    'G3',
+    '34',
+    '36',
+    '38',
+    '40',
+    '42',
+    '44',
+    'U'
   ];
 
-  custoString: string = "0.00";
+  custoString = '0.00';
 
   optionsCor = optionsCores;
   optionsTipo = optionsTipos;
@@ -96,37 +98,49 @@ export class ProdutoFormEditComponent implements OnInit {
 
   constructor() {}
 
+
   ngOnInit() {
+
+
+
     this.filteredOptions = this.parent
-      .get("fornec")
-      .get("tamanho")
+      .get('fornec')
+      .get('tamanho')
       .valueChanges.pipe(
-        startWith(""),
+        startWith(''),
         map(value => this._filter(value))
       );
 
     this.filteredOptionsTipo = this.parent
-      .get("fornec")
-      .get("tipo")
+      .get('fornec')
+      .get('tipo')
       .valueChanges.pipe(
-        startWith(""),
+        startWith(''),
         map(value => this._filterTipo(value))
       );
 
-    this.filteredOptionsFornecedor = this.myControlFornec.valueChanges.pipe(
+
+  setTimeout(a => {
+
+    this.filteredOptionsFornecedor = this.parent
+    .get('fornec')
+    .get('fornecedor').valueChanges.pipe(
+      startWith(''),
       map(value => this._filterFornecedor(value))
     );
+  }, 1000);
+
 
     this.filteredOptionsCor = this.parent
-      .get("fornec")
-      .get("cor")
+      .get('fornec')
+      .get('cor')
       .valueChanges.pipe(
-        startWith(""),
+        startWith(''),
         map(value => this._filterCor(value))
       );
 
     this.filteredOptionsFind = this.myControl.valueChanges.pipe(
-      startWith(""),
+      startWith(''),
       map(value => this._filterFind(value))
     );
   }
@@ -136,34 +150,33 @@ export class ProdutoFormEditComponent implements OnInit {
   }
 
   convertCalc(valor: string, quantidade: number) {
-    let convertValor = valor.substring(3).replace(/[,.]/g, function(m) {
-      return m === "," ? "." : "";
+    const convertValor = valor.substring(3).replace(/[,.]/g, function(m) {
+      return m === ',' ? '.' : '';
     });
 
-    let num = (+convertValor * quantidade).toFixed(2);
+    const num = (+convertValor * quantidade).toFixed(2);
 
     return String(num);
   }
 
   private _filterFind(value: string): string[] {
-    let filterValue = "";
-    if (value) filterValue = value.toLowerCase();
-
+    let filterValue = '';
+    filterValue = value.toLowerCase();
     return this.arrayProdutos.filter(
       option => option.toLowerCase().indexOf(filterValue) === 0
     );
   }
 
   calcLucro(valor, quantidade, preco) {
-    let convertValor = valor.substring(3).replace(/[,.]/g, function(m) {
-      return m === "," ? "." : "";
+    const convertValor = valor.substring(3).replace(/[,.]/g, function(m) {
+      return m === ',' ? '.' : '';
     });
 
-    let convertPreco = preco.substring(3).replace(/[,.]/g, function(m) {
-      return m === "," ? "." : "";
+    const convertPreco = preco.substring(3).replace(/[,.]/g, function(m) {
+      return m === ',' ? '.' : '';
     });
 
-    let num = (+convertPreco * quantidade - +convertValor * quantidade).toFixed(
+    const num = (+convertPreco * quantidade - +convertValor * quantidade).toFixed(
       2
     );
 
@@ -171,29 +184,29 @@ export class ProdutoFormEditComponent implements OnInit {
   }
 
   porcentagemLucro(valor, quantidade, preco) {
-    let convertValor = valor.substring(3).replace(/[,.]/g, function(m) {
-      return m === "," ? "." : "";
+    const convertValor = valor.substring(3).replace(/[,.]/g, function(m) {
+      return m === ',' ? '.' : '';
     });
 
-    let convertPreco = preco.substring(3).replace(/[,.]/g, function(m) {
-      return m === "," ? "." : "";
+    const convertPreco = preco.substring(3).replace(/[,.]/g, function(m) {
+      return m === ',' ? '.' : '';
     });
 
-    let num = (
+    const num = (
       ((+convertPreco * quantidade - +convertValor * quantidade) /
         (+convertValor * quantidade)) *
       100
     ).toFixed(2);
 
-    let testNum = Number.isNaN(Number(num));
-    if (testNum) return "0";
+    const testNum = Number.isNaN(Number(num));
+    if (testNum) { return '0'; }
 
     return String(num);
   }
 
   private _filter(value: string): string[] {
-    let filterValue = "";
-    if (value) filterValue = value.toLowerCase();
+    let filterValue = '';
+    if (value) { filterValue = value.toLowerCase(); }
 
     return this.options.filter(
       option => option.toLowerCase().indexOf(filterValue) === 0
@@ -201,8 +214,8 @@ export class ProdutoFormEditComponent implements OnInit {
   }
 
   private _filterTipo(value: string): string[] {
-    let filterValue = "";
-    if (value) filterValue = value.toLowerCase();
+    let filterValue = '';
+    if (value) { filterValue = value.toLowerCase(); }
 
     return this.optionsTipo.filter(
       option => option.toLowerCase().indexOf(filterValue) === 0
@@ -210,8 +223,11 @@ export class ProdutoFormEditComponent implements OnInit {
   }
 
   private _filterFornecedor(value: string): string[] {
-    let filterValue = "";
-    if (value) filterValue = value.toLowerCase();
+
+    let filterValue = '';
+    if (value) {
+    filterValue = value.toLowerCase();
+    }
 
     return this.optionsFornecedor.filter(
       option => option.toLowerCase().indexOf(filterValue) === 0
@@ -219,8 +235,8 @@ export class ProdutoFormEditComponent implements OnInit {
   }
 
   private _filterCor(value: string): string[] {
-    let filterValue = "";
-    if (value) filterValue = value.toLowerCase();
+    let filterValue = '';
+    if (value) { filterValue = value.toLowerCase(); }
 
     return this.optionsCor.filter(
       option => option.toLowerCase().indexOf(filterValue) === 0
@@ -229,8 +245,7 @@ export class ProdutoFormEditComponent implements OnInit {
   changeEditButton() {
     this.editButton = !this.editButton;
 
-    if (!this.editButton) this.parent.get("fornec").enable();
-    else this.parent.get("fornec").disable();
+    if (!this.editButton) { this.parent.get('fornec').enable(); } else { this.parent.get('fornec').disable(); }
   }
 
   deleteItem() {
@@ -252,4 +267,43 @@ export class ProdutoFormEditComponent implements OnInit {
   previousData(e) {
     this.previous.emit(e);
   }
+
+pad(num, size) {
+
+  const numnum = parseInt(num);
+  let s = '';
+   for (let i = 0; i < 5 - numnum.toString().length; i++) {
+    s += '0';
+   }
+
+  let retorno = 'SD' + s + numnum.toString();
+  if (retorno.length > 7) {retorno = 'SD' + retorno.substr(2 + retorno.length - 7); }
+  this.parent.value.fornec.codigo = retorno;
+    return retorno;
+}
+
+calcEstoque( ) {
+
+
+  let estoque = 0;
+  let resultado = 0;
+  if(this.produto){
+  resultado = this.produto.quantidade;
+
+  if (
+    this.produto &&
+    this.produto.estoque &&
+    this.produto.estoque.length > 0
+  ) {
+    this.produto.estoque.forEach(obj => {
+      estoque += obj.quant;
+    });
+
+  }
+
+  resultado = this.produto.quantidade - estoque;
+  if (resultado == 0) {return 'SEM ESTOQUE'; }
+  }
+  return resultado;
+}
 }

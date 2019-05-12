@@ -7,19 +7,19 @@ import {
   ElementRef,
   ViewChild,
   AfterViewInit
-} from "@angular/core";
-import { FormGroup, FormControl } from "@angular/forms";
-import { trigger, transition, style, animate } from "@angular/animations";
-import { Observable } from "rxjs";
-import { startWith, map } from "rxjs/operators";
+} from '@angular/core';
+import { FormGroup, FormControl } from '@angular/forms';
+import { trigger, transition, style, animate } from '@angular/animations';
+import { Observable } from 'rxjs';
+import { startWith, map } from 'rxjs/operators';
 
 @Component({
-  selector: "app-cliente-form",
-  templateUrl: "./cliente-form.component.html",
-  styleUrls: ["./cliente-form.component.scss"],
+  selector: 'app-cliente-form',
+  templateUrl: './cliente-form.component.html',
+  styleUrls: ['./cliente-form.component.scss'],
   animations: [
-    trigger("fade", [
-      transition("void => *", [style({ opacity: 0 }), animate(500)])
+    trigger('fade', [
+      transition('void => *', [style({ opacity: 0 }), animate(500)])
     ])
   ]
 })
@@ -34,36 +34,36 @@ export class ClienteFormComponent implements OnInit, AfterViewInit {
   back: EventEmitter<void> = new EventEmitter<void>();
 
   options: string[] = [
-    "AC",
-    "AL",
-    "AM",
-    "AP",
-    "BA",
-    "CE",
-    "DF",
-    "ES",
-    "GO",
-    "MA",
-    "MG",
-    "MS",
-    "MT",
-    "PA",
-    "PB",
-    "PE",
-    "PI",
-    "PR",
-    "RJ",
-    "RN",
-    "RO",
-    "RR",
-    "RS",
-    "SC",
-    "SE",
-    "SP",
-    "TO"
+    'AC',
+    'AL',
+    'AM',
+    'AP',
+    'BA',
+    'CE',
+    'DF',
+    'ES',
+    'GO',
+    'MA',
+    'MG',
+    'MS',
+    'MT',
+    'PA',
+    'PB',
+    'PE',
+    'PI',
+    'PR',
+    'RJ',
+    'RN',
+    'RO',
+    'RR',
+    'RS',
+    'SC',
+    'SE',
+    'SP',
+    'TO'
   ];
   filteredOptions: Observable<string[]>;
-  @ViewChild("nameInput") nameInput;
+  @ViewChild('nameInput') nameInput;
 
   constructor() {}
 
@@ -73,10 +73,10 @@ export class ClienteFormComponent implements OnInit, AfterViewInit {
     this.nameInput.nativeElement.focus();
 
     this.filteredOptions = this.parent
-      .get("fornec")
-      .get("estado")
+      .get('fornec')
+      .get('estado')
       .valueChanges.pipe(
-        startWith(""),
+        startWith(''),
         map(value => this._filter(value))
       );
   }
@@ -91,8 +91,8 @@ export class ClienteFormComponent implements OnInit, AfterViewInit {
 
   private _filter(value: string): string[] {
 
-      let filterValue = "";
-      if (value) filterValue = value.toLowerCase();
+      let filterValue = '';
+      if (value) { filterValue = value.toLowerCase(); }
 
       return this.options.filter(
         option => option.toLowerCase().indexOf(filterValue) === 0

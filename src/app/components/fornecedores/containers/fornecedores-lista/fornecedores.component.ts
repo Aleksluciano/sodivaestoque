@@ -1,17 +1,17 @@
-import { Component, OnInit, ViewChild } from "@angular/core";
-import { FornecedorService } from "src/app/services/fornecedor.service";
-import { Fornecedor } from "src/app/models/fornecedor.model";
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { FornecedorService } from 'src/app/services/fornecedor.service';
+import { Fornecedor } from 'src/app/models/fornecedor.model';
 
 import {
   MatTableDataSource,
   MatDialogConfig,
   MatDialog
-} from "@angular/material";
-import { ConfirmModalComponent } from "src/app/components/shared/confirm-modal/confirm-modal.component";
-import { Router } from "@angular/router";
+} from '@angular/material';
+import { ConfirmModalComponent } from 'src/app/components/shared/confirm-modal/confirm-modal.component';
+import { Router } from '@angular/router';
 
 @Component({
-  selector: "app-fornecedores",
+  selector: 'app-fornecedores',
   template: `
     <br />
 
@@ -28,18 +28,18 @@ import { Router } from "@angular/router";
 })
 export class FornecedoresComponent implements OnInit {
   displayedColumns: string[] = [
-    "Indice",
-    "Nome",
-    "Endereço",
-    "Bairro",
-    "Cidade",
-    "Estado",
-    "Contato",
-    "Telefone",
-    "Celular",
-    "Email",
-    "Cnpj",
-    "Ações"
+    'Indice',
+    'Nome',
+    'Endereço',
+    'Bairro',
+    'Cidade',
+    'Estado',
+    'Contato',
+    'Telefone',
+    'Celular',
+    'Email',
+    'Cnpj',
+    'Ações'
   ];
   fornecedores: Fornecedor[] = [];
   dataSource: MatTableDataSource<Fornecedor>;
@@ -60,7 +60,7 @@ export class FornecedoresComponent implements OnInit {
   }
 
   onDeleteClick(event: Fornecedor) {
-    this.popupOpen = true
+    this.popupOpen = true;
     const dialogConfig = new MatDialogConfig();
     dialogConfig.disableClose = false;
     dialogConfig.autoFocus = true;
@@ -73,7 +73,7 @@ export class FornecedoresComponent implements OnInit {
       .afterClosed()
       .subscribe(result => {
         this.popupOpen = false;
-        if (result) this.fornecedoresService.deleteFornecedor(event.id);
+        if (result) { this.fornecedoresService.deleteFornecedor(event.id); }
       });
   }
 
@@ -82,12 +82,12 @@ export class FornecedoresComponent implements OnInit {
   }
 
   applyFilter(filterValue: string) {
-    if (filterValue) this.dataSource.filter = filterValue.trim().toLowerCase();
+    if (filterValue) { this.dataSource.filter = filterValue.trim().toLowerCase(); }
   }
 
   newItem() {
     if (!this.popupOpen) {
-    this.router.navigate(["/add"]);
+    this.router.navigate(['/add']);
     }
   }
 }

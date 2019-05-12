@@ -11,3 +11,7 @@ a:active {
 #sair{
   margin-right: 20%
 }
+
+.menu{
+  border: solid 1px;
+}

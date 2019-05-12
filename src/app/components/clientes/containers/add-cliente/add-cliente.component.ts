@@ -1,13 +1,13 @@
-import { Component, OnInit } from "@angular/core";
-import { FormBuilder, Validators } from "@angular/forms";
-import { ClienteService } from "src/app/services/cliente.service";
-import { Router } from "@angular/router";
-import { Location } from "@angular/common";
-import { MatDialog } from "@angular/material";
-import { InfoModalComponent } from "src/app/components/shared/info-modal.component.ts/info-modal.component";
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, Validators } from '@angular/forms';
+import { ClienteService } from 'src/app/services/cliente.service';
+import { Router } from '@angular/router';
+import { Location } from '@angular/common';
+import { MatDialog } from '@angular/material';
+import { InfoModalComponent } from 'src/app/components/shared/info-modal.component.ts/info-modal.component';
 
 @Component({
-  selector: "app-add-cliente",
+  selector: 'app-add-cliente',
   template: `
     <br />
     <form [formGroup]="form" (ngSubmit)="onSubmit()">
@@ -23,17 +23,17 @@ import { InfoModalComponent } from "src/app/components/shared/info-modal.compone
 export class AddClienteComponent implements OnInit {
   form = this.fb.group({
     fornec: this.fb.group({
-      nome: ["", Validators.required],
-      cep: "",
-      endereco: ["", Validators.required],
-      bairro: ["", Validators.required],
-      cidade: ["", Validators.required],
-      estado: ["", Validators.required],
-      telefone: "",
-      celular: "",
-      email: "",
-      cpf: "",
-      rg: ""
+      nome: ['', Validators.required],
+      cep: '',
+      endereco: ['', Validators.required],
+      bairro: ['', Validators.required],
+      cidade: ['', Validators.required],
+      estado: ['', Validators.required],
+      telefone: '',
+      celular: '',
+      email: '',
+      // cpf: "",
+      // rg: ""
     })
   });
 
@@ -48,7 +48,7 @@ export class AddClienteComponent implements OnInit {
   ngOnInit() {}
 
   onSubmit() {
-    if (this.form.valid)
+    if (this.form.valid) {
       this.fornecedoresService
         .newCliente(this.form.value.fornec)
         .then(a => {
@@ -56,13 +56,14 @@ export class AddClienteComponent implements OnInit {
             this.form.value.fornec.nome
           );
           this.form.reset();
-          this.router.navigate(["clientes"]);
+          this.router.navigate(['clientes']);
         })
         .catch(error => {
           this.dialog.open(InfoModalComponent, {
-            data: { title: "Erro", message: error.message }
+            data: { title: 'Erro', message: error.message }
           });
         });
+    }
   }
 
   findAdress(event: string) {
@@ -79,7 +80,7 @@ export class AddClienteComponent implements OnInit {
       })
       .catch(error => {
         this.dialog.open(InfoModalComponent, {
-          data: { title: "Erro", message: error.message }
+          data: { title: 'Erro', message: error.message }
         });
       });
   }

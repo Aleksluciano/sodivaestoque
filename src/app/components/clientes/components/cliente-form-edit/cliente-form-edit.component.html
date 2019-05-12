@@ -1,34 +1,24 @@
 <mat-card @fade>
-
-  <mat-card-header class="inline">
-    <mat-card-title class="inline">
-      <h2 class="inline">Atualizar Cliente</h2>
+    <a [routerLink]="" (click)="return()">
+        <button mat-mini-fab color="accent">
+          <mat-icon>arrow_back</mat-icon>
+        </button>
+      </a>
+  <mat-card-header >
+    <mat-card-title >
+      <h2 style="margin: auto">Atualizar Cliente</h2>
     </mat-card-title>
 
-  </mat-card-header>
 
-
-
-  <button
-  class="findData"
-  color="primary"
-  mat-button
-  (keydown.enter)="findData(Buscar.value)"
-  type="button"
-  (click)="findData(Buscar.value)"
-  id="searchIcon"
-  >
-    <mat-icon>search</mat-icon>
-  </button>
   <button
   class="findData"
   color="accent"
-  mat-button
+  mat-icon-button
   type="button"
-  (click)="nextData(Buscar.value)"
+  (click)="previousData(Buscar.value)"
   id="searchIcon"
   >
-    <mat-icon>arrow_right</mat-icon>
+    <mat-icon>arrow_left</mat-icon>
   </button>
 
   <mat-form-field
@@ -52,18 +42,32 @@
         </mat-autocomplete>
     </mat-form-field>
 
-  <button
-  class="findData"
-  color="accent"
-  mat-button
-  type="button"
-  (click)="previousData(Buscar.value)"
-  id="searchIcon"
-  >
-    <mat-icon>arrow_left</mat-icon>
-  </button>
+    <button
+    class="findData"
+    color="accent"
+    mat-icon-button
+    type="button"
+    (click)="nextData(Buscar.value)"
+    id="searchIcon"
+    >
+      <mat-icon>arrow_right</mat-icon>
+    </button>
 
 
+    <button
+    class="findData"
+    color="primary"
+    mat-mini-fab
+    (keydown.enter)="findData(Buscar.value)"
+    type="button"
+    (click)="findData(Buscar.value)"
+    id="searchIcon"
+    >
+      <mat-icon>search</mat-icon>
+    </button>
+
+
+</mat-card-header>
 
   <mat-card-subtitle>
     <p>Os campos com * são obrigatórios</p>
@@ -73,7 +77,7 @@
     <div formGroupName="fornec">
 
       <div class="mat-form-field--inline">
-        <mat-form-field appearance="outline">
+        <mat-form-field appearance="outline" id="field-nome">
           <mat-label>Nome</mat-label>
           <input matInput
            placeholder="Nome"
@@ -161,7 +165,7 @@
           >
         </mat-form-field>
 
-        <mat-form-field appearance="outline" id="field-cnpj">
+        <!-- <mat-form-field appearance="outline" id="field-cnpj">
           <mat-label>Cpf</mat-label>
           <input matInput placeholder="Cpf" type="text" formControlName="cpf"
           minlength="11"
@@ -175,7 +179,7 @@
           minlength="9"
           mask="00.000.000-0"
           >
-        </mat-form-field>
+        </mat-form-field> -->
 
       </div>
 
@@ -203,12 +207,48 @@
   id="deleteButton"
   >Deletar
 </button>
-    <a [routerLink]="" (click)="return()">
-      <button mat-mini-fab color="accent">
-        <mat-icon>arrow_back</mat-icon>
-      </button>
-    </a>
+
 
   </div>
 
+</mat-card>
+<br>
+<mat-card *ngIf="compras.length > 0">
+  <mat-card-title>
+    Histórico de compras
+  </mat-card-title>
+<div *ngFor="let item of compras">
+    <a style="color:rgb(55, 190, 214)" routerLink="/vendas/edit/{{item?.id}}">{{ item?.recibo }}</a> <span> - Data: {{ backTimeStamp(item?.data) | date:'dd-MM-yyyy' }}</span>
+    <table border="4">
+        <thead>
+            <tr style="background-color: rgb(30, 210, 84)">
+            <th>Cód.</th>
+            <th >Tipo</th>
+            <th >Descrição</th>
+            <th >Cor</th>
+            <th >Tam.</th>
+            <td >Quant.</td>
+            <th >Preço</th>
+          </tr>
+        </thead>
+  <tbody>
+      <tr *ngFor="let compra of item.listaProduto; let i = index" >
+      <td ><a style="color: orange;margin-left: 15px" routerLink="/produtos/edit/{{compra?.id}}">{{ compra.codigo }}</a></td>
+      <td align="center">{{ compra.tipo }} </td>
+      <td >{{ compra.descricao }} </td>
+      <td align="center">{{ compra.cor }} </td>
+      <td align="center">{{ compra.tamanho }} </td>
+      <td align="center">{{ compra.quantidade }} </td>
+      <td align="center">R$ {{ compra.preco | number: '.2':'pt' }} </td>
+    </tr>
+  </tbody>
+    </table>
+    <br>
+</div>
+<!-- <mat-list>
+    <mat-list-item *ngFor="let compra of item.listaProduto">
+      <a style="color: rgb(55, 190, 214);margin-left: 15px;margin-right: 15px" routerLink="/vendas/edit/{{item?.id}}">{{ item?.recibo }}</a> <a style="color: yellow;margin-left: 15px;margin-right: 15px" routerLink="/produtos/edit/{{compra?.id}}" >{{ compra?.codigo }}</a> {{ compra?.tipo }} {{ compra?.descricao }} {{ compra?.cor }} {{ compra?.quantidade }} {{ backTimeStamp(item?.data) | date:'dd-MM-yyyy' }}</mat-list-item>
+   </mat-list>
+
+  </div> -->
 </mat-card>

@@ -1,8 +1,12 @@
 <mat-card @fade>
-
-  <mat-card-header class="inline">
-    <mat-card-title class="inline">
-      <h2 class="inline">Adicionar Fornecedor</h2>
+    <a [routerLink]="" (click)="return()">
+        <button mat-mini-fab color="accent">
+          <mat-icon>arrow_back</mat-icon>
+        </button>
+      </a>
+  <mat-card-header >
+    <mat-card-title >
+      <h2 style="margin: auto">Adicionar Fornecedor</h2>
     </mat-card-title>
   </mat-card-header>
 
@@ -116,11 +120,7 @@
 
     </div>
     <button mat-raised-button color="primary" type="submit" [disabled]="!parent.valid">Criar</button>
-    <a [routerLink]="" (click)="return()">
-      <button mat-mini-fab color="accent">
-        <mat-icon>arrow_back</mat-icon>
-      </button>
-    </a>
+
 
   </div>
 

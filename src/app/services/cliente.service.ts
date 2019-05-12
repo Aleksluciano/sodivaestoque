@@ -2,11 +2,11 @@ import { Injectable } from '@angular/core';
 import { Cliente } from '../models/cliente.model';
 import { Observable } from 'rxjs';
 import { AngularFirestoreDocument, AngularFirestoreCollection, AngularFirestore } from '@angular/fire/firestore';
-import { map } from "rxjs/operators";
+import { map } from 'rxjs/operators';
 
 
 import { NgFlashMessageService } from 'ng-flash-messages';
-import { NgxViacepService } from "@brunoc/ngx-viacep";
+import { NgxViacepService } from '@brunoc/ngx-viacep';
 @Injectable({
   providedIn: 'root'
 })
@@ -14,7 +14,7 @@ export class ClienteService {
 
   fornecedoresCollection: AngularFirestoreCollection<Cliente>;
   fornecedorDoc: AngularFirestoreDocument<Cliente>;
-  clientes: Observable<Cliente[]>
+  clientes: Observable<Cliente[]>;
   cliente: Observable<Cliente>;
 
   constructor(
@@ -43,18 +43,18 @@ export class ClienteService {
     return this.clientes;
    }
 
-   newCliente(cliente: Cliente){
-     return this.fornecedoresCollection.add(cliente)
+   newCliente(cliente: Cliente) {
+     return this.fornecedoresCollection.add(cliente);
    }
 
-   getCliente(id: string): Observable<Cliente>{
+   getCliente(id: string): Observable<Cliente> {
 
       this.fornecedorDoc = this.afs.doc<Cliente>(`clientes/${id}`);
       this.cliente =  this.fornecedorDoc.snapshotChanges().pipe(
         map(action => {
-          if(action.payload.exists === false){
+          if (action.payload.exists === false) {
             return null;
-          }else{
+          } else {
             const data = action.payload.data() as Cliente;
             data.id = action.payload.id;
             return data;
@@ -65,14 +65,14 @@ export class ClienteService {
 
    }
 
-   updateCliente(cliente: Cliente){
+   updateCliente(cliente: Cliente) {
 
     this.fornecedorDoc = this.afs.doc(`clientes/${cliente.id}`);
      return this.fornecedorDoc.update(cliente);
 
    }
 
-   deleteCliente(id: string){
+   deleteCliente(id: string) {
     this.fornecedorDoc = this.afs.doc(`clientes/${id}`);
     return this.fornecedorDoc.delete();
 
@@ -81,12 +81,12 @@ export class ClienteService {
    searchCep(cep: string) {
 
     return this.viacep
-      .buscarPorCep(cep)
+      .buscarPorCep(cep);
 
   }
 
 
-   flashMessageToNew(name: string){
+   flashMessageToNew(name: string) {
     this.ngFlashMessageService.showFlashMessage({
       messages: [`SUCESSO! Cliente ${name} adicionado.`],
       dismissible: true,
@@ -95,7 +95,7 @@ export class ClienteService {
     });
    }
 
-   flashMessageToUpdate(name: string){
+   flashMessageToUpdate(name: string) {
     this.ngFlashMessageService.showFlashMessage({
       messages: [`SUCESSO! Cliente ${name} atualizado.`],
       dismissible: true,
@@ -104,7 +104,7 @@ export class ClienteService {
     });
    }
 
-   flashMessageToDelete(name: string){
+   flashMessageToDelete(name: string) {
     this.ngFlashMessageService.showFlashMessage({
       messages: [`SUCESSO! Cliente ${name} removido.`],
       dismissible: true,

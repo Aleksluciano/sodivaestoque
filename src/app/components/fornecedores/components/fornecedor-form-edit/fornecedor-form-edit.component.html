@@ -1,33 +1,27 @@
 <mat-card @fade>
+    <a [routerLink]="" (click)="return()">
+        <button mat-mini-fab color="accent">
+          <mat-icon>arrow_back</mat-icon>
+        </button>
+      </a>
 
-    <mat-card-header class="inline">
-      <mat-card-title class="inline">
-        <h2 class="inline">Atualizar Fornecedor</h2>
+    <mat-card-header >
+      <mat-card-title >
+        <h2 style="margin: auto;">Atualizar Fornecedor</h2>
       </mat-card-title>
 
-    </mat-card-header>
 
 
 
-    <button
-    class="findData"
-    color="primary"
-    mat-button
-    type="button"
-    (click)="findData(Buscar.value)"
-    id="searchIcon"
-    >
-      <mat-icon>search</mat-icon>
-    </button>
     <button
     class="findData"
     color="accent"
-    mat-button
+    mat-icon-button
     type="button"
-    (click)="nextData(Buscar.value)"
+    (click)="previousData(Buscar.value)"
     id="searchIcon"
     >
-      <mat-icon>arrow_right</mat-icon>
+      <mat-icon>arrow_left</mat-icon>
     </button>
 
     <mat-form-field
@@ -50,19 +44,33 @@
             </mat-option>
           </mat-autocomplete>
       </mat-form-field>
+      <button
+      class="findData"
+      color="accent"
+      mat-icon-button
+      type="button"
+      (click)="nextData(Buscar.value)"
+      id="searchIcon"
+      >
+        <mat-icon>arrow_right</mat-icon>
+      </button>
 
-    <button
-    class="findData"
-    color="accent"
-    mat-button
-    type="button"
-    (click)="previousData(Buscar.value)"
-    id="searchIcon"
-    >
-      <mat-icon>arrow_left</mat-icon>
-    </button>
+      <button
+      class="findData"
+      color="primary"
+      mat-mini-fab
+      type="button"
+      (click)="findData(Buscar.value)"
+      id="searchIcon"
+      >
+        <mat-icon>search</mat-icon>
+      </button>
+
+  </mat-card-header>
 
     <mat-card-subtitle>
+
+
       <p>Os campos com * são obrigatórios</p>
     </mat-card-subtitle>
 
@@ -198,11 +206,7 @@
     id="deleteButton"
     >Deletar
   </button>
-      <a [routerLink]="" (click)="return()">
-        <button mat-mini-fab color="accent">
-          <mat-icon>arrow_back</mat-icon>
-        </button>
-      </a>
+
 
     </div>
 
