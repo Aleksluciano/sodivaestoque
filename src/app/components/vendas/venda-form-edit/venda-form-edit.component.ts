@@ -303,7 +303,7 @@ export class VendaFormEditComponent implements OnInit {
     while (length < parseInt(this.numeroPagamentos)) {
       this.pagamentos.push({
         preco: this.totalLista / parseInt(this.numeroPagamentos),
-        forma: 'debito',
+        forma: 'credito',
         data: new Date()
       });
       length++;
@@ -412,7 +412,7 @@ export class VendaFormEditComponent implements OnInit {
       };
 
       this.vendasService
-        .getProdutoByRecibo(venda.recibo)
+        .getVendaByRecibo(venda.recibo)
         .get()
         .subscribe(document => {
           if (document.size > 0 && venda.recibo != this.recibo) {

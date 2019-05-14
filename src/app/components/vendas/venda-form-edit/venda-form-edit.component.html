@@ -61,7 +61,7 @@
               </div>
         </mat-card>
         </div>
-        <div fxFlex=30 *ngIf="cliente">
+        <div fxFlex=30 *ngIf="cliente?.endereco">
             <p >Endereço: {{ cliente?.endereco }}</p>
             <p >Telefone: {{ cliente?.telefone || cliente?.celular }}</p>
         </div>
@@ -94,27 +94,7 @@
       </mat-option>
     </mat-autocomplete>
 </mat-form-field>
-<mat-form-field appearance="outline"  id="desconto" >
-    <mat-label>Desc.</mat-label>
-    <input matInput
-    placeholder="Desc."
-     type="number"
-     [(ngModel)]="desconto"
-     disabled="true"
-     min="0" max="30"
-     step="5"
-     >
-     <span matSuffix>%</span>
-  </mat-form-field>
-  <form class="buttonquant" >
-      <button mat-mini-fab class="plusquant" (click)="addDesconto()">
-          <mat-icon aria-label="Add" class="iconb">add</mat-icon>
-        </button>
-      <button mat-mini-fab class="minusquant" (click)="removeDesconto()">
-          <mat-icon aria-label="Add" class="iconb" >remove</mat-icon>
-        </button>
 
-      </form>
 
 <mat-form-field appearance="outline"  id="quantidade" >
     <mat-label>Qt.</mat-label>
@@ -181,12 +161,13 @@
           <td></td>
           <td></td>
           <td align="center">{{ quantidadeTotalLista }}</td>
-          <td align="center" style="font-size: 1.5em;color:rgb(63, 63, 252);font-weight: bold; background-color: white;min-width: 70px">R$ {{ totalLista | number: '.2-2' }}</td>
+          <td align="center" style="font-size: 1.2em;min-width: 70px">R$ {{ totalLista | number: '.2-2' }}</td>
 
         </tr>
       </tfoot>
       </table>
 <h4 *ngIf="desconto > 0">Valor total com desconto de: {{ desconto }}%</h4>
+<h4 *ngIf="desconto == 0">Valor total sem desconto</h4>
   </mat-card>
 </div>
 </div>
@@ -212,11 +193,32 @@
       <br>
       <mat-card>
           <h5>Informações de pagamento</h5>
+          <mat-form-field appearance="outline"  id="desconto" >
+              <mat-label>Desc.</mat-label>
+              <input matInput
+              placeholder="Desc."
+               type="number"
+               [(ngModel)]="desconto"
+               disabled="true"
+               min="0" max="30"
+               step="5"
+               >
+               <span matSuffix>%</span>
+            </mat-form-field>
+            <form class="buttonquant" >
+                <button mat-mini-fab class="plusquant" (click)="addDesconto()">
+                    <mat-icon aria-label="Add" class="iconb">add</mat-icon>
+                  </button>
+                <button mat-mini-fab class="minusquant" (click)="removeDesconto()">
+                    <mat-icon aria-label="Add" class="iconb" >remove</mat-icon>
+                  </button>
+
+                </form>
           <div>
           <mat-radio-group aria-label="Select an option" [(ngModel)]="avistaaprazo" (change)="addPagamentos()">
               <mat-radio-button style="margin-right: 20px" value="1">À vista </mat-radio-button>
 
-              <mat-radio-button value="2">À prazo</mat-radio-button>
+              <mat-radio-button value="2">A prazo</mat-radio-button>
             </mat-radio-group>
             <div *ngIf="avistaaprazo == '1'">
                 <br>
@@ -224,9 +226,9 @@
                 <mat-form-field>
                     <mat-label>Forma de pagamento</mat-label>
                     <select matNativeControl required [(ngModel)]="forma">
-                      <option value="debito">💳 - Débito</option>
+                      <option value="debito">🔁 - Débito</option>
                       <option value="credito">💳 - Crédito</option>
-                      <option value="dinheiro">💰 - Dinheiro</option>
+                      <option value="dinheiro">💵 - Dinheiro</option>
                     </select>
                   </mat-form-field>
                   <mat-form-field style="margin-left: 15px" appearance="outline" id="datePicker" class="primeiroPag">
@@ -250,17 +252,16 @@
               </mat-radio-group>
             </div>
             <br><br>
-            <div *ngFor="let preco of pagamentos; let j = index">
-              <div >
-                  <br>
-                  <br>
+            <section *ngFor="let preco of pagamentos; let j = index">
+              <section style="font-size: .8em;margin-top:-10px">
+
                 <span>{{ j + 1 }}X - </span>
                 <mat-form-field>
                     <mat-label>Forma de pagamento</mat-label>
                     <select matNativeControl required [(ngModel)]="pagamentos[j].forma">
-                      <option value="debito">💳 - Débito</option>
+                      <option value="debito">🔁 - Débito</option>
                       <option value="credito" selected>💳 - Crédito</option>
-                      <option value="dinheiro">💰 - Dinheiro</option>
+                      <option value="dinheiro">💵 - Dinheiro</option>
                     </select>
                   </mat-form-field>
                   <mat-form-field appearance="outline"  class="precoPag">
@@ -282,18 +283,17 @@
                       <mat-datepicker #it ></mat-datepicker>
                       </mat-form-field>
                       <span style="margin-left: 15px" *ngIf="j != 0" > {{ preco.data | date:'dd-MM-yyyy' }} </span>
-                  </div>
-                </div>
+                    </section>
+                  </section>
               </div>
-              <br>
-              <br>
-              <br>
+              <section style="font-size: 1.5em;color:rgb(63, 63, 252);font-weight: bold; background-color: white;width: 200px;margin-left: 200px">Total: R$ {{ totalLista | number: '.2-2' }}</section>
+
               <button
               mat-raised-button
               color="primary"
               type="button"
               (click)="updateVenda()"
-              [disabled]="lista.length == 0"
+              [disabled]="lista.length == 0 || !form.valid"
               id="saveButton"
               >Salvar Alterações</button>
               </div>

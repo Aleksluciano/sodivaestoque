@@ -67,29 +67,24 @@ export class VendaService {
 
    }
 
-   getProdutoByRecibo(recibo: string) {
+   getVendaByRecibo(recibo: string) {
 
     return this.afs.collection('vendas', (ref) =>
     ref.where('recibo', '==', recibo).limit(1));
 
    }
 
-   getProdutoByClientes(id: string){
+   getVendaByClientes(id: string){
    return this.afs.collection<Venda>('vendas', (ref) =>
     ref.where('clienteId', '==', id));
-    // this.compras = this.vendasCollection('vendas', (ref) =>
-    // ref.where('clienteId', '==', id)).snapshotChanges().
-    // pipe(
-    //   map(actions => {
-    //     const data = a.payload.doc.data() as Venda;
 
-    //     data.id = a.payload.doc.id;
-    //     return data;
-    //   });
-    // }));
-
-    // return this.compras;
    }
+
+   getVendaByPeriodo(primeiro: Date, ultimo: Date){
+    return this.afs.collection<Venda>('vendas', (ref) =>
+     ref.where('dataUltimoPag', '>=', primeiro).where('dataUltimoPag', '<=', ultimo))
+
+    }
 
 
 

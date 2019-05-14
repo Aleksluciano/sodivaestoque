@@ -17,7 +17,7 @@ import { AngularFireAuthModule } from '@angular/fire/auth';
 import { environment } from '../environments/environment';
 
 // tslint:disable-next-line: max-line-length
-import {MatTableModule, MatSidenavModule, MatListModule, MatTabsModule, MatBadgeModule, MatInputModule, MatFormFieldModule, MatButtonModule, MatCardModule, MatExpansionModule, MatIconModule, MatMenuModule, MatSortModule, MatDialogModule, MatAutocompleteModule, MatSelectModule, MatToolbarModule, MatChipsModule, MatButtonToggleGroup, MatButtonToggleModule, MatRadioModule, MatDatepickerModule, MAT_DATE_LOCALE, MatNativeDateModule, MatPaginatorModule} from '@angular/material';
+import {MatTableModule, MatSidenavModule, MatListModule, MatTabsModule, MatBadgeModule, MatInputModule, MatFormFieldModule, MatButtonModule, MatCardModule, MatExpansionModule, MatIconModule, MatMenuModule, MatSortModule, MatDialogModule, MatAutocompleteModule, MatSelectModule, MatToolbarModule, MatChipsModule, MatButtonToggleGroup, MatButtonToggleModule, MatRadioModule, MatDatepickerModule, MAT_DATE_LOCALE, MatNativeDateModule, MatPaginatorModule, MatTooltipModule} from '@angular/material';
 import {
   BrowserAnimationsModule
 } from '@angular/platform-browser/animations';
@@ -51,6 +51,7 @@ import { VendaFormComponent } from './components/vendas/venda-form/venda-form.co
 import { SenhaComponent } from './components/senha/senha.component';
 import { VendasListaComponent } from './components/vendas/vendas-lista/vendas-lista.component';
 import { VendaFormEditComponent } from './components/vendas/venda-form-edit/venda-form-edit.component';
+import { FaturamentoComponent } from './components/faturamento/faturamento.component';
 
 export const customCurrencyMaskConfig = {
   align: 'right',
@@ -100,7 +101,8 @@ registerLocaleData(ptBr);
     VendasListaComponent,
     SenhaComponent,
     VendaFormEditComponent,
-    PrintComponent
+    PrintComponent,
+    FaturamentoComponent
     //////////
 
   ],
@@ -139,6 +141,7 @@ registerLocaleData(ptBr);
     MatDatepickerModule,
     MatNativeDateModule,
     MatPaginatorModule,
+    MatTooltipModule,
    ReactiveFormsModule.withConfig({warnOnNgModelWithFormControl: 'never'}),
 
 

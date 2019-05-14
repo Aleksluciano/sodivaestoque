@@ -82,7 +82,7 @@ export class FornecedoresComponent implements OnInit {
   }
 
   applyFilter(filterValue: string) {
-    if (filterValue) { this.dataSource.filter = filterValue.trim().toLowerCase(); }
+  this.dataSource.filter = filterValue.trim().toLowerCase(); 
   }
 
   newItem() {

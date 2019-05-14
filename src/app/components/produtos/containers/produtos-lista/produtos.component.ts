@@ -134,8 +134,8 @@ export class ProdutosComponent implements OnInit {
   }
 
   applyFilter(filterValue: string) {
-    if (filterValue) { this.dataSource.filter = filterValue.trim().toLowerCase(); }
-    console.log("LALA",this.dataSource);
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+
   }
 
   newItem() {

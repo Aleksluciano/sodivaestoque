@@ -1,6 +1,6 @@
 import { ClienteService } from 'src/app/services/cliente.service';
 import { Produto } from '../../../models/produto.model';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ProdutoService } from 'src/app/services/produto.service';
 import { DatePipe, Location } from '@angular/common';
 import { Observable } from 'rxjs';
@@ -60,6 +60,8 @@ export class VendaFormComponent implements OnInit {
   dataPrimeiroPag = new Date();
   dataUltimoPag = new Date();
 
+  @ViewChild('nomeCliente') nomeCliente;
+
   constructor(
     private produtosService: ProdutoService,
     private clientesService: ClienteService,
@@ -73,6 +75,7 @@ export class VendaFormComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.nomeCliente.nativeElement.focus();
     this.myControlProduto.setValue('SD00000');
 
     this.form = this.fb.group({
@@ -260,7 +263,7 @@ export class VendaFormComponent implements OnInit {
     while (length < parseInt(this.numeroPagamentos)) {
       this.pagamentos.push({
         preco: this.totalLista / parseInt(this.numeroPagamentos),
-        forma: 'debito',
+        forma: 'credito',
         data: new Date()
       });
       length++;
@@ -366,7 +369,7 @@ export class VendaFormComponent implements OnInit {
       };
 
       this.vendasService
-        .getProdutoByRecibo(venda.recibo)
+        .getVendaByRecibo(venda.recibo)
         .get()
         .subscribe(document => {
           if (document.size > 0) {

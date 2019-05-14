@@ -265,7 +265,7 @@ export class EditClienteComponent implements OnInit {
 
   getCompras(id: string){
 
-  this.vendasService.getProdutoByClientes(id).snapshotChanges().pipe(
+  this.vendasService.getVendaByClientes(id).snapshotChanges().pipe(
     map(actions => actions.map(a => {
       const data = a.payload.doc.data() as Venda;
       const id = a.payload.doc.id;

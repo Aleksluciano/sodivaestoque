@@ -1,0 +1,126 @@
+<div id="body">
+
+    <mat-form-field id='ano'>
+        <mat-select  [(ngModel)]="ano" (selectionChange)="getPeriodo()">
+          <mat-option *ngFor="let c of anos" [value]="c">
+            {{c}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-button-toggle-group class="toggleDay" name="fontStyle" aria-label="Font Style" [(ngModel)]="mes_atual">
+          <mat-button-toggle  (click)="getPeriodo()" class="numberDay"  *ngFor="let month of months"  [value]="month">{{ month }}</mat-button-toggle>
+        </mat-button-toggle-group>
+        <br>
+        <br>
+        <br>
+        <section style="margin-left: 100px;font-size: 1.4em;width: 400px">
+        <span >Total à vista:<span style="color:chartreuse;float: right">R$ {{ avista | number: '.2-2'}}</span></span>
+      </section>
+      <section style="margin-left: 100px;font-size: 1.4em;width: 400px">
+        <span >Total a prazo:<span style="color:chartreuse;float: right">R$ {{ aprazo | number: '.2-2'}}</span></span>
+      </section>
+      <section style="margin-left: 100px;font-size: 1.4em;width: 400px">
+          <span ><hr></span>
+        </section>
+        <section style="margin-left: 100px;font-size: 1.4em;width: 400px">
+            <span >Total Geral:<span style="color:rgb(103, 247, 252);float: right;font-weight: bold">R$ {{ aprazo + avista | number: '.2-2'}}</span></span>
+          </section>
+          <br>
+          <br>
+          <br>
+          <mat-accordion>
+              <mat-expansion-panel *ngFor="let fat of faturasatuais">
+                <mat-expansion-panel-header>
+                  <mat-panel-title>
+                    <span [ngClass]="{'dotgreen': fat?.status != 'true'}"></span>{{ fat.recibo }} - {{ fat.clienteNome }}
+                  </mat-panel-title>
+                  <mat-panel-description>
+                      <section *ngIf="fat.tipoPagamento == '1'">
+                          <span style="color:chartreuse;margin-left: 35px;position: absolute;right: 820px">{{ fat.vezes }}</span>
+                          <span style="color:chartreuse;position: absolute;right: 700px">
+                              {{ fat.valor | number: '.2-2' }}
+                          </span>
+                          <span style="position: absolute;right: 300px">
+                              {{ backTimeStamp(fat.dataPrimeiroPag) | date:'dd-MM-yyyy' }}
+                          </span>
+                        </section>
+                      <section *ngIf="fat.tipoPagamento == '2'">
+
+                    <section *ngFor="let pag of fat.divisaoPagamento; let i = index">
+
+                      <section *ngIf="mescorrente(pag)">
+                          <span style="color:chartreuse;margin-left: 35px;position: absolute;right: 820px">{{ i + 1 }}</span>
+                          <span style="position: absolute;right: 800px">/ {{ fat.vezes }}</span>
+                        <span style="color:chartreuse;position: absolute;right: 700px">{{ pag.preco | number: '.2-2'}}</span>
+                        <span style="position: absolute;right: 640px">/ {{ fat.valor | number: '.2-2'}}</span>
+                        <span style="position: absolute;right: 300px">
+                            {{ pag.data.toDate() | date:'dd-MM-yyyy' }}
+                        </span>
+                      </section>
+                    </section>
+                  </section>
+
+                  </mat-panel-description>
+                </mat-expansion-panel-header>
+                <mat-card>
+
+<mat-card-content>
+              <section *ngIf="fat?.tipoPagamento == '1'" >
+         <span style="color:coral">Forma de pagameto: </span><span *ngIf="fat.forma == 'debito'">🔁 - Débito</span>
+         <span *ngIf="fat.forma == 'credito'">💳 - Crédito</span>
+         <span *ngIf="fat.forma == 'dinheiro'">💵 - Dinheiro</span>
+
+         <!-- <span style="color:coral;margin-left:20px">Data de pagamento: </span>{{ backTimeStamp(fat.dataPrimeiroPag) | date:'dd-MM-yyyy' }} -->
+
+                  </section>
+                    <section *ngIf="fat?.tipoPagamento == '2'" style="margin-left:400px;width: 280px">
+                <section *ngFor="let pag of fat.divisaoPagamento; let t = index">
+                  <div  [ngClass]="{ 'border': mescorrente(pag) }">
+                    <span>{{ t + 1 }}X - </span>
+                    <span style="color:coral">Forma de pagameto: </span><span *ngIf="pag.forma == 'debito'">🔁 - Débito</span>
+                    <span *ngIf="pag.forma == 'credito'">💳 - Crédito</span>
+                    <span *ngIf="pag.forma == 'dinheiro'">💵 - Dinheiro</span>
+                    <br>
+                    <section *ngIf="mescorrente(pag)" style="margin-left:30px">
+                      <mat-form-field style="width:120px">
+                        <mat-label>Forma de pagamento</mat-label>
+                        <select matNativeControl required >
+                          <option value="debito">🔁 - Débito</option>
+                          <option value="credito" selected>💳 - Crédito</option>
+                          <option value="dinheiro">💵 - Dinheiro</option>
+                        </select>
+                      </mat-form-field>
+                    </section>
+
+                    <section>
+           <span style="color:coral;margin-left:20px">Valor : </span>{{ pag.preco | number: '.2-2'}}
+<br>
+
+          <section *ngIf="mescorrente(pag)" style="margin-left:30px">
+              <mat-form-field appearance="outline"  class="precoPag" style="width:100px">
+                  <mat-label>Valor pago</mat-label>
+                  <input matInput
+                   type="text"
+               [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }"
+               currencyMask
+                >
+                </mat-form-field>
+              </section>
+            </section>
+        </div>
+                  </section>
+                </section>
+               </mat-card-content>
+              </mat-card>
+                <!-- <mat-form-field>
+                  <input matInput placeholder="First name">
+                </mat-form-field>
+
+                <mat-form-field>
+                  <input matInput placeholder="Age">
+                </mat-form-field> -->
+              </mat-expansion-panel>
+
+            </mat-accordion>
+      </div>

@@ -217,6 +217,7 @@
   <mat-card-title>
     Histórico de compras
   </mat-card-title>
+  <br>
 <div *ngFor="let item of compras">
     <a style="color:rgb(55, 190, 214)" routerLink="/vendas/edit/{{item?.id}}">{{ item?.recibo }}</a> <span> - Data: {{ backTimeStamp(item?.data) | date:'dd-MM-yyyy' }}</span>
     <table border="4">
