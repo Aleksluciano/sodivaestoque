@@ -1,0 +1,126 @@
+<div id="body" @fade>
+
+  <mat-form-field id='ano'>
+      <mat-select  [(ngModel)]="ano" (selectionChange)="getPeriodoAno()">
+        <mat-option *ngFor="let c of anos" [value]="c">
+          {{c}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-button-toggle-group class="toggleDay" name="fontStyle" aria-label="Font Style" [(ngModel)]="mes_atual">
+        <mat-button-toggle  (click)="getPeriodo()" class="numberDay"  *ngFor="let month of months"  [value]="month">{{ month }}</mat-button-toggle>
+      </mat-button-toggle-group>
+      <br>
+      <br>
+      <br>
+
+      <section style="margin-left: 300px;font-size: 1.4em;width: 400px">
+      <span >Total de despesas:<span style="color:rgba(252, 69, 69, 0.685);float: right;font-weight: bold">R$ {{ totalDespesa | number: '.2-2'}}</span></span>
+    </section>
+<br><br>
+<section style="margin-left:70px">
+<mat-form-field appearance="outline" id="fornecedor">
+  <mat-label>Despesa</mat-label>
+  <input
+    matInput
+    placeholder="Despesa"
+    type="text"
+    name="despesa"
+    [(ngModel)]="despesa.despesa"
+    [matAutocomplete]="auto"
+    minlength="2"
+    required
+  />
+  <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+    <mat-option
+      *ngFor="let option of filteredOptions | async"
+      [value]="option"
+    >
+      {{ option }}
+    </mat-option>
+  </mat-autocomplete>
+</mat-form-field>
+<mat-form-field  style="margin-left:10px" appearance="outline" id="descricao">
+  <mat-label>Observação</mat-label>
+  <input
+    matInput
+    [(ngModel)]="despesa.observacao"
+    placeholder="Observação"
+    type="text"
+    name="observacao"
+  />
+</mat-form-field>
+<mat-form-field appearance="outline" id="valor">
+    <mat-label>Valor</mat-label>
+    <input
+      matInput
+      placeholder="Valor"
+      type="text"
+      name="valor"
+      [(ngModel)]="despesa.valor"
+      currencyMask
+      [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }"
+      required
+    />
+  </mat-form-field>
+<mat-form-field  style="margin-left:10px" appearance="outline" id="datePicker">
+  <mat-label>Data</mat-label>
+  <input matInput
+  [matDatepicker]="it"
+  [(ngModel)]="despesa.data"
+  name="data"
+  placeholder="Data da despesa" maxlength="10"
+  tabindex="-1"
+  required>
+  <mat-datepicker-toggle matSuffix [for]="it" ></mat-datepicker-toggle>
+  <mat-datepicker #it ></mat-datepicker>
+  </mat-form-field>
+  <button
+  style="margin-left:10px"
+  mat-raised-button
+  color="primary"
+  type="submit"
+  [disabled]="!despesa.despesa || despesa.valor == 0"
+  (click)="addDespesa()"
+>
+  Criar
+</button>
+</section>
+<br>
+<br>
+
+<mat-accordion>
+    <mat-expansion-panel *ngFor="let head of despesasHeader">
+      <mat-expansion-panel-header>
+          <mat-panel-title >
+        {{ head.despesa.despesa }}
+          </mat-panel-title >
+          <mat-panel-description style="position: absolute;left: 550px;">
+              {{ head.despesa.valor | number:'.2-2' }}
+         </mat-panel-description>
+      </mat-expansion-panel-header>
+  <section id="itens">
+    <br>
+  <section style="margin-left: 440px">
+
+  <p *ngFor="let item of head.grupo" ><span style="position: absolute;left: 200px;"> {{ item.observacao }}</span >
+    <span style="position: absolute;left: 550px;">{{ item.valor | number:'.2-2' }}</span>
+    <span style="margin-left: 300px"> {{ backTimeStamp(item.data) | date:'dd-MM-yyyy' }}</span>
+    <span style="margin-left: 200px" > <button mat-icon-button color="warn" (click)="deleteDespesa(item)">
+        <mat-icon>delete</mat-icon>
+      </button>
+    </span>
+  </p>
+  </section>
+  <br>
+</section>
+
+
+
+
+
+    </mat-expansion-panel>
+
+  </mat-accordion>
+</div>

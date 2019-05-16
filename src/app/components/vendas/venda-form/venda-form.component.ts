@@ -60,6 +60,8 @@ export class VendaFormComponent implements OnInit {
   dataPrimeiroPag = new Date();
   dataUltimoPag = new Date();
 
+  controlada: boolean = false;
+
   @ViewChild('nomeCliente') nomeCliente;
 
   constructor(
@@ -91,7 +93,7 @@ export class VendaFormComponent implements OnInit {
       const s = '00000' + String(partNumber);
       num = s.substr(s.length - 5);
       }
-      console.log(num);
+
       const dat = new Date(this.dataRecibo);
       this.form.setValue({
         cliente: '',
@@ -294,7 +296,7 @@ export class VendaFormComponent implements OnInit {
   }
 
   addQuantidade() {
-    console.log(this.quantidade, this.calcEstoque());
+
     if (this.quantidade < this.produto.quantidade - this.calcEstoque()) {
       this.quantidade += 1;
     }
@@ -324,6 +326,17 @@ export class VendaFormComponent implements OnInit {
     }
 
 
+  }
+
+  confereValorPositvo() {
+    if(this.avistaaprazo == '2'){
+    const val = this.pagamentos.some(a => a.preco < 0);
+    if (val) {return true; }
+    let total = 0;
+    this.pagamentos.forEach(sum => total += sum.preco);
+    if ((total.toFixed(2) < this.totalLista.toFixed(2)) || (total.toFixed(2) > this.totalLista.toFixed(2))) {return true; }
+    }
+    return false;
   }
 
   createVenda() {
@@ -365,7 +378,8 @@ export class VendaFormComponent implements OnInit {
         quantidadeTotal: quant,
         dataPrimeiroPag: this.dataPrimeiroPag,
         dataUltimoPag: this.dataUltimoPag,
-        forma: this.forma
+        forma: this.forma,
+        controlada: this.controlada
       };
 
       this.vendasService
@@ -385,6 +399,7 @@ export class VendaFormComponent implements OnInit {
 
 
     this.dialog.open(PrintComponent, {
+// tslint:disable-next-line: max-line-length
       data: { lista: this.lista, recibo: this.form.value.recibo, totalLista: this.totalLista, datavenda: this.form.value.data, desconto: this.desconto}
     }).afterClosed().subscribe(result => {
 
@@ -407,6 +422,7 @@ export class VendaFormComponent implements OnInit {
                 this.pagamentos = [];
                 this.quantidade = 0;
                 this.forma = 'debito';
+                this.controlada = false;
                 this.primeiroPagamento = new Date();
                 this.vendasService.flashMessageToNew(venda.recibo);
                 this.router.navigate(['vendas']);
@@ -505,7 +521,7 @@ export class VendaFormComponent implements OnInit {
 
 
            const day = new Date(`${ano.toString()}-${mes.toString()}-${this.dataPrimeiroPag.getDate().toString()}`);
-           console.log(day, lastday);
+
            if (lastday.getMonth() != day.getMonth()) {
             this.pagamentos[i].data = new Date(lastday);
            } else {

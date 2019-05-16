@@ -15,3 +15,7 @@ a:active {
 .menu{
   border: solid 1px;
 }
+
+.foco{
+  background-color: rgb(28, 128, 128);
+}

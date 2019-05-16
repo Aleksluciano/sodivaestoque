@@ -206,19 +206,11 @@ export class ProdutoFormComponent implements OnInit {
   }
 
   setFornecName(event) {
-    console.log(event);
+
 
   }
 
-//   pad(numnum:string, size:number) {
-//     let num = parseInt(numnum.substring(2))
-//     let s = num.toString();
-//     //if(s.length == size )return 'SD' + s.substring(0, size)
-//     while (s.length < size) s = "0" + s;
-//     console.log(s)
 
-//     return 'SD' + s
-// }
 
 pad(num, size) {
 

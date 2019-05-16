@@ -61,7 +61,7 @@ handleKeyboardEvent(event: KeyboardEvent) {
         return acumulado + atual.quantidadeTotal;
        }, 0);
       this.dataSource = new MatTableDataSource(this.vendas);
-      console.log(this.vendas);
+     
 
     });
 

@@ -74,6 +74,8 @@ export class VendaFormEditComponent implements OnInit {
     data: [new Date(this.dataRecibo), Validators.required]
   });
 
+  controlada = false;
+
   constructor(
     private produtosService: ProdutoService,
     private clientesService: ClienteService,
@@ -122,6 +124,7 @@ export class VendaFormEditComponent implements OnInit {
       this.numeroPagamentos = venda.vezes;
       this.primeiroPagamento = new Date(venda.dataPrimeiroPag['seconds'] * 1000);
       this.primeiroPagamento2 = new Date(venda.dataPrimeiroPag['seconds'] * 1000);
+      this.controlada = venda.controlada;
 
 
       this.quantidadeTotalLista = this.lista.reduce((acumulado, atual) => {
@@ -289,9 +292,9 @@ export class VendaFormEditComponent implements OnInit {
 
     }
     if (this.pagamentos.length > 0) {
-    this.pagamentos.forEach(x=>{
+    this.pagamentos.forEach(x => {
       x.preco = this.totalLista / parseInt(this.numeroPagamentos);
-    })
+    });
     }
   }
 
@@ -334,7 +337,7 @@ export class VendaFormEditComponent implements OnInit {
   }
 
   addQuantidade() {
-    console.log(this.quantidade, this.calcEstoque());
+
     if (this.quantidade < this.produto.quantidade - this.calcEstoque()) {
       this.quantidade += 1;
     }
@@ -366,6 +369,18 @@ export class VendaFormEditComponent implements OnInit {
 
   }
 
+  confereValorPositvo() {
+    if(this.avistaaprazo == '2'){
+    const val = this.pagamentos.some(a => a.preco < 0);
+    if (val) {return true; }
+    let total = 0;
+    this.pagamentos.forEach(sum => total += sum.preco);
+    if ((total.toFixed(2) < this.totalLista.toFixed(2)) || (total.toFixed(2) > this.totalLista.toFixed(2))) {return true; }
+    }
+
+    return false;
+  }
+
   updateVenda() {
     if (this.form.valid && this.lista.length > 0) {
 
@@ -385,8 +400,7 @@ export class VendaFormEditComponent implements OnInit {
         clienteEndereco = this.cliente.endereco;
         if (this.cliente.telefone) {
         clienteTelefone = this.cliente.telefone;
-        }
-        else if (this.cliente.celular) {clienteTelefone = this.cliente.celular; }
+        } else if (this.cliente.celular) {clienteTelefone = this.cliente.celular; }
       }
 
       const venda: Venda = {
@@ -408,7 +422,8 @@ export class VendaFormEditComponent implements OnInit {
         quantidadeTotal: quant,
         dataPrimeiroPag: this.dataPrimeiroPag,
         dataUltimoPag: this.dataUltimoPag,
-        forma: this.forma
+        forma: this.forma,
+        controlada: this.controlada
       };
 
       this.vendasService
@@ -423,12 +438,20 @@ export class VendaFormEditComponent implements OnInit {
               .updateVenda(venda)
               .then(result => {
                 let id = '';
-                if (this.cliente) {id = this.cliente.id }
+                if (this.cliente) {id = this.cliente.id; }
                 this.produtosService.updateEstoque(venda.listaProduto, venda, this.form.value, id);
                 if (this.estoqueEdit.length > 0) {
                   this.estoqueEdit.forEach(t => {
-                    const findIndex = venda.listaProduto.findIndex(s => s.id == t.id);
-                    if (findIndex < 0) {this.produtosService.updateOneEstoque(t); }
+                    const find = venda.listaProduto.find(s => s.id == t.id);
+                    console.log('estoqueedit', this.estoqueEdit, t, find);
+                   if (!find) {
+                    t.estoque.forEach((v, i) => {
+                      if (v.id == venda.id) {
+                        t.estoque.slice(i, 1);
+                      }
+                    });
+                    this.produtosService.updateOneEstoque(t); }
+                    console.log('volta', venda.listaProduto);
                   });
                 }
                 this.dialog.open(PrintComponent, {
@@ -533,7 +556,7 @@ export class VendaFormEditComponent implements OnInit {
 
 
          const day = new Date(`${ano.toString()}-${mes.toString()}-${this.dataPrimeiroPag.getDate().toString()}`);
-         console.log(day, lastday);
+
          if (lastday.getMonth() != day.getMonth()) {
           this.pagamentos[i].data = new Date(lastday);
          } else {

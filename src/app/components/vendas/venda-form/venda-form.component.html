@@ -295,9 +295,9 @@
               color="primary"
               type="button"
               (click)="createVenda()"
-              [disabled]="lista.length == 0 || !form.valid"
+              [disabled]="lista.length == 0 || !form.valid || confereValorPositvo()"
               id="saveButton"
-              >Finalizar Venda</button>
+              >Finalizar Venda</button> <mat-checkbox style="margin-left: 70px" [(ngModel)]="controlada">Controlar cobrança? </mat-checkbox>
               </div>
       </mat-card>
       </div>

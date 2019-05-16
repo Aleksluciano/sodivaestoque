@@ -30,7 +30,7 @@
     <ng-container matColumnDef="Cliente">
       <th mat-header-cell *matHeaderCellDef> Cliente </th>
       <td mat-cell *matCellDef="let venda" >
-      <a *ngIf="venda.clienteId" routerLink="/clientes/edit/{{venda.clienteId}}" style="color:yellow">{{ venda.clienteNome }}</a>
+      <a *ngIf="venda.clienteId" routerLink="/clientes/edit/{{venda.clienteId}}" style="color:whitesmoke">{{ venda.clienteNome }}</a>
       <span *ngIf="!venda.clienteId">{{ venda.clienteNome }}</span>
     </td>
 

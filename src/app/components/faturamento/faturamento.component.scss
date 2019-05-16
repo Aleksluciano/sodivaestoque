@@ -4,11 +4,14 @@
 
 #ano{
   width: 70px;
+  margin-left: 150px;
 }
 
 .border{
   border-style: solid;
-  border-color: yellow;
+  border-color: whitesmoke;
+  height: 80px;
+  width: 600px;
 }
 
 mat-card{
@@ -16,11 +19,24 @@ background-color: black
 }
 
 
+.dotred {
+  height: 20px;
+  width: 20px;
+  background-color: red;
+  border-radius: 50%;
+  display: inline-block;
+}
+.dotyellow {
+  height: 20px;
+  width: 20px;
+  background-color: orange;
+  border-radius: 50%;
+  display: inline-block;
+}
 .dotgreen {
   height: 20px;
   width: 20px;
   background-color: rgb(92, 201, 92);
   border-radius: 50%;
   display: inline-block;
-  margin-right: 15px;
 }

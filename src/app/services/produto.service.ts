@@ -96,11 +96,11 @@ if (!produto.estoque) {produto.estoque = []; }
   }
 
   updateEstoque(lista: Produto[], venda, data, clienteId: string = '') {
-    console.log('volta venda', venda);
+
     lista.forEach(a => {
       let findidvazio = a.estoque.find(b => b.id == '');
       if(!findidvazio)findidvazio = a.estoque.find(b => b.id == venda.id);
-      console.log(findidvazio,"lelele")
+
       if (findidvazio) {
       findidvazio.id = venda.id;
       findidvazio.recibo = data.recibo;
@@ -131,7 +131,7 @@ if (!produto.estoque) {produto.estoque = []; }
 
           if(indexEstoque >= 0){
                 b.estoque.splice(indexEstoque, 1)
-                console.log("BBB3",b)
+          
                 produtoDoc.update({ estoque: b.estoque })
                 .then(result=> console.log(result))
                 .catch(e=>console.log(e))

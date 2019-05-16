@@ -274,7 +274,7 @@ export class EditClienteComponent implements OnInit {
   )
   .subscribe(compras => {
   this.compras = compras;
-  console.log("aquii", compras)
+
   });
 
 }

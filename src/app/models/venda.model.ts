@@ -18,4 +18,6 @@ export interface Venda {
   dataPrimeiroPag: Date;
   dataUltimoPag: Date;
   forma: string;
+  controlada?: boolean;
+  status?: boolean;
 }

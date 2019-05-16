@@ -16,6 +16,8 @@ import { SenhaComponent } from './components/senha/senha.component';
 import { VendasListaComponent } from './components/vendas/vendas-lista/vendas-lista.component';
 import { VendaFormEditComponent } from './components/vendas/venda-form-edit/venda-form-edit.component';
 import { FaturamentoComponent } from './components/faturamento/faturamento.component';
+import { DespesasComponent } from './components/despesas/despesas.component';
+import { BalancoComponent } from './components/balanco/balanco.component';
 
 const routes: Routes = [
   {path: '', component: LoginComponent},
@@ -32,7 +34,9 @@ const routes: Routes = [
   {path: 'produtos/add', component: AddProdutoComponent, canActivate: [AuthGuard]},
   {path: 'produtos/edit/:id', component: EditProdutoComponent, canActivate: [AuthGuard]},
   {path: 'senha', component: SenhaComponent, canActivate: [AuthGuard]},
-  {path: 'faturamento', component: FaturamentoComponent, canActivate: [AuthGuard]}
+  {path: 'faturamento', component: FaturamentoComponent, canActivate: [AuthGuard]},
+  {path: 'despesas', component: DespesasComponent, canActivate: [AuthGuard]},
+  {path: 'balanco', component: BalancoComponent, canActivate: [AuthGuard]}
   // {  path: "", loadChildren: "./components/fornecedores/forcedores.module#FornecedoresModule"},
 ];
 @NgModule({

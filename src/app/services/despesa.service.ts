@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Venda } from '../models/venda.model';
+import { Despesa } from '../models/despesa.model';
 import { Observable } from 'rxjs';
 import { AngularFirestoreDocument, AngularFirestoreCollection, AngularFirestore } from '@angular/fire/firestore';
 import { map, take } from 'rxjs/operators';
@@ -10,19 +10,19 @@ import { NgxViacepService } from '@brunoc/ngx-viacep';
 @Injectable({
   providedIn: 'root'
 })
-export class VendaService {
+export class DespesaService {
 
-  vendasCollection: AngularFirestoreCollection<Venda>;
-  comprasCollection: AngularFirestoreCollection<Venda>;
-  vendaDoc: AngularFirestoreDocument<Venda>;
-  vendas: Observable<Venda[]>;
-  compras: Observable<Venda[]>;
-  venda: Observable<Venda>;
+  despesasCollection: AngularFirestoreCollection<Despesa>;
+  comprasCollection: AngularFirestoreCollection<Despesa>;
+  despesaDoc: AngularFirestoreDocument<Despesa>;
+  despesas: Observable<Despesa[]>;
+  compras: Observable<Despesa[]>;
+  despesa: Observable<Despesa>;
 
  ano: number = 0;
 
-  vendaDocPeriodo: AngularFirestoreDocument<Venda>;
-  vendasPeriodo: Observable<Venda[]>;
+  despesaDocPeriodo: AngularFirestoreDocument<Despesa>;
+  despesasPeriodo: Observable<Despesa[]>;
 
   constructor(
     private afs: AngularFirestore,
@@ -30,79 +30,79 @@ export class VendaService {
     private viacep: NgxViacepService
     ) {
 
-    this.vendasCollection = this.afs.collection('vendas',
+    this.despesasCollection = this.afs.collection('despesas',
     ref => ref.orderBy('recibo', 'asc'));
    }
 
-   getVendas(): Observable<Venda[]> {
+   getDespesas(): Observable<Despesa[]> {
 
-    this.vendas = this.vendasCollection.snapshotChanges().
+    this.despesas = this.despesasCollection.snapshotChanges().
     pipe(
       map(changes => {
       return changes.map(action => {
-        const data = action.payload.doc.data() as Venda;
+        const data = action.payload.doc.data() as Despesa;
 
         data.id = action.payload.doc.id;
         return data;
       });
     }));
 
-    return this.vendas;
+    return this.despesas;
    }
 
-   newVenda(venda: Venda) {
-     return this.vendasCollection.add(venda);
+   newDespesa(despesa: Despesa) {
+     return this.despesasCollection.add(despesa);
    }
 
-   getVenda(id: string): Observable<Venda> {
+   getDespesa(id: string): Observable<Despesa> {
 
-      this.vendaDoc = this.afs.doc<Venda>(`vendas/${id}`);
-      this.venda =  this.vendaDoc.snapshotChanges().pipe(
+      this.despesaDoc = this.afs.doc<Despesa>(`despesas/${id}`);
+      this.despesa =  this.despesaDoc.snapshotChanges().pipe(
         map(action => {
 
           if (action.payload.exists === false) {
             return null;
           } else {
-            const data = action.payload.data() as Venda;
+            const data = action.payload.data() as Despesa;
             data.id = action.payload.id;
             return data;
           }
 
         }));
-          return this.venda;
+          return this.despesa;
 
    }
 
    getVendaByRecibo(recibo: string) {
 
-    return this.afs.collection('vendas', (ref) =>
+    return this.afs.collection('despesas', (ref) =>
     ref.where('recibo', '==', recibo).limit(1));
 
    }
 
    getVendaByClientes(id: string){
-   return this.afs.collection<Venda>('vendas', (ref) =>
+   return this.afs.collection<Despesa>('despesas', (ref) =>
     ref.where('clienteId', '==', id));
 
    }
 
-   getVendaByPeriodo(ano: number): Observable<Venda[]> {
+   getDespesaByPeriodo(ano: number): Observable<Despesa[]> {
 
     if(this.ano != ano){
     this.ano = ano;
-    this.vendasPeriodo = null;
+    this.despesasPeriodo = null;
     console.log('tavanull')
   }
 
-  console.log('Observable',this.vendasPeriodo)
-    //   let query = this.afs.collection<Venda>('vendas', (ref) =>
+  console.log('Observable',this.despesasPeriodo)
+    //   let query = this.afs.collection<Despesa>('despesas', (ref) =>
     //  ref.where('dataUltimoPag', '>=', this.primeiro).where('dataUltimoPag', '<=', this.ultimo));
-   let query = this.afs.collection<Venda>('vendas', (ref) =>
+   let query = this.afs.collection<Despesa>('despesas', (ref) =>
      ref.where('ano', '==', ano));
 
-     this.vendasPeriodo = query.snapshotChanges().pipe(
+     this.despesasPeriodo = query.snapshotChanges().pipe(
       map(actions => actions.map(a => {
-        const data = a.payload.doc.data() as Venda;
+        const data = a.payload.doc.data() as Despesa;
         const id = a.payload.doc.id;
         console.log('lidenovo')
         return { id, ...data };
@@ -110,36 +110,23 @@ export class VendaService {
       }))
     )
 
-    return this.vendasPeriodo;
+    return this.despesasPeriodo;
 
       }
 
-   updateFatura(fatura: Venda) {
-
-      const faturaDoc = this.afs.doc(`vendas/${fatura.id}`);
-       return faturaDoc.update({ status: fatura.status, forma: fatura.forma});
-
-     }
-
-     updateFaturaParcial(fatura: Venda) {
-
-      const faturaDoc = this.afs.doc(`vendas/${fatura.id}`);
-       return faturaDoc.update({ divisaoPagamento: fatura.divisaoPagamento });
-
-     }
 
 
 
-  updateVenda(venda: Venda) {
+  updateVenda(despesa: Despesa) {
 
-    this.vendaDoc = this.afs.doc(`vendas/${venda.id}`);
-     return this.vendaDoc.update(venda);
+    this.despesaDoc = this.afs.doc(`despesas/${despesa.id}`);
+     return this.despesaDoc.update(despesa);
 
    }
 
-   deleteVenda(id: string) {
-    this.vendaDoc = this.afs.doc(`vendas/${id}`);
-    return this.vendaDoc.delete();
+   deleteDespesa(id: string) {
+    this.despesaDoc = this.afs.doc(`despesas/${id}`);
+    return this.despesaDoc.delete();
 
    }
 
@@ -153,7 +140,7 @@ export class VendaService {
 
    flashMessageToNew(name: string) {
     this.ngFlashMessageService.showFlashMessage({
-      messages: [`SUCESSO! Venda ${name} adicionado.`],
+      messages: [`SUCESSO! Despesa ${name} adicionado.`],
       dismissible: true,
       timeout: 2000,
       type: 'success'
@@ -162,7 +149,7 @@ export class VendaService {
 
    flashMessageToUpdate(name: string) {
     this.ngFlashMessageService.showFlashMessage({
-      messages: [`SUCESSO! Venda ${name} atualizado.`],
+      messages: [`SUCESSO! Despesa ${name} atualizado.`],
       dismissible: true,
       timeout: 2000,
       type: 'success'
@@ -171,7 +158,7 @@ export class VendaService {
 
    flashMessageToDelete(name: string) {
     this.ngFlashMessageService.showFlashMessage({
-      messages: [`SUCESSO! Venda ${name} removido.`],
+      messages: [`SUCESSO! Despesa ${name} removido.`],
       dismissible: true,
       timeout: 2000,
       type: 'success'
