@@ -77,11 +77,11 @@ export class VendaFormComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.nomeCliente.nativeElement.focus();
+
     this.myControlProduto.setValue('SD00000');
 
     this.form = this.fb.group({
-      cliente: ['', Validators.required],
+      cliente: ['Cliente', Validators.required],
       recibo: ['00001', Validators.required],
       data: [new Date(this.dataRecibo), Validators.required]
     });
@@ -96,7 +96,7 @@ export class VendaFormComponent implements OnInit {
 
       const dat = new Date(this.dataRecibo);
       this.form.setValue({
-        cliente: '',
+        cliente: 'Cliente',
         recibo: num,
         data: dat,
         });
@@ -127,12 +127,16 @@ export class VendaFormComponent implements OnInit {
       map(value => this._filterFindProduto(value))
     );
 
+    setTimeout(a => {
     this.filteredOptionsFindCliente = this.form
       .get('cliente')
       .valueChanges.pipe(
         startWith(''),
         map(value => this._filterFindCliente(value))
       );
+    },1000);
+
+      //this.nomeCliente.nativeElement.focus();
   }
 
   private _filterFindProduto(value: string): Produto[] {
@@ -164,8 +168,9 @@ export class VendaFormComponent implements OnInit {
   }
 
   private _filterFindCliente(value: string): Cliente[] {
-    let filterValue = '';
 
+
+    let filterValue = '';
     if (value) {
       filterValue = value.toLowerCase();
     }
@@ -511,21 +516,27 @@ export class VendaFormComponent implements OnInit {
         for (let i = 0; i < this.pagamentos.length; i++) {
 
           mes++;
-          if (mes > 12) {
-            ano++;
-            mes = mes - 12;
-          }
+          // if (mes % 13 == 0) {
+          //   ano+=1;
+
+          // }
 
 
-           const lastday = new Date(ano, mes, 0);
+           const lastday = new Date(ano, mes,0);
+           let day = new Date(ano,mes-1,this.dataPrimeiroPag.getDate());
 
 
-           const day = new Date(`${ano.toString()}-${mes.toString()}-${this.dataPrimeiroPag.getDate().toString()}`);
+           //let day = new Date(`${ano.toString()}-${mes.toString()}-${this.dataPrimeiroPag.getDate().toString()}`);
+        // let day = new Date(ano,mes,this.dataPrimeiroPag.getDate());
 
-           if (lastday.getMonth() != day.getMonth()) {
-            this.pagamentos[i].data = new Date(lastday);
+        if (lastday.getMonth() != day.getMonth()) {
+
+            this.pagamentos[i].data = new Date(day.getFullYear(),day.getMonth(),0);
+
            } else {
+
             this.pagamentos[i].data = new Date(day);
+
            }
 
             this.dataUltimoPag = new Date(this.pagamentos[i].data);

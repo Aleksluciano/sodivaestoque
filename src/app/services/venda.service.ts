@@ -20,6 +20,7 @@ export class VendaService {
   venda: Observable<Venda>;
 
  ano: number = 0;
+ anoanterior: number = 0;
 
   vendaDocPeriodo: AngularFirestoreDocument<Venda>;
   vendasPeriodo: Observable<Venda[]>;
@@ -90,21 +91,22 @@ export class VendaService {
 
     if(this.ano != ano){
     this.ano = ano;
+    this.anoanterior =  ano - 1;
     this.vendasPeriodo = null;
-    console.log('tavanull')
+
   }
 
-  console.log('Observable',this.vendasPeriodo)
+
     //   let query = this.afs.collection<Venda>('vendas', (ref) =>
     //  ref.where('dataUltimoPag', '>=', this.primeiro).where('dataUltimoPag', '<=', this.ultimo));
    let query = this.afs.collection<Venda>('vendas', (ref) =>
-     ref.where('ano', '==', ano));
+     ref.where('ano', '<=', this.ano).where('ano', '>=', this.anoanterior))
 
      this.vendasPeriodo = query.snapshotChanges().pipe(
       map(actions => actions.map(a => {
         const data = a.payload.doc.data() as Venda;
         const id = a.payload.doc.id;
-        console.log('lidenovo')
+
         return { id, ...data };
 
       }))

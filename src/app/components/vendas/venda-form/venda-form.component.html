@@ -29,7 +29,7 @@
              [matAutocomplete]="autocliente"
              required>
 
-          <mat-autocomplete autoActiveFirstOption #autocliente="matAutocomplete" >
+          <mat-autocomplete autoActiveFirstOption #autocliente="matAutocomplete">
               <mat-option *ngFor="let option of filteredOptionsFindCliente | async"
               [value]="option.nome"
               >

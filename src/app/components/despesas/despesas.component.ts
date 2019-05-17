@@ -5,6 +5,8 @@ import { FormControl } from '@angular/forms';
 import { DespesaService } from '../../services/despesa.service';
 import { Despesa } from 'src/app/models/despesa.model';
 import { rowsAnimation, fadeAnimation } from '../shared/animations/animations';
+import { MatDialogConfig, MatDialog } from '@angular/material';
+import { ConfirmModalComponent } from '../shared/confirm-modal/confirm-modal.component';
 
 @Component({
   selector: 'app-despesas',
@@ -52,7 +54,11 @@ export class DespesasComponent implements OnInit {
     'Telefone',
   ];
 
-  constructor(private despesasService: DespesaService) { }
+  popupOpen = false;
+
+  constructor(
+    private dialog: MatDialog,
+    private despesasService: DespesaService) { }
 
   ngOnInit() {
 
@@ -120,12 +126,12 @@ this.despesasHeader.forEach(a=>{
   this.totalDespesa += a.despesa.valor;
 })
 
-console.log(this.despesasItem)
+
   }
 
   private _filter(value: string): string[] {
     let filterValue = '';
-    if (value) { filterValue = value.toLowerCase(); }
+     filterValue = value.toLowerCase();
 
     return this.options.filter(
       option => option.toLowerCase().indexOf(filterValue) === 0
@@ -145,8 +151,22 @@ console.log(this.despesasItem)
   }
 
 deleteDespesa(item: Despesa){
+  this.popupOpen = true;
+    const   dialogConfig = new MatDialogConfig();
+    dialogConfig.disableClose = false;
+    dialogConfig.autoFocus = true;
+    dialogConfig.data = {
+      message: `Deseja realmente remover a Despesa`,
+      item: ` ${item.despesa} com valor de ${item.valor}`
+    };
+    this.dialog
+      .open(ConfirmModalComponent, dialogConfig)
+      .afterClosed()
+      .subscribe(result => {
+        this.popupOpen = false;
+        if (result) { this.despesasService.deleteDespesa(item.id); }
+      });
 
-  this.despesasService.deleteDespesa(item.id)
 }
 
 }

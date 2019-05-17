@@ -91,10 +91,10 @@ export class DespesaService {
     if(this.ano != ano){
     this.ano = ano;
     this.despesasPeriodo = null;
-    console.log('tavanull')
+
   }
 
-  console.log('Observable',this.despesasPeriodo)
+
     //   let query = this.afs.collection<Despesa>('despesas', (ref) =>
     //  ref.where('dataUltimoPag', '>=', this.primeiro).where('dataUltimoPag', '<=', this.ultimo));
    let query = this.afs.collection<Despesa>('despesas', (ref) =>
@@ -104,7 +104,7 @@ export class DespesaService {
       map(actions => actions.map(a => {
         const data = a.payload.doc.data() as Despesa;
         const id = a.payload.doc.id;
-        console.log('lidenovo')
+  
         return { id, ...data };
 
       }))

@@ -277,7 +277,7 @@
                       <mat-label>Data do 1º pagamento</mat-label>
                       <input matInput [matDatepicker]="it" [(ngModel)]="primeiroPagamento2"
                       placeholder="Data do 1º pagamento" maxlength="10"
-                      (dateInput)="addEvent('input', $event)" (dateChange)="addEvent('change', $event)"
+                      (dateChange)="addEvent('change', $event)"
                       required >
                       <mat-datepicker-toggle matSuffix [for]="it"></mat-datepicker-toggle>
                       <mat-datepicker #it ></mat-datepicker>

@@ -43,8 +43,8 @@ export class FaturamentoComponent implements OnInit {
     this.faturas = faturas;
     //this.faturasBackup  = JSON.parse(JSON.stringify(this.faturas));
     //this.faturasBackup = this.faturas.map(a=>({...a}));
-    console.log('front')
-    //console.log(this.faturas,'cheguei');
+
+
     //this.calcTotal(mes);
     this.getPeriodo();
     });
@@ -70,7 +70,8 @@ export class FaturamentoComponent implements OnInit {
     this.faturas.forEach((fatura) => {
 
     const mes = new Date(fatura.dataPrimeiroPag['seconds'] * 1000).getMonth();
-    if (fatura.tipoPagamento == '1' && mes == mesatual) {
+    const ano = new Date(fatura.dataPrimeiroPag['seconds'] * 1000).getFullYear();
+    if (fatura.tipoPagamento == '1' && mes == mesatual && ano == parseInt(this.ano)) {
     this.faturasatuais.push(fatura);
     this.avista += fatura.valor;
     }
@@ -78,7 +79,8 @@ export class FaturamentoComponent implements OnInit {
     if (fatura.tipoPagamento == '2') {
       fatura.divisaoPagamento.forEach(pag => {
         const mes = new Date(pag.data['seconds'] * 1000).getMonth();
-        if (mes == mesatual) {
+        const ano = new Date(pag.data['seconds'] * 1000).getFullYear();
+        if (mes == mesatual && ano == parseInt(this.ano)) {
           this.faturasatuais.push(fatura);
           this.aprazo += pag.preco;
         }
@@ -200,8 +202,7 @@ pagaFaturaParcial(fat: Venda, pag) {
 
   // let find = this.faturasBackup.find(a=>a.id == fat.id);
   // if(find){
-  //   console.log(fat.divisaoPagamento)
-  //   console.log(find.divisaoPagamento)
+
   //   fat.divisaoPagamento = [...find.divisaoPagamento];
 
   // }

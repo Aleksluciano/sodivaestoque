@@ -443,7 +443,7 @@ export class VendaFormEditComponent implements OnInit {
                 if (this.estoqueEdit.length > 0) {
                   this.estoqueEdit.forEach(t => {
                     const find = venda.listaProduto.find(s => s.id == t.id);
-                    console.log('estoqueedit', this.estoqueEdit, t, find);
+
                    if (!find) {
                     t.estoque.forEach((v, i) => {
                       if (v.id == venda.id) {
@@ -451,7 +451,7 @@ export class VendaFormEditComponent implements OnInit {
                       }
                     });
                     this.produtosService.updateOneEstoque(t); }
-                    console.log('volta', venda.listaProduto);
+
                   });
                 }
                 this.dialog.open(PrintComponent, {
@@ -546,21 +546,27 @@ export class VendaFormEditComponent implements OnInit {
       for (let i = 0; i < this.pagamentos.length; i++) {
 
         mes++;
-        if (mes > 12) {
-          ano++;
-          mes = mes - 12;
-        }
+        // if (mes % 13 == 0) {
+        //   ano+=1;
+
+        // }
 
 
-         const lastday = new Date(ano, mes, 0);
+         const lastday = new Date(ano, mes,0);
+         let day = new Date(ano,mes-1,this.dataPrimeiroPag.getDate());
 
 
-         const day = new Date(`${ano.toString()}-${mes.toString()}-${this.dataPrimeiroPag.getDate().toString()}`);
+         //let day = new Date(`${ano.toString()}-${mes.toString()}-${this.dataPrimeiroPag.getDate().toString()}`);
+      // let day = new Date(ano,mes,this.dataPrimeiroPag.getDate());
 
-         if (lastday.getMonth() != day.getMonth()) {
-          this.pagamentos[i].data = new Date(lastday);
+      if (lastday.getMonth() != day.getMonth()) {
+
+          this.pagamentos[i].data = new Date(day.getFullYear(),day.getMonth(),0);
+
          } else {
+
           this.pagamentos[i].data = new Date(day);
+
          }
 
           this.dataUltimoPag = new Date(this.pagamentos[i].data);
