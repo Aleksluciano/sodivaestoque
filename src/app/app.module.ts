@@ -57,6 +57,7 @@ import { BalancoComponent } from './components/balanco/balanco.component';
 import { AgendaComponent } from './components/agenda/agenda.component';
 import { EstatisticasComponent } from './components/estatisticas/estatisticas.component';
 import { CartoesComponent } from './components/cartoes/cartoes.component';
+import { CaixaComponent } from './components/caixa/caixa.component';
 
 export const customCurrencyMaskConfig = {
   align: 'right',
@@ -112,7 +113,8 @@ registerLocaleData(ptBr);
     BalancoComponent,
     AgendaComponent,
     EstatisticasComponent,
-    CartoesComponent
+    CartoesComponent,
+    CaixaComponent
     //////////
 
   ],

@@ -13,6 +13,7 @@
       <button [ngClass]="{'foco': toggle[1]}"  (click)="changeFoco(1)" mat-button routerLink="/faturamento">Faturamento</button>
       <button  [ngClass]="{'foco': toggle[2]}"  (click)="changeFoco(2)" mat-button routerLink="/despesas">Despesas</button>
       <button  [ngClass]="{'foco': toggle[8]}"  (click)="changeFoco(8)" mat-button routerLink="/cartoes">Cartões</button>
+      <button  [ngClass]="{'foco': toggle[9]}"  (click)="changeFoco(9)" mat-button routerLink="/caixa">Caixa</button>
     <button [ngClass]="{'foco': toggle[6]}"  (click)="changeFoco(6)" mat-button [matMenuTriggerFor]="menu" class="menu">Cadastros</button>
 
     <mat-menu #menu="matMenu">

@@ -3,11 +3,12 @@ import { Component, OnInit } from '@angular/core';
 import { CartaoService } from '../../services/cartao.service';
 import { ConfirmModalComponent } from '../shared/confirm-modal/confirm-modal.component';
 import { MatDialog, MatDialogConfig } from '@angular/material';
-
+import { rowsAnimation, fadeAnimation } from '../shared/animations/animations';
 @Component({
   selector: 'app-cartoes',
   templateUrl: './cartoes.component.html',
-  styleUrls: ['./cartoes.component.scss']
+  styleUrls: ['./cartoes.component.scss'],
+  animations: [rowsAnimation, fadeAnimation]
 })
 export class CartoesComponent implements OnInit {
 cartao: Cartao = {
@@ -63,7 +64,15 @@ deleteCartao(item: Cartao){
       .afterClosed()
       .subscribe(result => {
         this.popupOpen = false;
-    if(result) this.cartoesService.deleteCartao(item.id);
+    if(result) { this.cartoesService.deleteCartao(item.id)
+      this.cartao = {
+        valorCredito: 0,
+        valorDebito: 0,
+        data: new Date(),
+        mes: new Date().getMonth(),
+        ano: new Date().getFullYear()
+      }
+    }
     });
 
 }

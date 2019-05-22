@@ -1,0 +1,84 @@
+<div id="body" @fade>
+
+  <mat-form-field id='ano'>
+      <mat-select  [(ngModel)]="ano" (selectionChange)="getPeriodoAno()">
+        <mat-option *ngFor="let c of anos" [value]="c">
+          {{c}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-button-toggle-group class="toggleDay" name="fontStyle" aria-label="Font Style" [(ngModel)]="mes_atual">
+        <mat-button-toggle  (click)="getPeriodo()" class="numberDay"  *ngFor="let month of months"  [value]="month">{{ month }}</mat-button-toggle>
+      </mat-button-toggle-group>
+      <br>
+      <br>
+      <br>
+
+      <section style="margin-left: 400px;font-size: 1.4em;width: 400px">
+      <span >Total em caixa:<span style="color:rgb(103, 247, 252);float: right;font-weight: bold">R$ {{ totalCaixa | number: '.2-2'}}</span></span>
+    </section>
+<br><br>
+<section style="margin-left:70px">
+
+<mat-form-field  style="margin-left:200px" appearance="outline" id="descricao">
+  <mat-label>Observação</mat-label>
+  <input
+    matInput
+    [(ngModel)]="caixa.observacao"
+    placeholder="Observação"
+    type="text"
+    name="observacao"
+  />
+</mat-form-field>
+<mat-form-field appearance="outline" id="valor">
+    <mat-label>Valor</mat-label>
+    <input
+      matInput
+      placeholder="Valor"
+      type="text"
+      name="valor"
+      [(ngModel)]="caixa.valor"
+      currencyMask
+      [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }"
+      required
+    />
+  </mat-form-field>
+<mat-form-field  style="margin-left:10px" appearance="outline" id="datePicker">
+  <mat-label>Data</mat-label>
+  <input matInput
+  [matDatepicker]="it"
+  [(ngModel)]="caixa.data"
+  name="data"
+  placeholder="Data da operação" maxlength="10"
+  tabindex="-1"
+  required>
+  <mat-datepicker-toggle matSuffix [for]="it" ></mat-datepicker-toggle>
+  <mat-datepicker #it ></mat-datepicker>
+  </mat-form-field>
+  <button
+  style="margin-left:10px"
+  mat-raised-button
+  color="primary"
+  type="submit"
+  [disabled]="caixa.valor == 0 || !caixa.observacao"
+  (click)="addCaixa()"
+>
+  Criar
+</button>
+</section>
+<br>
+<br>
+<section style="margin-left: 440px" >
+
+  <h5 *ngFor="let item of caixasAtual"  [ngStyle]="{ color: item.valor >= 0 ? 'rgb(103, 247, 252)' : 'rgb(243, 13, 13)' }"><span style="position: absolute;left: 400px;" > {{ item.observacao }}</span >
+    <span style="position: absolute;left: 550px;">R$ {{ item.valor | number:'.2-2' }}</span>
+    <span style="position: absolute;left: 650px;">Data da operação: {{ backTimeStamp(item.data) | date:'dd-MM-yyyy' }}</span>
+    <span style="margin-left:330px" > <button style="margin-top:-20px" mat-icon-button color="warn" (click)="deleteCaixa(item)">
+        <mat-icon>delete</mat-icon>
+      </button>
+    </span>
+  </h5>
+  </section>
+
+</div>

@@ -1,5 +1,5 @@
 <br><br>
-<div id="body">
+<div id="body" @fade>
 
 <mat-form-field appearance="outline"  style="width: 130px">
   <mat-label>Taxa Débito</mat-label>
@@ -50,7 +50,7 @@ type="submit"
 Criar
 </button>
 
-<h4 *ngFor="let item of cartoes"><span>🔁 Taxa Débito: {{ item.valorDebito }}</span>    <span style="margin-left:20px">💳 Taxa Crédito: {{ item.valorCredito }}</span>    <span style="margin-left:20px">Data de início da taxa: {{ backTimeStamp(item.data) | date:'dd-MM-yyyy' }}</span><button mat-icon-button color="warn" (click)="deleteCartao(item)">
+<h4 *ngFor="let item of cartoes"><span>🔁 Taxa Débito: {{ item.valorDebito | number:'.2-2' }}</span>    <span style="margin-left:20px">💳 Taxa Crédito: {{ item.valorCredito | number:'.2-2' }}</span>    <span style="margin-left:20px">Data de início da taxa: {{ backTimeStamp(item.data) | date:'dd-MM-yyyy' }}</span><button mat-icon-button color="warn" (click)="deleteCartao(item)">
   <mat-icon>delete</mat-icon>
 </button></h4>
 </div>

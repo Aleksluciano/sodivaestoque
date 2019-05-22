@@ -89,6 +89,7 @@ export class ProdutosComponent implements OnInit {
     this.produtosService.getProdutos().subscribe(produtos => {
       this.produtos = produtos;
       this.dataSource = new MatTableDataSource(this.produtos);
+      this.footerQuantidade = 0;
       this.produtos.forEach(a => {
 
         let estoque = 0;
@@ -100,6 +101,7 @@ export class ProdutosComponent implements OnInit {
         });
 
       }
+
         this.footerQuantidade += a.quantidade - estoque;
         this.footerValorPago += a.valor * a.quantidade;
         this.footerPrecoVenda += a.preco * a.quantidade;

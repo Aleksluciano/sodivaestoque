@@ -1,3 +1,4 @@
+import { CaixaComponent } from './components/caixa/caixa.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { FornecedoresComponent } from './components/fornecedores/containers/fornecedores-lista/fornecedores.component';
@@ -42,7 +43,8 @@ const routes: Routes = [
   {path: 'balanco', component: BalancoComponent, canActivate: [AuthGuard]},
   {path: 'agenda', component: AgendaComponent, canActivate: [AuthGuard]},
   {path: 'estatisticas', component: EstatisticasComponent, canActivate: [AuthGuard]},
-  {path: 'cartoes', component: CartoesComponent, canActivate: [AuthGuard]}
+  {path: 'cartoes', component: CartoesComponent, canActivate: [AuthGuard]},
+  {path: 'caixa', component: CaixaComponent, canActivate: [AuthGuard]}
   // {  path: "", loadChildren: "./components/fornecedores/forcedores.module#FornecedoresModule"},
 ];
 @NgModule({
