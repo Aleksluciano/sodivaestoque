@@ -332,7 +332,11 @@
   </mat-card-title>
 
 <mat-list>
-    <mat-list-item *ngFor="let item of produto?.estoque">  <a style="color: rgb(55, 190, 214);margin-left: 15px;margin-right: 15px" routerLink="/vendas/edit/{{item?.id}}">{{ item?.recibo }}</a> <span> - {{ item?.quant }}un </span><a style="color: yellow;margin-left: 15px;margin-right: 15px" routerLink="/clientes/edit/{{item?.clienteId}}" >{{ item?.cliente }}</a> {{ item?.data?.toDate() | date:'dd-MM-yyyy' }}</mat-list-item>
+    <mat-list-item *ngFor="let item of produto?.estoque">  <a style="color: rgb(55, 190, 214);margin-left: 15px;margin-right: 15px" routerLink="/vendas/edit/{{item?.id}}">{{ item?.recibo }}</a>
+      <span> - {{ item?.quant }}un </span>
+      <a style="color: yellow;margin-left: 15px;margin-right: 15px" *ngIf="item?.clienteId" routerLink="/clientes/edit/{{item?.clienteId}}" >{{ item?.cliente }}</a>
+      <a style="color: yellow;margin-left: 15px;margin-right: 15px" *ngIf="!item?.clienteId"  >{{ item?.cliente }}</a>
+      {{ item?.data?.toDate() | date:'dd-MM-yyyy' }}</mat-list-item>
    </mat-list>
 </mat-card>
 

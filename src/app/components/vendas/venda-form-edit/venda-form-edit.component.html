@@ -295,7 +295,7 @@
               (click)="updateVenda()"
               [disabled]="lista.length == 0 || !form.valid || confereValorPositvo()"
               id="saveButton"
-              >Salvar Alterações</button> <mat-checkbox style="margin-left: 70px" [(ngModel)]="controlada">Controlar cobrança? </mat-checkbox>
+              >Salvar Alterações</button> <mat-checkbox *ngIf="cliente?.id" style="margin-left: 70px" [(ngModel)]="controlada">Controlar cobrança? </mat-checkbox>
               </div>
       </mat-card>
       </div>

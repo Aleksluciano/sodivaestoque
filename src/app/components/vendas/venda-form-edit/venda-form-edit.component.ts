@@ -75,6 +75,7 @@ export class VendaFormEditComponent implements OnInit {
   });
 
   controlada = false;
+  status = false;
 
   constructor(
     private produtosService: ProdutoService,
@@ -125,6 +126,7 @@ export class VendaFormEditComponent implements OnInit {
       this.primeiroPagamento = new Date(venda.dataPrimeiroPag['seconds'] * 1000);
       this.primeiroPagamento2 = new Date(venda.dataPrimeiroPag['seconds'] * 1000);
       this.controlada = venda.controlada;
+      this.status = venda.status;
 
 
       this.quantidadeTotalLista = this.lista.reduce((acumulado, atual) => {
@@ -423,7 +425,8 @@ export class VendaFormEditComponent implements OnInit {
         dataPrimeiroPag: this.dataPrimeiroPag,
         dataUltimoPag: this.dataUltimoPag,
         forma: this.forma,
-        controlada: this.controlada
+        controlada: this.controlada,
+        status: this.status
       };
 
       this.vendasService
@@ -573,6 +576,16 @@ export class VendaFormEditComponent implements OnInit {
 
       }
     }
+
+    if(this.dataPrimeiroPag.getTime() == this.form.value.data.getTime()){
+      this.status = true;
+    }else{
+      this.status = false;
+      }
+
+      if(this.pagamentos.length > 0){
+        this.pagamentos[0].status = this.status;
+      }
 
   }
 

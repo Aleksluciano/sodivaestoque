@@ -54,6 +54,9 @@ import { VendaFormEditComponent } from './components/vendas/venda-form-edit/vend
 import { FaturamentoComponent } from './components/faturamento/faturamento.component';
 import { DespesasComponent } from './components/despesas/despesas.component';
 import { BalancoComponent } from './components/balanco/balanco.component';
+import { AgendaComponent } from './components/agenda/agenda.component';
+import { EstatisticasComponent } from './components/estatisticas/estatisticas.component';
+import { CartoesComponent } from './components/cartoes/cartoes.component';
 
 export const customCurrencyMaskConfig = {
   align: 'right',
@@ -106,7 +109,10 @@ registerLocaleData(ptBr);
     PrintComponent,
     FaturamentoComponent,
     DespesasComponent,
-    BalancoComponent
+    BalancoComponent,
+    AgendaComponent,
+    EstatisticasComponent,
+    CartoesComponent
     //////////
 
   ],

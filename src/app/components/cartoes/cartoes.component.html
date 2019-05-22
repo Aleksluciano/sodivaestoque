@@ -1,0 +1,56 @@
+<br><br>
+<div id="body">
+
+<mat-form-field appearance="outline"  style="width: 130px">
+  <mat-label>Taxa Débito</mat-label>
+  <input
+    matInput
+    placeholder="Taxa Débito"
+    type="text"
+    name="valor"
+    [(ngModel)]="cartao.valorDebito"
+    currencyMask
+    [options]="{ prefix: '% ', thousands: '.', decimal: ',' }"
+    required
+  />
+</mat-form-field>
+<mat-form-field appearance="outline" id="valor" style="margin-left:10px;width: 130px">
+  <mat-label>Taxa Crédito</mat-label>
+  <input
+    matInput
+    placeholder="Taxa Crédito"
+    type="text"
+    name="valor"
+    [(ngModel)]="cartao.valorCredito"
+    currencyMask
+    [options]="{ prefix: '% ', thousands: '.', decimal: ',' }"
+    required
+  />
+</mat-form-field>
+<mat-form-field  style="margin-left:10px" appearance="outline" id="datePicker">
+<mat-label>Data de início da taxa</mat-label>
+<input matInput
+[matDatepicker]="it"
+[(ngModel)]="cartao.data"
+name="data"
+placeholder="Data da despesa" maxlength="10"
+tabindex="-1"
+required>
+<mat-datepicker-toggle matSuffix [for]="it" ></mat-datepicker-toggle>
+<mat-datepicker #it ></mat-datepicker>
+</mat-form-field>
+<button
+style="margin-left:10px"
+mat-raised-button
+color="primary"
+type="submit"
+[disabled]="cartao.valorDebito == 0 || cartao.valorCredito == 0"
+(click)="addCartao()"
+>
+Criar
+</button>
+
+<h4 *ngFor="let item of cartoes"><span>🔁 Taxa Débito: {{ item.valorDebito }}</span>    <span style="margin-left:20px">💳 Taxa Crédito: {{ item.valorCredito }}</span>    <span style="margin-left:20px">Data de início da taxa: {{ backTimeStamp(item.data) | date:'dd-MM-yyyy' }}</span><button mat-icon-button color="warn" (click)="deleteCartao(item)">
+  <mat-icon>delete</mat-icon>
+</button></h4>
+</div>

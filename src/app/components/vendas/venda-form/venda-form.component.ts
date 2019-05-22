@@ -53,6 +53,7 @@ export class VendaFormComponent implements OnInit {
   pagamentos = [];
   quantidade = 0;
   forma = 'debito';
+  status = false;
 
   primeiroPagamento = new Date();
   primeiroPagamento2 = new Date();
@@ -384,7 +385,8 @@ export class VendaFormComponent implements OnInit {
         dataPrimeiroPag: this.dataPrimeiroPag,
         dataUltimoPag: this.dataUltimoPag,
         forma: this.forma,
-        controlada: this.controlada
+        controlada: this.controlada,
+        status: this.status
       };
 
       this.vendasService
@@ -503,8 +505,11 @@ export class VendaFormComponent implements OnInit {
       this.dataPrimeiroPag = new Date(this.form.value.data);
       this.dataUltimoPag = new Date(this.form.value.data);
 
+
+
       if (this.avistaaprazo == '1') {
         this.dataPrimeiroPag = new Date(this.primeiroPagamento);
+
         this.dataUltimoPag = new Date(this.primeiroPagamento);
       } else {
         this.dataPrimeiroPag = new Date(this.primeiroPagamento2);
@@ -543,6 +548,17 @@ export class VendaFormComponent implements OnInit {
 
         }
       }
+
+      if(this.dataPrimeiroPag.getTime() == this.form.value.data.getTime()){
+        this.status = true;
+      }else{
+        this.status = false;
+        }
+
+        if(this.pagamentos.length > 0){
+          this.pagamentos[0].status = this.status;
+        }
+
 
     }
 
