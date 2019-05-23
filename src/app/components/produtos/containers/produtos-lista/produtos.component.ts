@@ -93,7 +93,7 @@ export class ProdutosComponent implements OnInit {
       this.produtos.forEach(a => {
 
         let estoque = 0;
-        if(a.estoque &&
+        if (a.estoque &&
           a.estoque.length > 0
       ) {
           a.estoque.forEach(obj => {

@@ -19,7 +19,7 @@ export class DespesaService {
   compras: Observable<Despesa[]>;
   despesa: Observable<Despesa>;
 
- ano: number = 0;
+ ano = 0;
 
   despesaDocPeriodo: AngularFirestoreDocument<Despesa>;
   despesasPeriodo: Observable<Despesa[]>;
@@ -80,7 +80,7 @@ export class DespesaService {
 
    }
 
-   getVendaByClientes(id: string){
+   getVendaByClientes(id: string) {
    return this.afs.collection<Despesa>('despesas', (ref) =>
     ref.where('clienteId', '==', id));
 
@@ -88,7 +88,7 @@ export class DespesaService {
 
    getDespesaByPeriodo(ano: number): Observable<Despesa[]> {
 
-    if(this.ano != ano){
+    if (this.ano != ano) {
     this.ano = ano;
     this.despesasPeriodo = null;
 
@@ -97,18 +97,18 @@ export class DespesaService {
 
     //   let query = this.afs.collection<Despesa>('despesas', (ref) =>
     //  ref.where('dataUltimoPag', '>=', this.primeiro).where('dataUltimoPag', '<=', this.ultimo));
-   let query = this.afs.collection<Despesa>('despesas', (ref) =>
+   const query = this.afs.collection<Despesa>('despesas', (ref) =>
      ref.where('ano', '==', ano));
 
      this.despesasPeriodo = query.snapshotChanges().pipe(
       map(actions => actions.map(a => {
         const data = a.payload.doc.data() as Despesa;
         const id = a.payload.doc.id;
-  
+
         return { id, ...data };
 
       }))
-    )
+    );
 
     return this.despesasPeriodo;
 

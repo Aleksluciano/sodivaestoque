@@ -1,7 +1,7 @@
 export interface Caixa {
   id?: string;
   observacao: string;
-  valor:number;
+  valor: number;
   positivo: boolean;
   data: Date;
   mes: number;

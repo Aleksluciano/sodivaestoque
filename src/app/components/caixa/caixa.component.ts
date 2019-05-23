@@ -30,7 +30,7 @@ export class CaixaComponent implements OnInit {
     positivo: true,
     mes: 0,
     ano: 0,
-  }
+  };
 
   popupOpen = false;
 
@@ -44,7 +44,7 @@ export class CaixaComponent implements OnInit {
     this.listeningFatura();
   }
 
-  listeningFatura(){
+  listeningFatura() {
 
     this.caixasService.getCaixaByPeriodo(parseInt(this.ano))
     .subscribe(caixas => {
@@ -77,19 +77,19 @@ export class CaixaComponent implements OnInit {
         b.data['seconds'] * 1000
     );
 
-this.caixas.forEach(a=>{
-  if(a.mes <= mesatual){
+this.caixas.forEach(a => {
+  if (a.mes <= mesatual) {
 
-this.totalCaixa+= a.valor;
+this.totalCaixa += a.valor;
 
   }
 
-  if(a.mes == mesatual){
+  if (a.mes == mesatual) {
 
     this.caixasAtual.push(a);
 
       }
-})
+});
 
 
 
@@ -97,19 +97,19 @@ this.totalCaixa+= a.valor;
 
 
 
-  addCaixa(){
+  addCaixa() {
     this.caixa.mes = this.caixa.data.getMonth();
     this.caixa.ano = this.caixa.data.getFullYear();
     this.caixasService.newCaixa(this.caixa);
   }
 
-  backTimeStamp(val){
+  backTimeStamp(val) {
 
     return val.toDate();
 
   }
 
-deleteCaixa(item: Caixa){
+deleteCaixa(item: Caixa) {
   this.popupOpen = true;
     const   dialogConfig = new MatDialogConfig();
     dialogConfig.disableClose = false;
@@ -132,7 +132,7 @@ deleteCaixa(item: Caixa){
             positivo: true,
             mes: 0,
             ano: 0,
-          }
+          };
         }
       });
 

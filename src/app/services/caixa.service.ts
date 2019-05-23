@@ -19,7 +19,7 @@ export class CaixaService {
   compras: Observable<Caixa[]>;
   caixa: Observable<Caixa>;
 
- ano: number = 0;
+ ano = 0;
 
   caixaDocPeriodo: AngularFirestoreDocument<Caixa>;
   caixasPeriodo: Observable<Caixa[]>;
@@ -80,7 +80,7 @@ export class CaixaService {
 
    }
 
-   getVendaByClientes(id: string){
+   getVendaByClientes(id: string) {
    return this.afs.collection<Caixa>('caixas', (ref) =>
     ref.where('clienteId', '==', id));
 
@@ -88,7 +88,7 @@ export class CaixaService {
 
    getCaixaByPeriodo(ano: number): Observable<Caixa[]> {
 
-    if(this.ano != ano){
+    if (this.ano != ano) {
     this.ano = ano;
     this.caixasPeriodo = null;
 
@@ -97,7 +97,7 @@ export class CaixaService {
 
     //   let query = this.afs.collection<Caixa>('caixas', (ref) =>
     //  ref.where('dataUltimoPag', '>=', this.primeiro).where('dataUltimoPag', '<=', this.ultimo));
-   let query = this.afs.collection<Caixa>('caixas', (ref) =>
+   const query = this.afs.collection<Caixa>('caixas', (ref) =>
      ref.where('ano', '==', ano));
 
      this.caixasPeriodo = query.snapshotChanges().pipe(
@@ -108,7 +108,7 @@ export class CaixaService {
         return { id, ...data };
 
       }))
-    )
+    );
 
     return this.caixasPeriodo;
 

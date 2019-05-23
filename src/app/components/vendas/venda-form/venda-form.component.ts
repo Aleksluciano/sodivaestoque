@@ -61,7 +61,7 @@ export class VendaFormComponent implements OnInit {
   dataPrimeiroPag = new Date();
   dataUltimoPag = new Date();
 
-  controlada: boolean = false;
+  controlada = false;
 
   @ViewChild('nomeCliente') nomeCliente;
 
@@ -135,9 +135,9 @@ export class VendaFormComponent implements OnInit {
         startWith(''),
         map(value => this._filterFindCliente(value))
       );
-    },1000);
+    }, 1000);
 
-      //this.nomeCliente.nativeElement.focus();
+      // this.nomeCliente.nativeElement.focus();
   }
 
   private _filterFindProduto(value: string): Produto[] {
@@ -335,7 +335,7 @@ export class VendaFormComponent implements OnInit {
   }
 
   confereValorPositvo() {
-    if(this.avistaaprazo == '2'){
+    if (this.avistaaprazo == '2') {
     const val = this.pagamentos.some(a => a.preco < 0);
     if (val) {return true; }
     let total = 0;
@@ -500,7 +500,7 @@ export class VendaFormComponent implements OnInit {
     return retorno;
   }
 
-  dataPrimeiroUltimoPag(){
+  dataPrimeiroUltimoPag() {
 
       this.dataPrimeiroPag = new Date(this.form.value.data);
       this.dataUltimoPag = new Date(this.form.value.data);
@@ -515,7 +515,7 @@ export class VendaFormComponent implements OnInit {
         this.dataPrimeiroPag = new Date(this.primeiroPagamento2);
         this.dataUltimoPag = new Date(this.primeiroPagamento2);
         let mes = this.primeiroPagamento2.getMonth();
-        let ano = this.primeiroPagamento2.getFullYear();
+        const ano = this.primeiroPagamento2.getFullYear();
         // let lastDay = new Date(dataUltimoPag.getFullYear(),dataUltimoPag.getMonth(),0);
 
         for (let i = 0; i < this.pagamentos.length; i++) {
@@ -527,16 +527,16 @@ export class VendaFormComponent implements OnInit {
           // }
 
 
-           const lastday = new Date(ano, mes,0);
-           let day = new Date(ano,mes-1,this.dataPrimeiroPag.getDate());
+           const lastday = new Date(ano, mes, 0);
+           const day = new Date(ano, mes - 1, this.dataPrimeiroPag.getDate());
 
 
-           //let day = new Date(`${ano.toString()}-${mes.toString()}-${this.dataPrimeiroPag.getDate().toString()}`);
+           // let day = new Date(`${ano.toString()}-${mes.toString()}-${this.dataPrimeiroPag.getDate().toString()}`);
         // let day = new Date(ano,mes,this.dataPrimeiroPag.getDate());
 
         if (lastday.getMonth() != day.getMonth()) {
 
-            this.pagamentos[i].data = new Date(day.getFullYear(),day.getMonth(),0);
+            this.pagamentos[i].data = new Date(day.getFullYear(), day.getMonth(), 0);
 
            } else {
 
@@ -549,13 +549,13 @@ export class VendaFormComponent implements OnInit {
         }
       }
 
-      if(this.dataPrimeiroPag.getTime() == this.form.value.data.getTime()){
+      if (this.dataPrimeiroPag.getTime() == this.form.value.data.getTime()) {
         this.status = true;
-      }else{
+      } else {
         this.status = false;
         }
 
-        if(this.pagamentos.length > 0){
+        if (this.pagamentos.length > 0) {
           this.pagamentos[0].status = this.status;
         }
 

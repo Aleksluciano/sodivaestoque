@@ -9,7 +9,7 @@ export class HeaderComponent implements OnInit {
   @Output() sidenavToggle = new EventEmitter<void>();
   @Output() logout = new EventEmitter<void>();
 
-  toggle = [true,false,false,false,false,false,false,false,false,false];
+  toggle = [true, false, false, false, false, false, false, false, false, false];
   constructor() { }
 
   ngOnInit() {
@@ -23,10 +23,10 @@ export class HeaderComponent implements OnInit {
     this.logout.emit();
   }
 
-  changeFoco(index){
-    this.toggle.forEach((a,i)=>{
-      if(i == index)this.toggle[i] = true;
-      if(i != index)this.toggle[i] = false;
-    })
+  changeFoco(index) {
+    this.toggle.forEach((a, i) => {
+      if (i == index) {this.toggle[i] = true; }
+      if (i != index) {this.toggle[i] = false; }
+    });
   }
 }

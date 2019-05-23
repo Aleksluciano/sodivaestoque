@@ -33,7 +33,7 @@ export class DespesasComponent implements OnInit {
     data: new Date(),
     mes: 0,
     ano: 0,
-  }
+  };
 
   filteredOptions: Observable<string[]>;
   myControl = new FormControl();
@@ -72,7 +72,7 @@ export class DespesasComponent implements OnInit {
     this.listeningFatura();
   }
 
-  listeningFatura(){
+  listeningFatura() {
 
     this.despesasService.getDespesaByPeriodo(parseInt(this.ano))
     .subscribe(despesas => {
@@ -104,27 +104,26 @@ export class DespesasComponent implements OnInit {
       if (a.despesa > b.despesa) { return 1; }
       return 0;
     });
-    let grupo = []
-this.despesas.forEach(a=>{
-  if(a.mes == mesatual){
+    let grupo = [];
+this.despesas.forEach(a => {
+  if (a.mes == mesatual) {
 
-    let find = this.despesasHeader.find(b=> b.despesa.despesa == a.despesa)
-    if(!find){
-      grupo = []
+    const find = this.despesasHeader.find(b => b.despesa.despesa == a.despesa);
+    if (!find) {
+      grupo = [];
       grupo.push({...a});
       this.despesasHeader.push({ despesa: {...a}, grupo: grupo});
-    }
-    else {
+    } else {
       find.despesa.valor += a.valor;
       find.grupo.push({...a});
     }
 
   }
-})
+});
 this.totalDespesa = 0;
-this.despesasHeader.forEach(a=>{
+this.despesasHeader.forEach(a => {
   this.totalDespesa += a.despesa.valor;
-})
+});
 
 
   }
@@ -138,19 +137,19 @@ this.despesasHeader.forEach(a=>{
     );
   }
 
-  addDespesa(){
+  addDespesa() {
     this.despesa.mes = this.despesa.data.getMonth();
     this.despesa.ano = this.despesa.data.getFullYear();
     this.despesasService.newDespesa(this.despesa);
   }
 
-  backTimeStamp(val){
+  backTimeStamp(val) {
 
     return val.toDate();
 
   }
 
-deleteDespesa(item: Despesa){
+deleteDespesa(item: Despesa) {
   this.popupOpen = true;
     const   dialogConfig = new MatDialogConfig();
     dialogConfig.disableClose = false;

@@ -12,7 +12,7 @@ import { AddProdutoComponent } from './components/produtos/containers/add-produt
 import { EditProdutoComponent } from './components/produtos/containers/edit-produto/edit-produto.component';
 import { LoginComponent } from './components/login/login.component';
 import { AuthGuard } from './guards/auth.guard';
-import { VendaFormComponent } from './components/vendas/venda-form/venda-form.component'
+import { VendaFormComponent } from './components/vendas/venda-form/venda-form.component';
 import { SenhaComponent } from './components/senha/senha.component';
 import { VendasListaComponent } from './components/vendas/vendas-lista/vendas-lista.component';
 import { VendaFormEditComponent } from './components/vendas/venda-form-edit/venda-form-edit.component';

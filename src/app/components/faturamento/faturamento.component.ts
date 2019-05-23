@@ -9,9 +9,9 @@ type ResumoType = {
   id: string,
   name: string,
   valor: number,
-  valorpag:number,
+  valorpag: number,
   grupo: Venda[]
-}[]
+}[];
 
 
 @Component({
@@ -126,32 +126,34 @@ export class FaturamentoComponent implements OnInit {
         this.faturasatuais.push(fatura);
         this.avista += fatura.valor;
 
-        let find = this.resumo.find(x=> x.id == fatura.clienteId)
-        if(find){
+        const find = this.resumo.find(x => x.id == fatura.clienteId);
+        if (find) {
 
-          if(fatura.controlada && !fatura.status)
-          find.valor+= fatura.valor;
+          if (fatura.controlada && !fatura.status) {
+          find.valor += fatura.valor;
+          }
 
-          if(fatura.controlada && fatura.status)
-          find.valorpag+= fatura.valor;
+          if (fatura.controlada && fatura.status) {
+          find.valorpag += fatura.valor;
+          }
 
-          find.grupo.push(fatura)
-        }else{
+          find.grupo.push(fatura);
+        } else {
 
           let val = 0;
           let valpago = 0;
-          if(fatura.controlada && !fatura.status)val = fatura.valor;
-          if(fatura.controlada && fatura.status)valpago = fatura.valor;
+          if (fatura.controlada && !fatura.status) {val = fatura.valor; }
+          if (fatura.controlada && fatura.status) {valpago = fatura.valor; }
 
-          let obj = {
+          const obj = {
             id: fatura.clienteId,
             name: fatura.clienteNome,
             valor: val,
             valorpag: valpago,
             grupo: []
-          }
-          obj.grupo.push(fatura)
-          this.resumo.push(obj)
+          };
+          obj.grupo.push(fatura);
+          this.resumo.push(obj);
 
         }
 
@@ -166,31 +168,33 @@ export class FaturamentoComponent implements OnInit {
             this.faturasatuais.push(fatura);
             this.aprazo += pag.preco;
 
-            let find = this.resumo.find(x=> x.id == fatura.clienteId)
-        if(find){
+            const find = this.resumo.find(x => x.id == fatura.clienteId);
+        if (find) {
 
-          if(fatura.controlada && !pag.status)
-          find.valor+= pag.preco;
+          if (fatura.controlada && !pag.status) {
+          find.valor += pag.preco;
+          }
 
-          if(fatura.controlada && pag.status)
-          find.valorpag+= pag.preco;
+          if (fatura.controlada && pag.status) {
+          find.valorpag += pag.preco;
+          }
 
-          find.grupo.push(fatura)
-        }else{
+          find.grupo.push(fatura);
+        } else {
 
-          let val = 0
+          let val = 0;
           let valpago = 0;
-          if(fatura.controlada && !pag.status)val = pag.preco;
-          if(fatura.controlada && pag.status)valpago = pag.preco;
-          let obj = {
+          if (fatura.controlada && !pag.status) {val = pag.preco; }
+          if (fatura.controlada && pag.status) {valpago = pag.preco; }
+          const obj = {
             id: fatura.clienteId,
             name: fatura.clienteNome,
             valor: val,
             valorpag: valpago,
             grupo: []
-          }
-          obj.grupo.push(fatura)
-          this.resumo.push(obj)
+          };
+          obj.grupo.push(fatura);
+          this.resumo.push(obj);
 
         }
 
@@ -260,7 +264,7 @@ export class FaturamentoComponent implements OnInit {
       // let data1a = new Date(data1.getFullYear(),data1.getMonth(),data1.getDate(),0,0,0,0);
       // let data2a = new Date(data2.getFullYear(),data2.getMonth(),data2.getDate(),0,0,0,0);
       console.log(data1.getTime(), data2.getTime());
-      if (data1.getTime() == data2.getTime()) { return "IGUAIS"; }
+      if (data1.getTime() == data2.getTime()) { return 'IGUAIS'; }
     }
     return 'DIFERENTE';
   }

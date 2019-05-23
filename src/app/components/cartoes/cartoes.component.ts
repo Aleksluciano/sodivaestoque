@@ -17,7 +17,7 @@ cartao: Cartao = {
   data: new Date(),
   mes: new Date().getMonth(),
   ano: new Date().getFullYear()
-}
+};
 
 cartoes: Cartao[] = [];
 popupOpen = false;
@@ -30,27 +30,27 @@ popupOpen = false;
 
     this.cartoesService.getCartoes()
     .subscribe(cartoes => {
-console.log(cartoes)
+console.log(cartoes);
     this.cartoes = [];
     this.cartoes = cartoes;
     });
   }
-addCartao(){
+addCartao() {
 
   this.cartao.mes = this.cartao.data.getMonth();
   this.cartao.ano = this.cartao.data.getFullYear();
 
-  let cartao = this.cartao;
+  const cartao = this.cartao;
   this.cartoesService.newCartao(cartao);
 }
 
-backTimeStamp(val){
+backTimeStamp(val) {
 
   return val.toDate();
 
 }
 
-deleteCartao(item: Cartao){
+deleteCartao(item: Cartao) {
   this.popupOpen = true;
     const   dialogConfig = new MatDialogConfig();
     dialogConfig.disableClose = false;
@@ -64,14 +64,14 @@ deleteCartao(item: Cartao){
       .afterClosed()
       .subscribe(result => {
         this.popupOpen = false;
-    if(result) { this.cartoesService.deleteCartao(item.id)
+    if (result) { this.cartoesService.deleteCartao(item.id);
       this.cartao = {
         valorCredito: 0,
         valorDebito: 0,
         data: new Date(),
         mes: new Date().getMonth(),
         ano: new Date().getFullYear()
-      }
+      };
     }
     });
 
