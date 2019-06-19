@@ -41,7 +41,7 @@ import { MAT_DIALOG_DATA } from '@angular/material';
   <section *ngFor="let item of data.lista">
   <span style="font-size: 0.8em" >{{ item.codigo }} {{ item.descricao }}</span>
   <section>
-  <span style="font-size: 0.8em;margin-left: 80px" >{{item.quantidade}}un x R$ {{ item.preco | number: '.2-2'}}</span>
+  <span style="font-size: 0.8em;margin-left: 70px" >{{item.quantidade}}un x R$ {{ item.preco | number: '.2-2'}}</span>
   </section>
   </section>
   <br>
@@ -62,7 +62,7 @@ import { MAT_DIALOG_DATA } from '@angular/material';
     </section>
     <br>
     <section>
-      <span style="margin-left: 50px" >Obrigado!</span>
+      <span style="font-size: 0.9em" >Agradecemos a preferência!</span>
     </section>
 
   </div>

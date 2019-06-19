@@ -45,7 +45,8 @@ export class VendaFormComponent implements OnInit {
   filteredOptionsFindCliente: Observable<Cliente[]>;
   myControlProduto = new FormControl();
   myControlCliente = new FormControl();
-
+  um = '1';
+  dois = '2';
   avistaaprazo = '1';
   dataRecibo = new Date();
   desconto = 0;
@@ -271,6 +272,7 @@ export class VendaFormComponent implements OnInit {
     while (length < parseInt(this.numeroPagamentos)) {
       this.pagamentos.push({
         preco: this.totalLista / parseInt(this.numeroPagamentos),
+        precopaago: 0,
         forma: 'credito',
         data: new Date()
       });
@@ -340,7 +342,7 @@ export class VendaFormComponent implements OnInit {
     if (val) {return true; }
     let total = 0;
     this.pagamentos.forEach(sum => total += sum.preco);
-    if ((total.toFixed(2) < this.totalLista.toFixed(2)) || (total.toFixed(2) > this.totalLista.toFixed(2))) {return true; }
+    if ((total.toFixed(2) < (this.totalLista).toFixed(2)) || ( total.toFixed(2) > (this.totalLista).toFixed(2))) {return true; }
     }
     return false;
   }
@@ -358,9 +360,11 @@ export class VendaFormComponent implements OnInit {
       let id = '';
       let clienteEndereco = '';
       let clienteTelefone = '';
+      let clienteObs = '';
       if (this.cliente) {
         id = this.cliente.id;
         clienteEndereco = this.cliente.endereco;
+        clienteObs = this.cliente.obs;
         if (this.cliente.telefone) {
         clienteTelefone = this.cliente.telefone;
         } else if (this.cliente.celular) {clienteTelefone = this.cliente.celular; }
@@ -369,6 +373,7 @@ export class VendaFormComponent implements OnInit {
       const venda: Venda = {
         clienteNome: this.form.value.cliente,
         clienteId: id,
+        clienteObs: clienteObs,
         clienteEndereco: clienteEndereco,
         clienteTelefone: clienteTelefone,
         recibo: this.form.value.recibo,
@@ -565,5 +570,33 @@ export class VendaFormComponent implements OnInit {
     addEvent(type: string, event: MatDatepickerInputEvent<Date>) {
       this.dataPrimeiroUltimoPag();
     }
+
+    arredondar(n, digits = 0) {
+      var negative = false;
+      if (digits === undefined) {
+          digits = 0;
+      }
+          if( n < 0) {
+          negative = true;
+        n = n * -1;
+      }
+      var multiplicator = Math.pow(10, digits);
+      n = parseFloat((n * multiplicator).toFixed(11));
+      n = (Math.round(n) / multiplicator).toFixed(2);
+      if( negative ) {
+          n = (n * -1).toFixed(2);
+      }
+    this.totalLista = parseInt(n);
+
+  }
+
+
+  onChangeAllMethodPayments(forma,j){
+    if(j == 0){
+    this.pagamentos.forEach(a => {
+      a.forma = forma;
+    });
+    }
+  }
 
 }

@@ -15,17 +15,30 @@
         <br>
         <br>
 
-        <section style="margin-left: 400px;font-size: 1.4em;width: 400px">
-        <span >Total à vista:<span style="color:chartreuse;float: right">R$ {{ avista | number: '.2-2'}}</span></span>
+        <section style="left: 200px;top:200px;position: absolute;font-size: 2.3em">
+            <span>{{ mesNOME[months.indexOf(mes_atual)]}}</span>
+          </section>
+
+        <section style="margin-left: 400px;font-size: 1.4em;width: 330px">
+        <span >Total faturado:<span style="color:chartreuse;float: right">R$ {{ avista + aprazo | number: '.2-2'}} +</span></span>
       </section>
-      <section style="margin-left: 400px;font-size: 1.4em;width: 400px">
-        <span >Total a prazo:<span style="color:chartreuse;float: right">R$ {{ aprazo | number: '.2-2'}}</span></span>
+      <!-- <section style="margin-left: 400px;font-size: 1.4em;width: 330px">
+        <span >Total a prazo:<span style="color:chartreuse;float: right">R$ {{ aprazo | number: '.2-2'}} +</span></span>
+      </section> -->
+      <section style="margin-left: 400px;font-size: 1.4em;width: 330px">
+          <span >Total diferenças:<span style="float: right" [ngStyle]="{ color:  totaldiferenca <= 0 ? 'chartreuse' : 'red' }">R$ {{ totaldiferenca >= 0 ? (totaldiferenca | number: '.2-2') : (totaldiferenca * -1 | number: '.2-2') }} {{ totaldiferenca <= 0 ? '+' : '-'}}</span></span>
+        </section>
+      <section style="margin-left: 400px;font-size: 1.4em;width: 330px">
+        <span >Taxa credito:<span style="color:red;float: right">R$ {{ taxacredito | number: '.2-2'}} -</span><span style="float: right">({{ this.totalcredito | number: '.2-2' }})</span></span>
       </section>
-      <section style="margin-left: 400px;font-size: 1.4em;width: 400px">
+      <section style="margin-left: 400px;font-size: 1.4em;width: 330px">
+        <span >Taxa debito: <span style="color:red;float: right">R$ {{ taxadebito | number: '.2-2'}} -</span><span style="float: right">({{ this.totaldebito | number: '.2-2' }})</span></span>
+      </section>
+      <section style="margin-left: 400px;font-size: 1.4em;width: 330px">
           <span ><hr></span>
         </section>
-        <section style="margin-left: 400px;font-size: 1.4em;width: 400px">
-            <span >Total Geral:<span style="color:rgb(103, 247, 252);float: right;font-weight: bold">R$ {{ aprazo + avista | number: '.2-2'}}</span></span>
+        <section style="margin-left: 400px;font-size: 1.4em;width: 330px">
+            <span >Total Geral:<span style="color:rgb(103, 247, 252);float: right;font-weight: bold">R$ {{ aprazo + avista - taxacredito - taxadebito + (totaldiferenca * -1) | number: '.2-2'}}</span></span>
           </section>
 
 
@@ -37,8 +50,10 @@
             <div *ngFor="let re of resumo">
 
                 <div *ngIf="re?.name"  [ngStyle]="{ backgroundColor: re.valor == 0 ? 'green' : 'DarkOrange' }">
-                    <span style="font-size: 1.4em">{{ re.name }}</span> <span style="position: absolute;right: 700px;font-size: 1.4em" >DIVIDA TOTAL: {{ re.valor | number:'.2-2'}}</span>
-                    <span *ngIf="re.valorpag > 0" style="position: absolute;right: 400px;font-size: 1.4em" >VALOR PAGO: {{ re.valorpag | number:'.2-2'}}</span>
+                    <span *ngIf="!re?.id" style="font-size: 1.4em">{{ re.name }}</span> 
+                    <a *ngIf="re?.id" routerLink="/clientes/edit/{{re?.id}}" style="font-size: 1.4em;color:whitesmoke">{{ re.name }}</a> 
+                    <span style="position: absolute;right: 550px;font-size: 1.4em" >DIVIDA TOTAL: {{ re.valor | number:'.2-2'}}</span>
+                    <span *ngIf="re.valorpag > 0" style="position: absolute;right: 250px;font-size: 1.4em" >VALOR PAGO: {{ re.valorpag | number:'.2-2'}}</span>
                   </div>
               <mat-expansion-panel *ngFor="let fat of re.grupo">
 
@@ -50,23 +65,30 @@
                     'dotyellow': ledControl(fat) == 'yellow',
                     'dotred': ledControl(fat) == 'red'
                     }">
-                </span><a *ngIf="fat.id" routerLink="/vendas/edit/{{fat.id}}" style="color:whitesmoke">{{ fat.recibo }}</a>
-             <!--    <a *ngIf="fat.clienteId" routerLink="/clientes/edit/{{fat.clienteId}}" style="color:whitesmoke;margin-left:10px">{{ fat.clienteNome }}</a> -->
+                </span>
+                <a *ngIf="fat.id" routerLink="/vendas/edit/{{fat.id}}" style="color:whitesmoke">{{ fat.recibo }}</a>
+
+               <span *ngIf = 'fat.valorhistorico > 0'>
+                  <span>,</span>
+              <a *ngFor = 'let rec of fat.reciboshistorico' routerLink="/vendas/edit/{{rec.id}}" style="color:whitesmoke">{{ rec.recibo }}</a>
+            </span>
+                <!-- <a *ngIf="fat.clienteId" routerLink="/clientes/edit/{{fat.clienteId}}" style="color:whitesmoke;margin-left:10px">{{ fat.clienteNome }}</a> -->
                 <span *ngIf="!fat.clienteId" style="color:whitesmoke;margin-left:10px">{{ fat.clienteNome }}</span>
                   </mat-panel-title>
                   <mat-panel-description>
                       <section *ngIf="fat.tipoPagamento == '1'">
-                          <span [ngStyle]="{ color: fat?.status ? 'chartreuse' : 'DarkOrange' }" style="margin-left: 35px;position: absolute;right: 820px">{{ fat.vezes }}</span>
-                          <span [ngStyle]="{ color: fat?.status ? 'chartreuse' : 'DarkOrange' }" style="position: absolute;right: 700px">
+                          <span style="margin-left: 35px;position: absolute;right: 720px">{{ fat.forma }}</span>
+                          <span [ngStyle]="{ color:  (!fat.controlada || (fat.controlada && fat?.status)) ? 'chartreuse' : 'DarkOrange' }" style="margin-left: 35px;position: absolute;right: 670px">{{ fat.vezes }}</span>
+                          <span [ngStyle]="{ color: (!fat.controlada || (fat.controlada && fat?.status)) ? 'chartreuse' : 'DarkOrange' }" style="position: absolute;right: 550px">
                               {{ fat.valor | number: '.2-2' }}
                           </span>
-                          <span style="position: absolute;right: 400px">
+                          <span style="position: absolute;right: 250px">
                             {{ diaSemana(fat.dataPrimeiroPag) }}
                           </span>
-                          <span style="position: absolute;right: 300px">
+                          <span style="position: absolute;right: 150px">
                               {{ backTimeStamp(fat.dataPrimeiroPag) | date:'dd-MM-yyyy' }}
                           </span>
-                          <span *ngIf="fat.controlada" style="position: absolute;right: 200px">
+                          <span *ngIf="fat.controlada" style="position: absolute;right: 100px">
                               <mat-icon>settings</mat-icon>
                         </span>
                         </section>
@@ -75,17 +97,18 @@
                     <section *ngFor="let pag of fat.divisaoPagamento; let i = index">
 
                       <section *ngIf="mescorrente(pag)">
-                          <span [ngStyle]="{ color: pag?.status ? 'chartreuse' : 'DarkOrange' }" style="margin-left: 35px;position: absolute;right: 820px">{{ i + 1 }}</span>
-                          <span style="position: absolute;right: 800px">/ {{ fat.vezes }}</span>
-                        <span [ngStyle]="{ color: pag?.status ? 'chartreuse' : 'DarkOrange' }" style="position: absolute;right: 700px">{{ pag.preco | number: '.2-2'}}</span>
-                        <span style="position: absolute;right: 640px">/ {{ fat.valor | number: '.2-2'}}</span>
-                        <span style="position: absolute;right: 400px">
+                          <span style="margin-left: 35px;position: absolute;right: 720px">{{ pag.forma }}</span>
+                          <span [ngStyle]="{ color: (!fat.controlada || (fat.controlada && pag.status)) ? 'chartreuse' : 'DarkOrange' }" style="margin-left: 35px;position: absolute;right: 670px">{{ i + 1 }}</span>
+                          <span style="position: absolute;right: 650px">/ {{ fat.vezes }}</span>
+                        <span [ngStyle]="{ color: (!fat.controlada || (fat.controlada && pag.status)) ? 'chartreuse' : 'DarkOrange' }" style="position: absolute;right: 550px">{{ pag.precopago | number: '.2-2'}}</span>
+                        <span style="position: absolute;right: 470px">/ {{ (fat?.valorhistorico > 0 ? fat.valorhistorico : fat.valor) | number: '.2-2'}}</span>
+                        <span style="position: absolute;right: 250px">
                           {{ diaSemana(pag.data) }}
                         </span>
-                        <span style="position: absolute;right: 300px">
-                            {{ pag.data.toDate() | date:'dd-MM-yyyy' }}
+                        <span style="position: absolute;right: 150px">
+                            {{ backTimeStamp(pag?.data) | date:'dd-MM-yyyy' }}
                         </span>
-                        <span *ngIf="fat.controlada" style="position: absolute;right: 200px">
+                        <span *ngIf="fat.controlada" style="position: absolute;right: 100px">
                             <mat-icon>settings</mat-icon>
                       </span>
 
@@ -103,7 +126,7 @@
          <span style="color:coral">Forma de pagameto: </span><span *ngIf="fat.forma == 'debito'" style="margin-right: 62px">🔁 - Débito</span>
          <span *ngIf="fat.forma == 'credito'" style="margin-right: 58px">💳 - Crédito</span>
          <span *ngIf="fat.forma == 'dinheiro'" style="margin-right: 50px">💵 - Dinheiro</span>
-         <span style="color:coral">Valor : </span>{{ fat.valor| number: '.2-2'}}
+         <span style="color:coral">Valor : </span>{{ fat.valorpago| number: '.2-2'}}
         </section>
          <section  *ngIf="fat?.controlada" style="margin-left:130px">
           <mat-form-field style="width:120px">
@@ -114,9 +137,24 @@
               <option value="dinheiro">💵 - Dinheiro</option>
             </select>
           </mat-form-field>
-          <span style="color:coral;margin-left:20px">Valor : </span>{{ fat.valor| number: '.2-2'}}
-          <button mat-raised-button color="primary" style="margin-left:20px" (click)="pagaFatura(fat)">Pago</button>
-          <button mat-raised-button style="margin-left:20px" (click)="resetaFatura(fat)">Reset</button>
+          <!-- <span style="color:coral;margin-left:20px">Valor : </span>{{ fat.valor| number: '.2-2'}} -->
+          <mat-form-field appearance="outline"  class="precoPag" style="width:100px;margin-left:10px" >
+            <mat-label>Valor pago</mat-label>
+            <input
+            matInput
+             type="text"
+         [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }"
+         currencyMask
+         [(ngModel)]="fat.valorpago"
+         (ngModelChange)="redistribuiValores(fat,0)"
+          >
+          </mat-form-field>
+          <button color="primary" style="margin-left:20px" (click)="arredondar(fat.valorpago,fat,0)">O</button>
+          <button mat-raised-button color="primary" style="margin-left:20px" (click)="pagaFatura(fat)" [disabled]="confereValorPositvo(fat)">Pago</button>
+          <button mat-raised-button style="margin-left:20px" (click)="resetaFatura(fat)" [disabled]="confereValorPositvo(fat)">Reset</button>
+        </section>
+        <section  *ngIf="fat?.tipoPagamento == '1'" style="margin-left: 15px;margin-top: 45px">
+          <span style="font-size: 1.5em" [ngStyle]="{ color: fat?.diferenca >= 0 ? 'chartreuse' : 'red' }">Diferença: {{ fat?.diferenca }}</span>
         </section>
 
          <!-- <span style="color:coral;margin-left:20px">Data de pagamento: </span>{{ backTimeStamp(fat.dataPrimeiroPag) | date:'dd-MM-yyyy' }} -->
@@ -129,7 +167,7 @@
                     <span style="color:coral">Forma de pagameto: </span><span *ngIf="pag.forma == 'debito'" style="margin-right: 62px">🔁 - Débito</span>
                     <span *ngIf="pag.forma == 'credito'" style="margin-right: 58px">💳 - Crédito</span>
                     <span *ngIf="pag.forma == 'dinheiro'" style="margin-right: 50px">💵 - Dinheiro</span>
-                    <span style="color:coral">Valor : </span>{{ pag.preco | number: '.2-2'}}
+                    <span style="color:coral">Valor : </span>{{ pag.precopago | number: '.2-2'}}
                     <br>
                     <section *ngIf="mescorrente(pag) && fat.controlada" style="margin-left:160px">
                       <mat-form-field style="width:120px">
@@ -140,26 +178,33 @@
                           <option value="dinheiro">💵 - Dinheiro</option>
                         </select>
                       </mat-form-field>
-                      <mat-form-field *ngIf="t < (fat.divisaoPagamento.length - 1)" appearance="outline"  class="precoPag" style="width:100px;margin-left:10px" >
+                      <mat-form-field appearance="outline"  class="precoPag" style="width:100px;margin-left:10px" >
                           <mat-label>Valor pago</mat-label>
                           <input
                           matInput
                            type="text"
                        [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }"
                        currencyMask
-                       [(ngModel)]="pag.preco"
-                       (ngModelChange)="redistribuiValores(fat,t,btpago)"
+                       [(ngModel)]="pag.precopago"
+                       (ngModelChange)="redistribuiValores(fat,t)"
                         >
                         </mat-form-field>
-                        <span *ngIf="t == (fat.divisaoPagamento.length - 1)" style="color:coral;margin-left:20px">Valor : </span><span *ngIf="t == (fat.divisaoPagamento.length - 1)">{{ pag.preco | number: '.2-2'}}</span>
+                        <button color="primary" style="margin-left:20px" (click)="arredondar(pag.precopago,fat,t)">O</button>
                         <button mat-raised-button color="primary" style="margin-left:20px" (click)="pagaFaturaParcial(fat,pag)" #btpago [disabled]="confereValorPositvo(fat)">Pago</button>
-                        <button mat-raised-button style="margin-left:20px" (click)="resetaFaturaParcial(fat,pag)" [disabled]="confereValorPositvo(fat,t)">Reset</button>
+                        <button mat-raised-button style="margin-left:20px" (click)="resetaFaturaParcial(fat,pag)" [disabled]="confereValorPositvo(fat)">Reset</button>
+
                     </section>
+
+
 
 
 <br>
 
         </div>
+        <section *ngIf="t == (fat.divisaoPagamento.length - 1)" style="margin-left: 15px;margin-top: 45px">
+          <span style="font-size: 1.5em" [ngStyle]="{ color: fat?.diferenca >= 0 ? 'chartreuse' : 'red' }">Diferença: {{ fat?.diferenca }}</span>
+        </section>
+
                   </section>
                 </section>
                </mat-card-content>

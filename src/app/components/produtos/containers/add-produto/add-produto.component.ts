@@ -7,7 +7,7 @@ import { MatDialog } from '@angular/material';
 import { InfoModalComponent } from 'src/app/components/shared/info-modal.component.ts/info-modal.component';
 import { Fornecedor } from 'src/app/models/fornecedor.model';
 import { FornecedorService } from 'src/app/services/fornecedor.service';
-import { map } from 'rxjs/operators';
+import { map, take } from 'rxjs/operators';
 
 @Component({
   selector: 'app-add-produto',
@@ -86,10 +86,11 @@ export class AddProdutoComponent implements OnInit {
 
   onSubmit() {
     if (this.form.valid) {
-
+this.pad(this.form.value.fornec.codigo.substr(2),5)
       this.produtosService
         .getProdutoByCodigo(this.form.value.fornec.codigo)
         .get()
+        .pipe(take(1))
         .subscribe(document => {
           if (document.size > 0) {
             this.produtosService.flashMessageToExist(
@@ -118,5 +119,21 @@ export class AddProdutoComponent implements OnInit {
 
   onBackClicked() {
     this.location.back();
+  }
+
+  pad(num, size) {
+
+    const numnum = parseInt(num);
+    let s = '';
+     for (let i = 0; i < 5 - numnum.toString().length; i++) {
+      s += '0';
+     }
+
+    let retorno = 'SD' + s + numnum.toString();
+
+    if (retorno.length > 7) {retorno = 'SD' + retorno.substr(2 + retorno.length - 7); }
+    this.form.value.fornec.codigo = retorno;
+
+      return retorno;
   }
 }

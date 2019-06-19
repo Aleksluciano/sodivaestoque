@@ -8,14 +8,15 @@ import { Router } from '@angular/router';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent implements OnInit{
+export class AppComponent implements OnInit {
   isLoggedIn: boolean;
 
-  title = 'sodivaestoque';
+  title = 'SDestoque';
+  request = false;
 
   constructor(
     private authService: AuthService,
-    private router: Router){
+    private router: Router) {
   }
 
   ngOnInit() {
@@ -25,6 +26,7 @@ export class AppComponent implements OnInit{
       } else {
         this.isLoggedIn = false;
       }
+      this.request = true;
     });
 
 
@@ -33,7 +35,7 @@ export class AppComponent implements OnInit{
   onLogoutClick() {
     this.isLoggedIn = false;
     this.authService.logout();
-    this.router.navigate(["/"]);
+    this.router.navigate(['/']);
   }
 
 }

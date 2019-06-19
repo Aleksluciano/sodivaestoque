@@ -9,6 +9,7 @@ export interface Cliente {
   telefone: string;
   celular: string;
   email: string;
+  obs: string;
   // cpf: string,
   // rg: string
 }

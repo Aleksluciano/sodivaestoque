@@ -32,6 +32,7 @@ export class AddClienteComponent implements OnInit {
       telefone: '',
       celular: '',
       email: '',
+      obs: '',
       // cpf: "",
       // rg: ""
     })

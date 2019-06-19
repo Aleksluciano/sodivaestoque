@@ -70,7 +70,7 @@ export class ProdutoService {
    getProdutoByCodigo(codigo: string) {
 
     return this.afs.collection('produtos', (ref) =>
-    ref.where('codigo', '==', codigo).limit(1));
+    ref.where('codigo', '==', codigo));
 
    }
 
@@ -131,7 +131,7 @@ if (!produto.estoque) {produto.estoque = []; }
 
           if(indexEstoque >= 0){
                 b.estoque.splice(indexEstoque, 1)
-          
+
                 produtoDoc.update({ estoque: b.estoque })
                 .then(result=> console.log(result))
                 .catch(e=>console.log(e))

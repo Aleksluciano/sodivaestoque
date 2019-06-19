@@ -4,7 +4,6 @@ export const optionsTipos: string[] = [
   'Bermuda',
   'Blazer',
   'Blusa',
-  'Blusa',
   'Body',
   'Calça',
   'Camisa',

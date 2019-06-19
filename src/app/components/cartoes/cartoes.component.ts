@@ -14,6 +14,7 @@ export class CartoesComponent implements OnInit {
 cartao: Cartao = {
   valorCredito: 0,
   valorDebito: 0,
+  valorCreditoAv: 0,
   data: new Date(),
   mes: new Date().getMonth(),
   ano: new Date().getFullYear()
@@ -30,7 +31,6 @@ popupOpen = false;
 
     this.cartoesService.getCartoes()
     .subscribe(cartoes => {
-console.log(cartoes);
     this.cartoes = [];
     this.cartoes = cartoes;
     });
@@ -68,6 +68,7 @@ deleteCartao(item: Cartao) {
       this.cartao = {
         valorCredito: 0,
         valorDebito: 0,
+        valorCreditoAv: 0,
         data: new Date(),
         mes: new Date().getMonth(),
         ano: new Date().getFullYear()

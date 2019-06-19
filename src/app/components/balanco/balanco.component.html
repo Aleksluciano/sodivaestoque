@@ -1,3 +1,31 @@
-<div id="body" >
-<h2>Em construção....</h2>
-  </div>
+<div id="body" @fade>
+
+  <mat-form-field id='ano'>
+      <mat-select  [(ngModel)]="ano" (selectionChange)="getPeriodoAno()">
+        <mat-option *ngFor="let c of anos" [value]="c">
+          {{c}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-button-toggle-group class="toggleDay" name="fontStyle" aria-label="Font Style" [(ngModel)]="mes_atual">
+        <mat-button-toggle  (click)="getPeriodo()" class="numberDay"  *ngFor="let month of months"  [value]="month">{{ month }}</mat-button-toggle>
+      </mat-button-toggle-group>
+      <br>
+      <br>
+      <br>
+
+      <section style="margin-left: 400px;font-size: 1.4em;width: 400px">
+      <span >Total à vista:<span style="color:chartreuse;float: right">R$ {{ avista | number: '.2-2'}}</span></span>
+    </section>
+    <section style="margin-left: 400px;font-size: 1.4em;width: 400px">
+      <span >Total a prazo:<span style="color:chartreuse;float: right">R$ {{ aprazo | number: '.2-2'}}</span></span>
+    </section>
+    <section style="margin-left: 400px;font-size: 1.4em;width: 400px">
+        <span ><hr></span>
+      </section>
+      <section style="margin-left: 400px;font-size: 1.4em;width: 400px">
+          <span >Total Geral:<span style="color:rgb(103, 247, 252);float: right;font-weight: bold">R$ {{ aprazo + avista | number: '.2-2'}}</span></span>
+        </section>
+
+    </div>

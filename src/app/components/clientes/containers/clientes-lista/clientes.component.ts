@@ -30,6 +30,7 @@ export class ClientesComponent implements OnInit {
   displayedColumns: string[] = [
     'Indice',
     'Nome',
+    'Obs',
     'Endereço',
     'Bairro',
     'Cidade',

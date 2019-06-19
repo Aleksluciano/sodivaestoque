@@ -12,20 +12,25 @@
       <button [ngClass]="{'foco': toggle[0]}"  (click)="changeFoco(0)" style="margin-left: 20px" mat-button routerLink="/vendas">Vendas</button>
       <button [ngClass]="{'foco': toggle[1]}"  (click)="changeFoco(1)" mat-button routerLink="/faturamento">Faturamento</button>
       <button  [ngClass]="{'foco': toggle[2]}"  (click)="changeFoco(2)" mat-button routerLink="/despesas">Despesas</button>
-      <button  [ngClass]="{'foco': toggle[8]}"  (click)="changeFoco(8)" mat-button routerLink="/cartoes">Cartões</button>
       <button  [ngClass]="{'foco': toggle[9]}"  (click)="changeFoco(9)" mat-button routerLink="/caixa">Caixa</button>
+      <button [ngClass]="{'foco': toggle[3]}"  (click)="changeFoco(3)" mat-button routerLink="/balanco">Balanço</button>
     <button [ngClass]="{'foco': toggle[6]}"  (click)="changeFoco(6)" mat-button [matMenuTriggerFor]="menu" class="menu">Cadastros</button>
-
+    <button style="margin-left:20px" [ngClass]="{'foco': toggle[8]}"  (click)="changeFoco(8)" mat-button [matMenuTriggerFor]="menu3" class="menu">Configuração</button>
+    <button style="margin-left:20px" [ngClass]="{'foco': toggle[7]}"  (click)="changeFoco(7)" mat-button [matMenuTriggerFor]="menu2" class="menu">Segurança</button>
     <mat-menu #menu="matMenu">
       <button mat-menu-item routerLink="/fornecedores">Fornecedores</button>
       <button mat-menu-item routerLink="/clientes">Clientes</button>
       <button mat-menu-item routerLink="/produtos">Produtos</button>
     </mat-menu>
+    <mat-menu #menu3="matMenu">
+      <button  mat-menu-item routerLink="/cartoes">Cartões</button>
+    </mat-menu>
+    <mat-menu #menu2="matMenu">
+    <button mat-menu-item routerLink="/senha" >Senha</button>
+  </mat-menu>
 
-    <button [ngClass]="{'foco': toggle[7]}"  (click)="changeFoco(7)" mat-button routerLink="/senha" >Senha</button>
-    <button  style="margin-left:200px" [ngClass]="{'foco': toggle[3]}"  (click)="changeFoco(3)" mat-button routerLink="/balanco">Balanço<mat-icon>build</mat-icon></button>
-    <button  [ngClass]="{'foco': toggle[4]}"  (click)="changeFoco(4)" mat-button routerLink="/agenda">Agenda<mat-icon>build</mat-icon></button>
-    <button  [ngClass]="{'foco': toggle[5]}"  (click)="changeFoco(5)" mat-button routerLink="/estatisticas">Estatísticas<mat-icon>build</mat-icon></button>
+    <!-- <button  [ngClass]="{'foco': toggle[4]}"  (click)="changeFoco(4)" mat-button routerLink="/agenda">Agenda<mat-icon>build</mat-icon></button>
+    <button  [ngClass]="{'foco': toggle[5]}"  (click)="changeFoco(5)" mat-button routerLink="/estatisticas">Estatísticas<mat-icon>build</mat-icon></button> -->
   </div>
 
   <div>

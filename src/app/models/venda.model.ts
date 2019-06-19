@@ -2,6 +2,7 @@ export interface Venda {
   id?: string;
   clienteId: string;
   clienteNome: string;
+  clienteObs: string;
   clienteEndereco: string;
   clienteTelefone: string;
   recibo: string;
@@ -20,4 +21,9 @@ export interface Venda {
   forma: string;
   controlada?: boolean;
   status?: boolean;
+  diferenca?: string;
+  valorpago?: number;
+  valorhistorico?: number;
+  reciboshistorico?: any;
+  novasoma?: boolean;
 }

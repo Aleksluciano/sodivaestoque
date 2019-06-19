@@ -90,6 +90,12 @@ export class ProdutosComponent implements OnInit {
       this.produtos = produtos;
       this.dataSource = new MatTableDataSource(this.produtos);
       this.footerQuantidade = 0;
+      this.footerValorPago = 0;
+      this.footerPrecoVenda = 0;
+      this.footerCustoTotal = 0;
+      this.footerLucroTotal = 0;
+      this.footerLucroPorcentagem = 0;
+      
       this.produtos.forEach(a => {
 
         let estoque = 0;
@@ -102,11 +108,14 @@ export class ProdutosComponent implements OnInit {
 
       }
 
+      if(a.tipo != 'QUALQUER'){
         this.footerQuantidade += a.quantidade - estoque;
         this.footerValorPago += a.valor * a.quantidade;
         this.footerPrecoVenda += a.preco * a.quantidade;
         this.footerCustoTotal += a.valor * a.quantidade;
         this.footerLucroTotal += ( a.preco * a.quantidade ) - ( a.valor * a.quantidade );
+      }
+
       });
 
       this.footerLucroPorcentagem = ((this.footerLucroTotal / this.footerCustoTotal) * 100);

@@ -13,6 +13,7 @@ export interface Produto {
   // custo: number,
   preco: number;
   estoque: any[];
+  desc: number;
   // lucrobruto: number
 }
 

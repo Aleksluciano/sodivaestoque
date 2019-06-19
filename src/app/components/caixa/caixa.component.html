@@ -69,16 +69,18 @@
 </section>
 <br>
 <br>
+
 <section style="margin-left: 440px" >
 
-  <h5 *ngFor="let item of caixasAtual"  [ngStyle]="{ color: item.valor >= 0 ? 'rgb(103, 247, 252)' : 'rgb(243, 13, 13)' }"><span style="position: absolute;left: 400px;" > {{ item.observacao }}</span >
-    <span style="position: absolute;left: 550px;">R$ {{ item.valor | number:'.2-2' }}</span>
-    <span style="position: absolute;left: 650px;">Data da operação: {{ backTimeStamp(item.data) | date:'dd-MM-yyyy' }}</span>
+  <h4 *ngFor="let item of caixasAtual"  [ngStyle]="{ color: item.valor >= 0 ? 'rgb(103, 247, 252)' : 'rgb(243, 13, 13)' }"><span style="position: absolute;left: 400px;background-color: black" > {{ item.observacao }}</span >
+    <span style="position: absolute;left: 550px;background-color: black">R$ {{ item.valor | number:'.2-2' }}</span>
+    <span style="position: absolute;left: 650px;background-color: black">Data da operação: {{ backTimeStamp(item.data) | date:'dd-MM-yyyy' }}</span>
     <span style="margin-left:330px" > <button style="margin-top:-20px" mat-icon-button color="warn" (click)="deleteCaixa(item)">
         <mat-icon>delete</mat-icon>
       </button>
     </span>
-  </h5>
+  </h4>
+
   </section>
 
 </div>

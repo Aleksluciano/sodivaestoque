@@ -47,6 +47,7 @@ export class EditClienteComponent implements OnInit {
   form = this.fb.group({
     fornec: this.fb.group({
       nome: ['', Validators.required],
+      obs: '',
       cep: '',
       endereco: ['', Validators.required],
       bairro: ['', Validators.required],
@@ -97,6 +98,7 @@ export class EditClienteComponent implements OnInit {
           telefone: this.cliente.telefone,
           celular: this.cliente.celular,
           email: this.cliente.email,
+          obs: this.cliente.obs || '',
           // cpf: this.cliente.cpf,
           // rg: this.cliente.rg
         });
@@ -209,6 +211,7 @@ export class EditClienteComponent implements OnInit {
         telefone: this.cliente.telefone,
         celular: this.cliente.celular,
         email: this.cliente.email,
+        obs: this.cliente.obs || '',
         // cpf: this.cliente.cpf,
         // rg: this.cliente.rg
       });
@@ -232,6 +235,7 @@ export class EditClienteComponent implements OnInit {
         telefone: this.cliente.telefone,
         celular: this.cliente.celular,
         email: this.cliente.email,
+        obs: this.cliente.obs || '',
         // cpf: this.cliente.cpf,
         // rg: this.cliente.rg
       });
@@ -255,6 +259,7 @@ export class EditClienteComponent implements OnInit {
         telefone: this.cliente.telefone,
         celular: this.cliente.celular,
         email: this.cliente.email,
+        obs: this.cliente.obs || '',
         // cpf: this.cliente.cpf,
         // rg: this.cliente.rg
       });

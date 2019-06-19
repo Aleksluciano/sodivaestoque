@@ -57,8 +57,8 @@ export class VendaService {
 
    getVenda(id: string): Observable<Venda> {
 
-      this.vendaDoc = this.afs.doc<Venda>(`vendas/${id}`);
-      this.venda =  this.vendaDoc.snapshotChanges().pipe(
+      let vendaDoc = this.afs.doc<Venda>(`vendas/${id}`);
+      this.venda =  vendaDoc.snapshotChanges().pipe(
         map(action => {
 
           if (action.payload.exists === false) {
@@ -119,14 +119,18 @@ export class VendaService {
    updateFatura(fatura: Venda) {
 
       const faturaDoc = this.afs.doc(`vendas/${fatura.id}`);
-       return faturaDoc.update({ status: fatura.status, forma: fatura.forma});
+       return faturaDoc.update({ status: fatura.status, forma: fatura.forma, valorpago: fatura.valorpago});
 
      }
 
      updateFaturaParcial(fatura: Venda) {
 
       const faturaDoc = this.afs.doc(`vendas/${fatura.id}`);
-       return faturaDoc.update({ divisaoPagamento: fatura.divisaoPagamento });
+       return faturaDoc.update({
+         divisaoPagamento: fatura.divisaoPagamento,
+        valorhistorico: fatura.valorhistorico,
+        reciboshistorico: fatura.reciboshistorico
+      });
 
      }
 

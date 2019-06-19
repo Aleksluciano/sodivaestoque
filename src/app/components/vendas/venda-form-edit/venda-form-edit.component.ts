@@ -48,7 +48,8 @@ export class VendaFormEditComponent implements OnInit {
   filteredOptionsFindCliente: Observable<Cliente[]>;
   myControlProduto = new FormControl();
   myControlCliente = new FormControl();
-
+  um = '1';
+  dois = '2';
   avistaaprazo = '1';
   dataRecibo = new Date();
   desconto = 0;
@@ -114,6 +115,7 @@ export class VendaFormEditComponent implements OnInit {
         telefone: venda.clienteTelefone,
         celular: '',
         email: '',
+        obs: '',
       };
 
       this.desconto = venda.desconto;
@@ -285,7 +287,13 @@ export class VendaFormEditComponent implements OnInit {
 
   aplicaDesconto() {
     this.totalLista = this.lista.reduce((sum, item) => {
-      return sum + item.preco * item.quantidade;
+      let preco = 0;
+      if(item.desc > 0){
+       preco = item.preco - (item.desc * item.preco / 100);
+      }else{
+      preco = item.preco;
+      }
+      return sum + preco * item.quantidade;
     }, 0);
 
     if (this.desconto > 0) {
@@ -308,6 +316,7 @@ export class VendaFormEditComponent implements OnInit {
     while (length < parseInt(this.numeroPagamentos)) {
       this.pagamentos.push({
         preco: this.totalLista / parseInt(this.numeroPagamentos),
+        precopago: 0,
         forma: 'credito',
         data: new Date()
       });
@@ -324,16 +333,28 @@ export class VendaFormEditComponent implements OnInit {
     return parseInt(num);
   }
 
-  addDesconto() {
-    if (this.desconto < 30) {
+  addDesconto(i = -1) {
+    if (this.desconto < 30 || (i !== -1 && this.lista[i].desc < 30)) {
+      if(i == -1){
       this.desconto += 5;
+      }else { 
+        if(!this.lista[i].desc)this.lista[i].desc = 0;
+        this.lista[i].desc += 5;
+        console.log(this.lista[i].desc);
+      }
       this.aplicaDesconto();
     }
   }
 
-  removeDesconto() {
-    if (this.desconto > 0) {
+  removeDesconto(i = -1) {
+    if (this.desconto > 0 || (i !== -1 && this.lista[i].desc > 0)) {
+      if(i == -1){
       this.desconto -= 5;
+      }else { 
+        if(!this.lista[i].desc)this.lista[i].desc = 0;
+        this.lista[i].desc -= 5;
+      console.log(this.lista[i].desc)
+      }
       this.aplicaDesconto();
     }
   }
@@ -397,9 +418,11 @@ export class VendaFormEditComponent implements OnInit {
       let id = '';
       let clienteEndereco = '';
       let clienteTelefone = '';
+      let clienteObs = '';
       if (this.cliente) {
         id = this.cliente.id;
         clienteEndereco = this.cliente.endereco;
+        clienteObs = this.cliente.obs;
         if (this.cliente.telefone) {
         clienteTelefone = this.cliente.telefone;
         } else if (this.cliente.celular) {clienteTelefone = this.cliente.celular; }
@@ -409,6 +432,7 @@ export class VendaFormEditComponent implements OnInit {
         id: this.id,
         clienteNome: this.form.value.cliente,
         clienteId: id,
+        clienteObs: clienteObs,
         clienteEndereco: clienteEndereco,
         clienteTelefone: clienteTelefone,
         recibo: this.form.value.recibo,
@@ -426,7 +450,9 @@ export class VendaFormEditComponent implements OnInit {
         dataUltimoPag: this.dataUltimoPag,
         forma: this.forma,
         controlada: this.controlada,
-        status: this.status
+        status: this.status,
+        valorhistorico: 0,
+         reciboshistorico: []
       };
 
       this.vendasService
@@ -591,6 +617,15 @@ export class VendaFormEditComponent implements OnInit {
 
   addEvent(type: string, event: MatDatepickerInputEvent<Date>) {
     this.dataPrimeiroUltimoPag();
+  }
+
+
+  onChangeAllMethodPayments(forma,j){
+    if(j == 0){
+    this.pagamentos.forEach(a => {
+      a.forma = forma;
+    });
+    }
   }
 
 

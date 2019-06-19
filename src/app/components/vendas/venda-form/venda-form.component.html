@@ -33,7 +33,7 @@
               <mat-option *ngFor="let option of filteredOptionsFindCliente | async"
               [value]="option.nome"
               >
-                {{option.nome}}
+            {{option.nome}} {{ option?.obs }}
               </mat-option>
             </mat-autocomplete>
           </mat-form-field>
@@ -60,11 +60,13 @@
                 <mat-datepicker #it ></mat-datepicker>
                 </mat-form-field>
               </div>
+              <div *ngIf="cliente?.id"><h3 style="color:chartreuse">CLIENTE CADASTRADO</h3></div>
         </mat-card>
         </div>
         <div fxFlex=30 *ngIf="cliente?.endereco">
             <p >Endereço: {{ cliente?.endereco }}</p>
             <p >Telefone: {{ cliente?.telefone || cliente?.celular }}</p>
+            <p >Observação: {{ cliente?.obs || cliente?.obs }}</p>
         </div>
         </div>
 <br><br>
@@ -150,7 +152,7 @@
         <td align="center">{{ item.cor }} </td>
         <td align="center">{{ item.tamanho }} </td>
         <td align="center">{{ item.quantidade }} </td>
-        <td align="center">R$ {{ item.preco | number: '.2':'pt' }} </td>
+        <td align="center">R$ {{ item.preco | number: '.2-2' }} </td>
       </tr>
     </tbody>
     <tfoot>
@@ -178,7 +180,7 @@
 <p >Descrição: {{ produto?.descricao }}</p>
 <p >Cor: {{ produto?.cor }}</p>
 <p >Tamanho: {{ produto?.tamanho }}</p>
-<p class="preco">Preço: R$ {{ produto?.preco | number: '.2':'pt' }}</p>
+<p class="preco">Preço: R$ {{ produto?.preco | number: '.2-2'  }}</p>
 <p class="preco">Quant. Estoque: {{ produto?.quantidade - calcEstoque() }}</p>
 
 </div>
@@ -221,7 +223,7 @@
 
               <mat-radio-button value="2">A prazo</mat-radio-button>
             </mat-radio-group>
-            <div *ngIf="avistaaprazo == '1'">
+            <div *ngIf="avistaaprazo == um">
                 <br>
                 <br>
                 <mat-form-field>
@@ -240,7 +242,7 @@
                     <mat-datepicker #picker ></mat-datepicker>
                     </mat-form-field>
            </div>
-            <div *ngIf="avistaaprazo == '2'">
+            <div *ngIf="avistaaprazo == dois">
             <div>
               <br>
               <br>
@@ -259,7 +261,7 @@
                 <span>{{ j + 1 }}X - </span>
                 <mat-form-field>
                     <mat-label>Forma de pagamento</mat-label>
-                    <select matNativeControl required [(ngModel)]="pagamentos[j].forma">
+                    <select matNativeControl required [(ngModel)]="pagamentos[j].forma" (change)="onChangeAllMethodPayments(pagamentos[j].forma,j)">
                       <option value="debito">🔁 - Débito</option>
                       <option value="credito" selected>💳 - Crédito</option>
                       <option value="dinheiro">💵 - Dinheiro</option>
@@ -284,10 +286,12 @@
                       <mat-datepicker #it ></mat-datepicker>
                       </mat-form-field>
                       <span style="margin-left: 15px" *ngIf="j != 0" > {{ preco.data | date:'dd-MM-yyyy' }} </span>
+
                     </section>
                 </section>
               </div>
-              <section style="font-size: 1.5em;color:rgb(63, 63, 252);font-weight: bold; background-color: white;width: 200px;margin-left: 200px">Total: R$ {{ totalLista | number: '.2-2' }}</section>
+              <section style="font-size: 1.5em;color:rgb(63, 63, 252);font-weight: bold; background-color: white;width: 200px;margin-left: 200px">Total: R$ {{ totalLista | number: '.2-2' }}
+              </section>
 
 
               <button

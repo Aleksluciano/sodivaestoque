@@ -277,6 +277,7 @@ pad(num, size) {
    }
 
   let retorno = 'SD' + s + numnum.toString();
+
   if (retorno.length > 7) {retorno = 'SD' + retorno.substr(2 + retorno.length - 7); }
   this.parent.value.fornec.codigo = retorno;
     return retorno;
