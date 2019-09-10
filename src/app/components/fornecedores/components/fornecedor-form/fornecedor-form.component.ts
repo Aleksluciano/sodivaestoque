@@ -63,7 +63,7 @@ export class FornecedorFormComponent implements OnInit, AfterViewInit {
     "TO"
   ];
   filteredOptions: Observable<string[]>;
-  @ViewChild("nameInput") nameInput;
+  @ViewChild("nameInput", {static: true}) nameInput;
 
   constructor() {}
 

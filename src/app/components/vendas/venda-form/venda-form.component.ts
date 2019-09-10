@@ -64,7 +64,7 @@ export class VendaFormComponent implements OnInit {
 
   controlada = false;
 
-  @ViewChild('nomeCliente') nomeCliente;
+  @ViewChild('nomeCliente', {static: true}) nomeCliente;
 
   constructor(
     private produtosService: ProdutoService,
