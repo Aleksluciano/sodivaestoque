@@ -31,8 +31,13 @@ agendas: Agenda[] = [];
 
   }
 
-  removeCard(agenda: Agenda){
+  removeCard(agenda: Agenda) {
     this.agendasService.deleteAgenda(agenda.id);
+  }
+
+  quantidadeAtividadePendente(): number {
+    console.log(this.agendas.filter(a => a.isDone).length);
+    return this.agendas.filter(a => !a.isDone).length;
   }
 
 }
