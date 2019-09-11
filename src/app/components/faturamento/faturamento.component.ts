@@ -191,7 +191,7 @@ mesNOME = [
       return cp as T;
     }
     return target;
-  };
+  }
 
   calcTotal(mesatual: number) {
     this.avista = 0;
@@ -203,9 +203,9 @@ mesNOME = [
     // this.faturasatuais = [];
     this.totaldiferenca = 0;
     this.resumo = [];
-    //this.faturas = this.faturas_ini.map(a => ({ ...a }));
+    // this.faturas = this.faturas_ini.map(a => ({ ...a }));
     this.faturas = this.deepCopy(this.faturas_ini);
-    
+
     this.faturas.forEach(fatura => {
       fatura.diferenca = '0.00';
       if (!fatura.reciboshistorico) { fatura.reciboshistorico = []; }
@@ -279,11 +279,11 @@ mesNOME = [
           this.resumo.push(obj);
         }
 
-        
+
       }
 
       if (fatura.tipoPagamento == '2') {
-      
+
         fatura.divisaoPagamento.forEach(pag => {
           const mes = new Date(pag.data['seconds'] * 1000).getMonth();
           const ano = new Date(pag.data['seconds'] * 1000).getFullYear();
@@ -293,7 +293,7 @@ mesNOME = [
           if (mes == mesatual && ano == parseInt(this.ano)) {
             // this.faturasatuais.push(fatura);
 
-         
+
             this.calcCreditoDebitoDiferenca(pag, fatura.tipoPagamento);
 
             let find = this.resumo.find(x => x.id == fatura.clienteId);
@@ -334,9 +334,9 @@ mesNOME = [
               this.resumo.push(obj);
             }
           }
-      
+
         });
-    
+
       }
     });
 
@@ -355,17 +355,17 @@ mesNOME = [
             let hist = null;
             if (fatura.reciboshistorico && fatura.reciboshistorico.length > 0) {
 
-              console.log(valfat.clienteNome,'aquiii');
+              console.log(valfat.clienteNome, 'aquiii');
               hist = fatura.reciboshistorico.find(
                 a => valfat.recibo == a.recibo
               );
             }
 
             if (!hist) {
-              if(valfat.valorhistorico > 0){
+              if (valfat.valorhistorico > 0) {
                 valfat.valor += fat.valorhistorico;
                 valfat.valorpago += valfat.valorpago;
-              }else{
+              } else {
               valfat.valor += fat.valor;
               valfat.valorpago += valfat.valorpago;
               }
@@ -378,10 +378,10 @@ mesNOME = [
                   }
                 });
 
-                if(valfat.valorhistorico > 0){
+                if (valfat.valorhistorico > 0) {
                   fatura.valor += valfat.valorhistorico;
                   fatura.valorpago += valfat.valorpago;
-                }else{
+                } else {
                 fatura.valor = valfat.valor;
                 fatura.valorpago = valfat.valorpago;
                 }
@@ -393,7 +393,7 @@ mesNOME = [
                   recibo: valfat.recibo
                 };
                 fatura.reciboshistorico.push(obj);
-                //valfat.valorhistorico = valfat.valor;
+                // valfat.valorhistorico = valfat.valor;
                 fatura.novasoma = true;
 
                 console.log(fatura);
@@ -433,20 +433,20 @@ mesNOME = [
             });
 
             if (recalc && valfat.novasoma) {
-              console.log(valfat.clienteNome,'aquiii');
+              console.log(valfat.clienteNome, 'aquiii');
               valfat.divisaoPagamento.forEach((f, index) => {
                 f.precopago = valfat.valor / parseInt(valfat.vezes);
                 resu.valor = f.precopago;
               });
 
-         
+
 
               // resu.valor = valfat.valor
-             
+
               // } else {
               //   this.redistribuiValores(valfat, index);
             }
-            
+
           }
         }
       });
@@ -486,10 +486,10 @@ mesNOME = [
                 fat.divisaoPagamento[fat.divisaoPagamento.length - 1]
               )
             ) {
-              if(fat.valorhistorico > 0)this.totaldiferenca += fat.valorhistorico - totfatura;
-              else this.totaldiferenca += fat.valor - totfatura;
+              // tslint:disable-next-line: max-line-length
+              if (fat.valorhistorico > 0) {this.totaldiferenca += fat.valorhistorico - totfatura; } else { this.totaldiferenca += fat.valor - totfatura; }
             }
-          
+
         }
 
         if (fat.tipoPagamento == '1') {
@@ -518,23 +518,23 @@ mesNOME = [
     if (tipo == '1') {
       this.avista += pag.valor;
       if (this.cartao) {
-      
-        if(pag.valorpago > 0){
-          if (pag.forma == "debito") {
+
+        if (pag.valorpago > 0) {
+          if (pag.forma == 'debito') {
             this.totaldebito += pag.valorpago;
             this.taxadebito += (pag.valorpago * this.cartao.valorDebito) / 100;
           }
-        
+
         if (pag.forma == 'credito') {
           this.totalcredito += pag.valorpago;
           this.taxacredito += (pag.valorpago * this.cartao.valorCreditoAv) / 100;
         }
-      }else{
-        if (pag.forma == "debito") {
+      } else {
+        if (pag.forma == 'debito') {
           this.totaldebito += pag.valor;
           this.taxadebito += (pag.valorpago * this.cartao.valorDebito) / 100;
         }
-      
+
       if (pag.forma == 'credito') {
         this.totalcredito += pag.valor;
         this.taxacredito += (pag.valor * this.cartao.valorCreditoAv) / 100;
@@ -555,7 +555,7 @@ mesNOME = [
   }
 
   backTimeStamp(val) {
-    return new Date(val['seconds'] * 1000)
+    return new Date(val['seconds'] * 1000);
   }
 
   redistribuiValores(fat, index) {
@@ -727,7 +727,7 @@ mesNOME = [
       .pipe(take(1))
       .subscribe(a => {
         a.divisaoPagamento.forEach((b, i) => {
-        
+
           fat.divisaoPagamento[i].precopago = b.precopago;
           fat.divisaoPagamento[i].forma = b.forma;
         });

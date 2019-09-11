@@ -44,7 +44,8 @@ const routes: Routes = [
   {path: 'agenda', component: AgendaComponent, canActivate: [AuthGuard]},
   {path: 'estatisticas', component: EstatisticasComponent, canActivate: [AuthGuard]},
   {path: 'cartoes', component: CartoesComponent, canActivate: [AuthGuard]},
-  {path: 'caixa', component: CaixaComponent, canActivate: [AuthGuard]}
+  {path: 'caixa', component: CaixaComponent, canActivate: [AuthGuard]},
+  {path: 'agenda', component: AgendaComponent, canActivate: [AuthGuard]},
   // {  path: "", loadChildren: "./components/fornecedores/forcedores.module#FornecedoresModule"},
 ];
 @NgModule({

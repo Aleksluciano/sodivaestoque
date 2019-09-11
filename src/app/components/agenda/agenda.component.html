@@ -1,4 +1,29 @@
-<div id="body" >
-  <h2>Em construção....</h2>
+<!-- <div id="container">
+  
+    <section class="container">
+        <div class="item">1</div>
+        <div class="card" *ngFor="let item of agendas; let i=index">
+          
+    
+              <h4><b>{{item.dateTime  | date:'HH:mm' }}</b></h4>
+              <img src="../../../assets/carla.jpg" alt="Avatar"> 
+              <p> {{item.name}}</p>
+            </div>
+      
+       
+  
+  
+</div> -->
+<div class="body">
+<section class="container flex">
+    <div class="item" *ngFor="let item of agendas; let i=index" [ngStyle]="{'text-decoration': item.isDone ? 'line-through' : 'none' }">
+      <span><button mat-icon-button (click)="removeCard(item)"><mat-icon>cancel</mat-icon></button>{{item.dateTime  | date: 'dd/MM/yyyy' }}</span>
+        <h4><b>{{item.dateTime  | date:'HH:mm' }}</b></h4>
+              <img *ngIf="item.person == 'Carla'" src="../../../assets/carla.jpg" alt="Avatar"> 
+              <img *ngIf="item.person == 'Paty'"src="../../../assets/paty.jpg" alt="Avatar"> 
+              <img *ngIf="item.person == 'Bia'"src="../../../assets/sibila.jpg" alt="Avatar"> 
+              <p > {{item.name}}</p>
+               <mat-checkbox [(ngModel)]="item.isDone" (click)="changeCheckBox(item)"></mat-checkbox>
     </div>
-
+  </section>
+</div>
