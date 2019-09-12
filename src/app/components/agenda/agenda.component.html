@@ -1,38 +1,36 @@
-<!-- <div id="container">
-  
-    <section class="container">
-        <div class="item">1</div>
-        <div class="card" *ngFor="let item of agendas; let i=index">
-          
-    
-              <h4><b>{{item.dateTime  | date:'HH:mm' }}</b></h4>
-              <img src="../../../assets/carla.jpg" alt="Avatar"> 
-              <p> {{item.name}}</p>
-            </div>
-      
-       
-  
-  
-</div> -->
 <div class="body">
-<section class="atividade">
-  <h1>Atividades pendentes: {{ quantidadeAtividadePendente() }}</h1>
-</section>
-<div class="container flex">
 
-    <section class="box-1 flex">
 
-    </section>
-  <section class="box-2 flex">
-    <section class="item" *ngFor="let item of agendas; let i=index" [ngStyle]="{'text-decoration': item.isDone ? 'line-through' : 'none' }">
-        <span><button mat-icon-button (click)="removeCard(item)"><mat-icon>cancel</mat-icon></button>{{item.dateTime  | date: 'dd/MM' }} {{item.dateTime  | date: 'EEEE' }}</span>
-          <h4><b>{{item.dateTime  | date:'HH:mm' }}</b></h4>
-                <img *ngIf="item.person == 'Carla'" src="../../../assets/carla.jpg" alt="Avatar"> 
-                <img *ngIf="item.person == 'Paty'"src="../../../assets/paty.jpg" alt="Avatar"> 
-                <img *ngIf="item.person == 'Bia'"src="../../../assets/sibila.jpg" alt="Avatar"> 
-                <p > {{item.name}}</p>
-                 <mat-checkbox [(ngModel)]="item.isDone" (click)="changeCheckBox(item)"></mat-checkbox>
-    </section>
+
+  <section class="atividade">
+    <h1>Atividades pendentes: {{ quantidadeAtividadePendente() }}</h1>
   </section>
+
+  <div class="container flex">
+
+    <section class="box-1">
+
+    </section>
+
+
+    <section class="box-2">
+      <section class="item" *ngFor="let item of agendas; let i=index" [ngStyle]="{'text-decoration': item.isDone ? 'line-through' : 'none',
+    'background': item.isDone ? 'gray' : 'whitesmoke'
+    }">
+        <span><button mat-icon-button (click)="removeCard(item)">
+            <mat-icon>cancel</mat-icon>
+          </button>{{item.dateTime  | date: 'dd/MM' }} {{item.dateTime  | date: 'EEEE' }}</span>
+        <h4><b>{{item.dateTime  | date:'HH:mm' }}</b></h4>
+        <img *ngIf="item.person == 'Carla'" src="../../../assets/carla.jpg" alt="Avatar">
+        <img *ngIf="item.person == 'Paty'" src="../../../assets/paty.jpg" alt="Avatar">
+        <img *ngIf="item.person == 'Bia'" src="../../../assets/sibila.jpg" alt="Avatar">
+        <p> {{item.name}}</p>
+        <mat-checkbox [(ngModel)]="item.isDone" (click)="changeCheckBox(item)"></mat-checkbox>
+      </section>
+    </section>
+
+
   </div>
+
+
 </div>

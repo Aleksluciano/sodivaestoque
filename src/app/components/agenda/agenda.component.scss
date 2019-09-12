@@ -13,20 +13,20 @@
   padding: 10px 10px;
 }
 
-.flex {
-	display: flex;
+.flex, .box-1, .box-2 {
+  display: flex;
+  flex-wrap: wrap;
 }
 
 
 .item {
-	margin: 5px;
   background: whitesmoke;
   color: black;
 	text-align: center;
   font-size: 1.5em;
   max-width: 150px;;
   max-height: 300px;
-  margin: 0 3px;
+  margin: 10px 3px;
   padding-bottom: 35px;
   border-radius: 5%;
  
