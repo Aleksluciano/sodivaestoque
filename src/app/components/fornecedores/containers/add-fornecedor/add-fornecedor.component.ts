@@ -1,13 +1,13 @@
-import { Component, OnInit } from "@angular/core";
-import { FormBuilder, Validators } from "@angular/forms";
-import { FornecedorService } from "src/app/services/fornecedor.service";
-import { Router } from "@angular/router";
-import { Location } from "@angular/common";
-import { MatDialog } from "@angular/material";
-import { InfoModalComponent } from "src/app/components/shared/info-modal.component.ts/info-modal.component";
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, Validators } from '@angular/forms';
+import { FornecedorService } from 'src/app/services/fornecedor.service';
+import { Router } from '@angular/router';
+import { Location } from '@angular/common';
+import { MatDialog } from '@angular/material';
+import { InfoModalComponent } from 'src/app/components/shared/info-modal.component.ts/info-modal.component';
 
 @Component({
-  selector: "app-add-fornecedor",
+  selector: 'app-add-fornecedor',
   template: `
     <br />
     <form [formGroup]="form" (ngSubmit)="onSubmit()">
@@ -23,17 +23,17 @@ import { InfoModalComponent } from "src/app/components/shared/info-modal.compone
 export class AddFornecedorComponent implements OnInit {
   form = this.fb.group({
     fornec: this.fb.group({
-      nome: ["", Validators.required],
-      cep: "",
-      endereco: ["", Validators.required],
-      bairro: ["", Validators.required],
-      cidade: ["", Validators.required],
-      estado: ["", Validators.required],
-      contato: ["", Validators.required],
-      telefone: "",
-      celular: "",
-      email: "",
-      cnpj: ""
+      nome: ['', Validators.required],
+      cep: '',
+      endereco: ['', Validators.required],
+      bairro: ['', Validators.required],
+      cidade: ['', Validators.required],
+      estado: ['', Validators.required],
+      contato: ['', Validators.required],
+      telefone: '',
+      celular: '',
+      email: '',
+      cnpj: ''
     })
   });
 
@@ -48,7 +48,7 @@ export class AddFornecedorComponent implements OnInit {
   ngOnInit() {}
 
   onSubmit() {
-    if (this.form.valid)
+    if (this.form.valid) {
       this.fornecedoresService
         .newFornecedor(this.form.value.fornec)
         .then(a => {
@@ -56,13 +56,14 @@ export class AddFornecedorComponent implements OnInit {
             this.form.value.fornec.nome
           );
           this.form.reset();
-          this.router.navigate(["fornecedores"]);
+          this.router.navigate(['fornecedores']);
         })
         .catch(error => {
           this.dialog.open(InfoModalComponent, {
-            data: { title: "Erro", message: error.message }
+            data: { title: 'Erro', message: error.message }
           });
         });
+    }
   }
 
   findAdress(event: string) {
@@ -79,7 +80,7 @@ export class AddFornecedorComponent implements OnInit {
       })
       .catch(error => {
         this.dialog.open(InfoModalComponent, {
-          data: { title: "Erro", message: error.message }
+          data: { title: 'Erro', message: error.message }
         });
       });
   }

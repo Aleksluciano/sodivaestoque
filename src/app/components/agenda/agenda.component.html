@@ -2,28 +2,48 @@
 
 
 
-  <section class="atividade">
-    <h1>Atividades pendentes: {{ quantidadeAtividadePendente() }}</h1>
+  <section class="atividade flex">
+    <h1>Atividades pendentes: {{ pendentes }}</h1>
+  
+
+  
+    <mat-form-field class="picker" >
+      <input matInput [matDatepicker]="picker" placeholder="Início" [(ngModel)]="pickerInicio" (dateChange)="filterDate()">
+      <mat-datepicker-toggle matSuffix [for]="picker" ></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+
+    <mat-form-field class="picker" >
+      <input matInput [matDatepicker]="picker2" placeholder="Fim" [(ngModel)]="pickerFim" (dateChange)="filterDate()">
+      <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+      <mat-datepicker #picker2></mat-datepicker>
+    </mat-form-field>
+
+    <button mat-button color="primary" id="addButton" (click)="createActivitie()">+ Adicionar</button>
+    
+  
   </section>
 
   <div class="container flex">
 
-    <section class="box-1">
+    <!-- <section class="box-1 flex">
 
-    </section>
+    </section> -->
 
 
-    <section class="box-2">
+    <section class="box-2 flex">
       <section class="item" *ngFor="let item of agendas; let i=index" [ngStyle]="{'text-decoration': item.isDone ? 'line-through' : 'none',
     'background': item.isDone ? 'gray' : 'whitesmoke'
     }">
         <span><button mat-icon-button (click)="removeCard(item)">
             <mat-icon>cancel</mat-icon>
-          </button>{{item.dateTime  | date: 'dd/MM' }} {{item.dateTime  | date: 'EEEE' }}</span>
+          </button>{{item.dateTime  | date: 'dd/MM' }} {{item.dateTime  | date: 'EEE' }}</span>
         <h4><b>{{item.dateTime  | date:'HH:mm' }}</b></h4>
         <img *ngIf="item.person == 'Carla'" src="../../../assets/carla.jpg" alt="Avatar">
         <img *ngIf="item.person == 'Paty'" src="../../../assets/paty.jpg" alt="Avatar">
         <img *ngIf="item.person == 'Bia'" src="../../../assets/sibila.jpg" alt="Avatar">
+        <br>
+     <br>
         <p> {{item.name}}</p>
         <mat-checkbox [(ngModel)]="item.isDone" (click)="changeCheckBox(item)"></mat-checkbox>
       </section>

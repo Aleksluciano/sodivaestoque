@@ -1,0 +1,31 @@
+<div class="container center">
+    <h1 mat-dialog-title>Criar Atividade</h1>
+    <div mat-dialog-content class="center">
+        <mat-select placeholder="Pessoa" [(ngModel)]="selectedValue" name="item">
+            <mat-option *ngFor="let item of items" [value]="item">
+                {{item}}
+            </mat-option>
+        </mat-select>
+        <br>
+        <br>
+        <div>
+            <mat-form-field>
+                <input matInput placeholder="Atividade" value="" #activ>
+            </mat-form-field>
+        </div>
+        <div class="date center">
+            <ngb-datepicker #dp [(ngModel)]="modeldate" (navigate)="date = $event.next" ></ngb-datepicker>  
+            <ngb-timepicker #dptime [(ngModel)]="time" ></ngb-timepicker>
+          
+        </div>
+        </div>
+
+        <br>
+
+  
+    <div mat-dialog-actions id="actions">
+
+        <button [disabled]="!activ.value || !dp._controlValue" id="buttonSave" mat-raised-button [mat-dialog-close]="{ name: selectedValue, activitie: activ.value, dia: dp._controlValue, tempo: dptime.model }"
+            color="primary">Salvar</button>
+    </div>
+</div>

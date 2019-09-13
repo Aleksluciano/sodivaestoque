@@ -13,9 +13,18 @@
   padding: 10px 10px;
 }
 
-.flex, .box-1, .box-2 {
+.flex{
   display: flex;
   flex-wrap: wrap;
+  justify-content: center
+}
+
+.picker{
+  margin-left: 80px;
+}
+
+.mat-button{
+  margin-left: 80px;
 }
 
 

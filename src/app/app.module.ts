@@ -1,3 +1,4 @@
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { PrintComponent } from './components/vendas/print.component';
 import { HeaderComponent } from './components/navigation/header/header.component';
 import { LoginComponent } from './components/login/login.component';
@@ -27,6 +28,7 @@ import { AddFornecedorComponent } from './components/fornecedores/containers/add
 import { NgFlashMessagesModule } from 'ng-flash-messages';
 import { NgxViacepModule } from '@brunoc/ngx-viacep';
 import { NgxMaskModule } from 'ngx-mask';
+import { AmazingTimePickerModule } from 'amazing-time-picker';
 import { InfoModalComponent } from './components/shared/info-modal.component.ts/info-modal.component';
 import { FornecedorFormEditComponent } from './components/fornecedores/components/fornecedor-form-edit/fornecedor-form-edit.component';
 import { EditFornecedorComponent } from './components/fornecedores/containers/edit-fornecedor/edit-fornecedor.component';
@@ -58,6 +60,8 @@ import { AgendaComponent } from './components/agenda/agenda.component';
 import { EstatisticasComponent } from './components/estatisticas/estatisticas.component';
 import { CartoesComponent } from './components/cartoes/cartoes.component';
 import { CaixaComponent } from './components/caixa/caixa.component';
+import { CreateAgendaComponent } from './components/agenda/create-agenda/create-agenda.component';
+
 
 export const customCurrencyMaskConfig = {
   align: 'right',
@@ -114,7 +118,9 @@ registerLocaleData(ptBr);
     AgendaComponent,
     EstatisticasComponent,
     CartoesComponent,
-    CaixaComponent
+    CaixaComponent,
+    CreateAgendaComponent,
+    CreateAgendaComponent,
     //////////
 
   ],
@@ -155,6 +161,8 @@ registerLocaleData(ptBr);
     MatPaginatorModule,
     MatTooltipModule,
     MatCheckboxModule,
+    NgbModule,
+
    ReactiveFormsModule.withConfig({warnOnNgModelWithFormControl: 'never'}),
 
 
@@ -169,7 +177,7 @@ registerLocaleData(ptBr);
   ],
   providers: [MatDatepickerModule, DatePipe, { provide: LOCALE_ID, useValue: 'pt' }],
   bootstrap: [AppComponent],
-  entryComponents: [ConfirmModalComponent, InfoModalComponent, PrintComponent]
+  entryComponents: [ConfirmModalComponent, InfoModalComponent, PrintComponent, CreateAgendaComponent]
 })
 export class AppModule {
 
