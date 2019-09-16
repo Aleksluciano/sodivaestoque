@@ -17,7 +17,7 @@
 
 .mat-cell:not(.colHide):not(.actions):not(.codigo),
 .mat-header-cell:not(.colHide):not(.actions):not(.codigo) {
-  min-width: 150px;
+  min-width: 90px;
 }
 
 .mat-header-cell, .mat-footer-cell{
@@ -84,7 +84,7 @@ tr:hover {
   width: 200px;
   margin-top: 1%;
   margin-bottom: 1%;
-  margin-right: 2%;
+  margin-right: 10%;
   float: right;
   z-index: 1;
 

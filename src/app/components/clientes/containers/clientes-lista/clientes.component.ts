@@ -35,9 +35,9 @@ export class ClientesComponent implements OnInit {
     'Bairro',
     'Cidade',
     'Estado',
-    'Telefone',
+    //'Telefone',
     'Celular',
-    'Email',
+    //'Email',
     // "Cpf",
     // "Rg",
     'Ações'

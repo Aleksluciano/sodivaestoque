@@ -77,16 +77,16 @@ this.pickerFim = new Date(this.pickerFim.getFullYear(), this.pickerFim.getMonth(
     if (result) {
       
       console.log("tempo",result.tempo, "dia", result.dia);
-console.log(new Date(result.dia.year, result.dia.month, result.dia.day, result.tempo.hour, result.tempo.minute ));
+console.log(new Date(result.dia.year, result.dia.month - 1, result.dia.day, result.tempo.hour, result.tempo.minute ));
 const agenda: Agenda= {
-  dateTime: new Date(result.dia.year, result.dia.month, result.dia.day, result.tempo.hour, result.tempo.minute ),
+  dateTime: new Date(result.dia.year, result.dia.month - 1, result.dia.day, result.tempo.hour, result.tempo.minute ),
   isDone: false,
   name: result.activitie,
   person: result.name
 }
     this.agendasService.newAgenda(agenda);
-    this.pickerFim = new Date(result.dia.year, result.dia.month, result.dia.day, result.tempo.hour, result.tempo.minute );
-    this.pickerInicio = new Date(result.dia.year, result.dia.month, result.dia.day, result.tempo.hour, result.tempo.minute );
+    this.pickerFim = new Date(result.dia.year, result.dia.month - 1, result.dia.day, result.tempo.hour, result.tempo.minute );
+    this.pickerInicio = new Date(result.dia.year, result.dia.month - 1, result.dia.day, result.tempo.hour, result.tempo.minute );
     this.filterDate();
     }
     });

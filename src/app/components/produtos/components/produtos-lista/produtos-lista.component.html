@@ -81,20 +81,20 @@
     <ng-container matColumnDef="preco" >
       <th mat-header-cell *matHeaderCellDef mat-sort-header> Preço de Venda</th>
       <td mat-cell *matCellDef="let produto" >R$ {{ produto?.preco | number: '.2' }} </td>
-      <td mat-footer-cell *matFooterCellDef><strong>R$ {{ footerPrecoVenda | number: '.2':'pt' }}</strong></td>
+      <td mat-footer-cell *matFooterCellDef><strong>{{ footerPrecoVenda | number: '.2':'pt' }}</strong></td>
     </ng-container>
 
     <ng-container matColumnDef="Custo" >
       <th mat-header-cell *matHeaderCellDef > Custo Total</th>
       <td mat-cell *matCellDef="let produto">R$ {{ produto?.valor * produto?.quantidade | number: '.2'}} </td>
-      <td mat-footer-cell *matFooterCellDef><strong>R$ {{ footerCustoTotal | number: '.2':'pt' }}</strong></td>
+      <td mat-footer-cell *matFooterCellDef><strong>{{ footerCustoTotal | number: '.2':'pt' }}</strong></td>
     </ng-container>
 
 
     <ng-container matColumnDef="LucroBruto" >
       <th mat-header-cell *matHeaderCellDef >R$ Lucro Bruto </th>
       <td mat-cell *matCellDef="let produto">R$ {{((produto?.preco * produto?.quantidade ) - (produto?.valor * produto?.quantidade))  | number: '.2'}} </td>
-      <td mat-footer-cell *matFooterCellDef><strong>R$ {{ footerLucroTotal | number: '.2':'pt' }}</strong></td>
+      <td mat-footer-cell *matFooterCellDef><strong>{{ footerLucroTotal | number: '.2':'pt' }}</strong></td>
     </ng-container>
 
     <ng-container matColumnDef="PorcentagemLucro" >

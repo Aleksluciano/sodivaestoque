@@ -58,7 +58,7 @@
     <ng-container matColumnDef="Valor">
       <th mat-header-cell *matHeaderCellDef> Valor </th>
       <td mat-cell *matCellDef="let venda">R$ {{ venda?.valor | number: '.2':'pt' }} </td>
-      <td mat-footer-cell *matFooterCellDef><strong>R$ {{ valorTotal | number: '.2':'pt' }}</strong></td>
+      <td mat-footer-cell *matFooterCellDef><strong>{{ valorTotal | number: '.2':'pt' }}</strong></td>
     </ng-container>
 
     <ng-container matColumnDef="TipoPag.">

@@ -17,7 +17,7 @@
 
 .mat-cell:not(.colHide):not(.actions),
 .mat-header-cell:not(.colHide):not(.actions) {
-  min-width: 150px;
+  min-width: 90px;
 }
 
 .mat-header-cell, .mat-footer-cell{
@@ -77,8 +77,8 @@ tr:hover {
 #newItemButton{
   width: 200px;
   margin-top: 1%;
-  margin-bottom: 1%;
-  margin-right: 2%;
+  margin-bottom: 10%;
+  margin-right: 10%;
   float: right;
   z-index: 1;
 
