@@ -1,6 +1,6 @@
 import { Venda } from './../../../models/venda.model';
-import { MatTableDataSource, MatDialog, MatDialogConfig } from '@angular/material';
-import { Component, OnInit, HostListener } from '@angular/core';
+import { MatTableDataSource, MatDialog, MatDialogConfig, MatSort, MatPaginator } from '@angular/material';
+import { Component, OnInit, HostListener, ViewChild } from '@angular/core';
 import { VendaService } from 'src/app/services/venda.service';
 import { Router } from '@angular/router';
 import { ConfirmModalComponent } from '../../shared/confirm-modal/confirm-modal.component';
@@ -18,6 +18,8 @@ export class VendasListaComponent implements OnInit {
 vendas = [];
 venda: Venda;
 dataSource: MatTableDataSource<Venda>;
+sort: MatSort;
+paginator: MatPaginator;
 valorTotal = 0;
 quantidadeTotalLista = 0;
 
@@ -25,8 +27,8 @@ popupOpen = false;
 
 displayedColumns: string[] = [
   'Indice',
-  'Recibo',
-  'Cliente',
+  'recibo',
+  'clienteNome',
   'Data',
   'Hora',
   'Quant.',
@@ -42,6 +44,15 @@ handleKeyboardEvent(event: KeyboardEvent) {
     this.callNewItemForm();
   }
 }
+
+@ViewChild(MatSort, {static: false}) set matSort(ms: MatSort) {
+  this.sort = ms;
+
+   }
+
+@ViewChild(MatPaginator, {static: false}) set matPaginator(mp: MatPaginator) {
+   this.paginator = mp;
+  }
 
   constructor(private vendasService: VendaService,
     private produtosService: ProdutoService,
@@ -61,7 +72,11 @@ handleKeyboardEvent(event: KeyboardEvent) {
         return acumulado + atual.quantidadeTotal;
        }, 0);
       this.dataSource = new MatTableDataSource(this.vendas);
-     
+      if(this.dataSource){
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
+      this.dataSource.sort.active = 'ini';
+      }
 
     });
 

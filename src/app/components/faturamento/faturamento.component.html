@@ -50,8 +50,8 @@
             <div *ngFor="let re of resumo">
 
                 <div *ngIf="re?.name"  [ngStyle]="{ backgroundColor: re.valor == 0 ? 'green' : 'DarkOrange' }">
-                    <span *ngIf="!re?.id" style="font-size: 1.4em">{{ re.name }}</span> 
-                    <a *ngIf="re?.id" routerLink="/clientes/edit/{{re?.id}}" style="font-size: 1.4em;color:whitesmoke">{{ re.name }}</a> 
+                    <span *ngIf="re?.id == re.name" style="font-size: 1.4em">{{ re.name }}</span>
+                    <a *ngIf="re?.id != re.name" routerLink="/clientes/edit/{{re?.id}}" style="font-size: 1.4em;color:whitesmoke">{{ re.name }}</a>
                     <span style="position: absolute;right: 550px;font-size: 1.4em" >DIVIDA TOTAL: {{ re.valor | number:'.2-2'}}</span>
                     <span *ngIf="re.valorpag > 0" style="position: absolute;right: 250px;font-size: 1.4em" >VALOR PAGO: {{ re.valorpag | number:'.2-2'}}</span>
                   </div>

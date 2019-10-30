@@ -21,7 +21,7 @@ a{
   }
 
   #nome{
-    width: 350px;
+    width: 450px;
     }
 
   #quantidade{
@@ -84,6 +84,10 @@ a{
     font-size: 1.2em;
   }
 
+  .desc{
+    width: 85px
+  }
+
   .preco{
     font-size: 1.4em;
   }
@@ -114,7 +118,7 @@ a{
   }
 
   td, th{
-    padding: 5px 0;
+    padding: 2px 0;
   }
 
   #recibo{

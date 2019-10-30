@@ -32,7 +32,7 @@
               <mat-option *ngFor="let option of filteredOptionsFindCliente | async"
               [value]="option.nome"
               >
-                {{option.nome}} {{ option?.obs }}
+                {{option.nome}} {{ option?.obs}}
               </mat-option>
             </mat-autocomplete>
           </mat-form-field>
@@ -65,7 +65,7 @@
         <div fxFlex=30 *ngIf="cliente?.endereco">
             <p >Endereço: {{ cliente?.endereco }}</p>
             <p >Telefone: {{ cliente?.telefone || cliente?.celular }}</p>
-            <p >Observação: {{ cliente?.obs || cliente?.obs }}</p>
+            <p >Observação: {{ cliente?.obs }}</p>
         </div>
         </div>
 <br><br>
@@ -323,7 +323,7 @@
               id="saveButton"
               >Salvar Alterações</button> <mat-checkbox *ngIf="cliente?.id" style="margin-left: 70px" [(ngModel)]="controlada">Controlar cobrança? </mat-checkbox>
               </div>
-              
+
       </mat-card>
       </div>
     </div>

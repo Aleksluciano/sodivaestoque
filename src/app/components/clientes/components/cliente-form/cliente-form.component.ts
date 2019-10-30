@@ -63,7 +63,7 @@ export class ClienteFormComponent implements OnInit, AfterViewInit {
     'TO'
   ];
   filteredOptions: Observable<string[]>;
-  @ViewChild('nameInput', {static: true}) nameInput;
+  @ViewChild('nameInput', {static: false}) nameInput;
 
   constructor() {}
 

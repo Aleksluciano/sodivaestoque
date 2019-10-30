@@ -283,11 +283,11 @@ mesNOME = [
       }
 
       if (fatura.tipoPagamento == '2') {
-
+       let tudozerado = fatura.divisaoPagamento.every(p=> p.precopago == 0);
         fatura.divisaoPagamento.forEach(pag => {
           const mes = new Date(pag.data['seconds'] * 1000).getMonth();
           const ano = new Date(pag.data['seconds'] * 1000).getFullYear();
-          if (!pag.precopago || pag.preco == 0) {
+          if (pag.precopago == null || tudozerado) {
             pag.precopago = pag.preco;
           }
           if (mes == mesatual && ano == parseInt(this.ano)) {
@@ -345,8 +345,8 @@ mesNOME = [
       let valfat: Venda;
       resu.grupo.sort(
         (a, b) =>
-          a.dataUltimoPag['seconds'] * 1000 -
-          b.dataUltimoPag['seconds'] * 1000
+          a.dataPrimeiroPag['seconds'] * 1000 -
+          b.dataPrimeiroPag['seconds'] * 1000
       );
       resu.grupo.forEach((fat, ix) => {
         if (fat.controlada) {
@@ -486,12 +486,10 @@ mesNOME = [
                 fat.divisaoPagamento[fat.divisaoPagamento.length - 1]
               )
             ) {
-              // tslint:disable-next-line: max-line-length
-              if (fat.valorhistorico > 0) {this.totaldiferenca += fat.valorhistorico - totfatura; } else { this.totaldiferenca += fat.valor - totfatura; }
-            }
+              if (fat.valorhistorico > 0) {this.totaldiferenca += fat.valorhistorico - totfatura; }
 
         }
-
+      }
         if (fat.tipoPagamento == '1') {
           this.calcCreditoDebitoDiferenca(fat, fat.tipoPagamento);
           this.totaldiferenca += fat.valor - fat.valorpago;
@@ -576,8 +574,9 @@ mesNOME = [
       } else { valorrestante = fat.valor - sum; }
 
       for (let i = index + 1; i < fat.divisaoPagamento.length; i++) {
-        fat.divisaoPagamento[i].precopago =
-          valorrestante / (fat.divisaoPagamento.length - index - 1);
+    
+        fat.divisaoPagamento[i].precopago = valorrestante / (fat.divisaoPagamento.length - index - 1);
+        
       }
     }
     // if(fat.divisaoPagamento[index].preco < 0)btpago.disabled = true;

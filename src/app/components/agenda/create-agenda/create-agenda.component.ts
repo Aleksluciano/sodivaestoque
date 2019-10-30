@@ -12,6 +12,7 @@ items = ['Carla', 'Bia', 'Paty'];
 time = {hour: 13, minute: 30};
 selectedValue = '';
 modeldate;
+date: {year: number, month: number};
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: { message: string, item: string} ,
   public dialogRef: MatDialogRef<CreateAgendaComponent>,

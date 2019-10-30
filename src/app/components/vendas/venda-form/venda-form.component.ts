@@ -64,7 +64,7 @@ export class VendaFormComponent implements OnInit {
 
   controlada = false;
 
-  @ViewChild('nomeCliente', {static: true}) nomeCliente;
+  @ViewChild('nomeCliente', {static: false}) nomeCliente;
 
   constructor(
     private produtosService: ProdutoService,
@@ -249,7 +249,13 @@ export class VendaFormComponent implements OnInit {
 
   aplicaDesconto() {
     this.totalLista = this.lista.reduce((sum, item) => {
-      return sum + item.preco * item.quantidade;
+      let preco = 0;
+      if(item.desc > 0){
+       preco = item.preco - (item.desc * item.preco / 100);
+      }else{
+      preco = item.preco;
+      }
+      return sum + preco * item.quantidade;
     }, 0);
 
     if (this.desconto > 0) {
@@ -289,16 +295,28 @@ export class VendaFormComponent implements OnInit {
     return parseInt(num);
   }
 
-  addDesconto() {
-    if (this.desconto < 30) {
+  addDesconto(i = -1) {
+    if (this.desconto < 30 || (i !== -1 && this.lista[i].desc < 30)) {
+      if (i == -1) {
       this.desconto += 5;
+      } else {
+        if (!this.lista[i].desc) {this.lista[i].desc = 0; }
+        this.lista[i].desc += 5;
+        console.log(this.lista[i].desc);
+      }
       this.aplicaDesconto();
     }
   }
 
-  removeDesconto() {
-    if (this.desconto > 0) {
+  removeDesconto(i = -1) {
+    if (this.desconto > 0 || (i !== -1 && this.lista[i].desc > 0)) {
+      if (i == -1) {
       this.desconto -= 5;
+      } else {
+        if (!this.lista[i].desc) {this.lista[i].desc = 0; }
+        this.lista[i].desc -= 5;
+      console.log(this.lista[i].desc);
+      }
       this.aplicaDesconto();
     }
   }
@@ -364,6 +382,7 @@ export class VendaFormComponent implements OnInit {
       if (this.cliente) {
         id = this.cliente.id;
         clienteEndereco = this.cliente.endereco;
+        if(this.cliente.obs)
         clienteObs = this.cliente.obs;
         if (this.cliente.telefone) {
         clienteTelefone = this.cliente.telefone;
@@ -572,18 +591,18 @@ export class VendaFormComponent implements OnInit {
     }
 
     arredondar(n, digits = 0) {
-      var negative = false;
+      let negative = false;
       if (digits === undefined) {
           digits = 0;
       }
-          if( n < 0) {
+          if ( n < 0) {
           negative = true;
         n = n * -1;
       }
-      var multiplicator = Math.pow(10, digits);
+      let multiplicator = Math.pow(10, digits);
       n = parseFloat((n * multiplicator).toFixed(11));
       n = (Math.round(n) / multiplicator).toFixed(2);
-      if( negative ) {
+      if ( negative ) {
           n = (n * -1).toFixed(2);
       }
     this.totalLista = parseInt(n);
@@ -591,8 +610,8 @@ export class VendaFormComponent implements OnInit {
   }
 
 
-  onChangeAllMethodPayments(forma,j){
-    if(j == 0){
+  onChangeAllMethodPayments(forma, j) {
+    if (j == 0) {
     this.pagamentos.forEach(a => {
       a.forma = forma;
     });

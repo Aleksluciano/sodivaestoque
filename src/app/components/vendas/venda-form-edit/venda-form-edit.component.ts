@@ -95,7 +95,7 @@ export class VendaFormEditComponent implements OnInit {
     this.id = this.route.snapshot.params['id'];
     this.vendasService.getVenda(this.id).subscribe(venda => {
 
-
+if(venda){
       this.form.setValue({
         cliente: venda.clienteNome,
         recibo: venda.recibo,
@@ -137,7 +137,7 @@ export class VendaFormEditComponent implements OnInit {
 
 
        this.dataPrimeiroUltimoPag();
-
+      }
 
 
     });
@@ -337,7 +337,7 @@ export class VendaFormEditComponent implements OnInit {
     if (this.desconto < 30 || (i !== -1 && this.lista[i].desc < 30)) {
       if(i == -1){
       this.desconto += 5;
-      }else { 
+      }else {
         if(!this.lista[i].desc)this.lista[i].desc = 0;
         this.lista[i].desc += 5;
         console.log(this.lista[i].desc);
@@ -350,7 +350,7 @@ export class VendaFormEditComponent implements OnInit {
     if (this.desconto > 0 || (i !== -1 && this.lista[i].desc > 0)) {
       if(i == -1){
       this.desconto -= 5;
-      }else { 
+      }else {
         if(!this.lista[i].desc)this.lista[i].desc = 0;
         this.lista[i].desc -= 5;
       console.log(this.lista[i].desc)
@@ -422,6 +422,7 @@ export class VendaFormEditComponent implements OnInit {
       if (this.cliente) {
         id = this.cliente.id;
         clienteEndereco = this.cliente.endereco;
+        if(this.cliente.obs)
         clienteObs = this.cliente.obs;
         if (this.cliente.telefone) {
         clienteTelefone = this.cliente.telefone;

@@ -71,7 +71,7 @@ export class ProdutoFormComponent implements OnInit {
   filteredOptionsFornecedor: Observable<string[]>;
   filteredOptionsCor: Observable<string[]>;
 
-  @ViewChild('codigoInput', {static: true}) codigoInput;
+  @ViewChild('codigoInput', {static: false}) codigoInput;
 
   constructor() {}
 

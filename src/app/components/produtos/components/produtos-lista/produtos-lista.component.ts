@@ -59,12 +59,12 @@ export class ProdutosListaComponent implements OnInit {
   sort: MatSort;
   paginator: MatPaginator;
 
-  @ViewChild(MatSort, {static: true}) set matSort(ms: MatSort) {
+  @ViewChild(MatSort, {static: false}) set matSort(ms: MatSort) {
     this.sort = ms;
 
      }
 
-    @ViewChild(MatPaginator, {static: true}) set matPaginator(mp: MatPaginator) {
+    @ViewChild(MatPaginator, {static: false}) set matPaginator(mp: MatPaginator) {
      this.paginator = mp;
     }
   // @ViewChild(MatPaginator) paginator: MatPaginator; // necessário para fazer o paginator
